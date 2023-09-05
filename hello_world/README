@@ -34,4 +34,4 @@ change this to -DRES=1.
 3.) Run the make command:
     make
 4.) Run the newly-created executable file stored in the hw1 directory:
-    <location>/CSCI_5229/hw1/gears.exe
+    <location>/CSCI_5229/hello_world/hello_world.exe
