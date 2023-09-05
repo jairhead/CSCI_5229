@@ -1,0 +1,8 @@
+The makefile will build the gears program for Linux, OSX or Windows.
+
+On Windows the -DUSEGLEW compiler flag invokes GLEW which is required to get
+OpenGL 2 features needed by this program.
+
+On OSX the -DRES=2 compiler flag adjusts the resolution of the glViewport() for
+retina displays.  If you see only part of the scene, it may be necessary to
+change this to -DRES=1.
