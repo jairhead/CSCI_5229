@@ -18,6 +18,7 @@ CLEAN=rm -f hello_world *.o *.a
 endif
 
 #  Compile and link
+default: hello_world
 hello_world:hello_world.c
 	gcc $(CFLG) -o $@ $^   $(LIBS)
 
