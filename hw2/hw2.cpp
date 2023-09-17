@@ -29,6 +29,9 @@ int main(int argc, char *argv[])
    glutSpecialFunc(la->special);
    glutKeyboardFunc(la->key);
 
+   // Call GLUT main loop
+   // glutMainLoop();
+
    // Exit program
    std::cout << "hw2::main(): exiting program" << std::endl;
    return 0;
