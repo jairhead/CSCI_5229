@@ -12,7 +12,7 @@
 int main(int argc, char *argv[])
 {
    // Enter program
-   std::cout << "hw2::Main() starting program" << std::endl;
+   std::cout << "hw2::main() starting program" << std::endl;
 
    // Declare LorenzAttractorHelper object
    LorenzAttractorHelper* la = new LorenzAttractorHelper();
@@ -30,6 +30,6 @@ int main(int argc, char *argv[])
    glutKeyboardFunc(la->key);
 
    // Exit program
-   std::cout << "hw2::Main(): exiting" << std::endl;
+   std::cout << "hw2::main(): exiting program" << std::endl;
    return 0;
 }
