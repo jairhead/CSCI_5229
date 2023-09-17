@@ -12,6 +12,7 @@ LorenzAttractorHelper::LorenzAttractorHelper() { }
 // Destructor
 LorenzAttractorHelper::~LorenzAttractorHelper() { }
 
+// 
 void LorenzAttractorHelper::helloWorld() {
   std::cout << "Hello World from LorenzAttractorHelper!" << std::endl;
 }

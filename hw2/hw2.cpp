@@ -7,15 +7,17 @@
 #include <LorenzAttractorHelper.h>
 #include <iostream>
 
-
-
-/*
- *  Main
- */
+// Main
 int main(int argc, char *argv[])
 {
-   std::cout << "Hello from main!" << std::endl;
-   LorenzAttractorHelper* foo = new LorenzAttractorHelper();
-   foo->helloWorld();
+   // Enter program
+   std::cout << "hw2::Main() starting program" << std::endl;
+
+   // Declare LorenzAttractorHelper object
+   LorenzAttractorHelper* la = new LorenzAttractorHelper();
+   la->helloWorld();
+
+   // Exit program
+   std::cout << "hw2::Main(): exiting" << std::endl;
    return 0;
 }
