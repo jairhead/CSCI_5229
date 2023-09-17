@@ -1,5 +1,6 @@
 /*
  * File: LorenzAttractorHelper.h
+ * Author: Jared McKneely
  * Description: Header file for the LorenzAttractorHelper object
  */
 
@@ -29,11 +30,13 @@ class LorenzAttractorHelper {
   public:
     LorenzAttractorHelper();
     ~LorenzAttractorHelper();
-    void helloWorld();
+    static void display();
+    static void reshape(int w, int h);
+    static void special(int key, int x, int y);
+    static void key(unsigned char ch, int x, int y);
   private:
-    // Lorenz Parameters
-    const double s  = 10;
-    const double b  = 2.6666;
-    const double r  = 28;
-
+    // Constant Lorenz Parameters
+    const double S  = 10;
+    const double B  = 2.6666;
+    const double R  = 28;
 };
