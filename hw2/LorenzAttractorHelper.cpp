@@ -50,7 +50,6 @@ void LorenzAttractorHelper::display() {
   double y = 1;
   double z = 1;
   computeEulerStep(x, y, z);
-  std::cout << "X: " << x << ", Y: " << y << ", Z: " << z << std::endl;
 
   // Flush and swap buffers
   glFlush();
@@ -93,7 +92,7 @@ void LorenzAttractorHelper::key(unsigned char ch, int x, int y) {
     case 3:
       mode = ch - '0';
     case 4:
-      mode = ch = '0';
+      mode = ch - '0';
       w = 1;
   }
 }
