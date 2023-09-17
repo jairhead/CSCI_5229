@@ -38,5 +38,25 @@ void LorenzAttractorHelper::special(int key, int x, int y) {
 // Primary OpenGL keyboard handler function
 // Callback for glutKeyboardFunc()
 void LorenzAttractorHelper::key(unsigned char ch, int x, int y) {
-  std::cout << "LorenzAttractorHelper::reshape(): enter function" << std::endl;
+  switch(ch) {
+    // ESC = exit
+    case 27:
+      exit(0);
+    // 0 = reset viewing angle
+    case 0:
+      th = 0;
+      ph = 0;
+      break;
+    // 1 - 4 = switch dimensions
+    case 1:
+      mode = ch - '0';
+    case 2:
+      mode = ch - '0';
+      z = 0;
+    case 3:
+      mode = ch - '0';
+    case 4:
+      mode = ch = '0';
+      w = 1;
+  }
 }
