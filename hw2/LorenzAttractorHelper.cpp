@@ -16,6 +16,7 @@ double w = 1;            // W variable
 const double S = 10;
 const double B = 2.6666;
 const double R = 28;
+const double DT = 0.001;
 
 // Constructor
 LorenzAttractorHelper::LorenzAttractorHelper() { }
@@ -33,23 +34,26 @@ void LorenzAttractorHelper::display() {
   glRotated(ph, 1, 0, 0);
   glRotated(th, 0, 1, 0);
 
-  // Set white lines for axes
+  // Set white lines and draw x, y, z axes
   glColor3ub(255, 255, 255);
   glBegin(GL_LINES);
-
-  // Draw x axis
   glVertex3d(0, 0, 0);
   glVertex3d(1, 0, 0);
-
-  // Draw y axis
   glVertex3d(0, 0, 0);
   glVertex3d(0, 1, 0);
-
-  // Draw z axis
   glVertex3d(0, 0, 0);
   glVertex3d(0, 0, 1);
 
-  //glFLush();
+  // Draw the Lorenz Attractor
+  glColor3ub(127, 50, 70);
+  double x = 1;
+  double y = 1;
+  double z = 1;
+  computeEulerStep(x, y, z);
+  std::cout << "X: " << x << ", Y: " << y << ", Z: " << z << std::endl;
+
+  // Flush and swap buffers
+  glFlush();
   glutSwapBuffers();
 }
 
@@ -92,4 +96,12 @@ void LorenzAttractorHelper::key(unsigned char ch, int x, int y) {
       mode = ch = '0';
       w = 1;
   }
+}
+
+// computeEulerStep() member function
+// Calculates a single explicit Euler integration step
+void LorenzAttractorHelper::computeEulerStep(double &x, double &y, double &z) {
+  x += (DT * (S * (y - x)));
+  y += (DT * ((x * (R - z)) - y));
+  z += (DT * ((x * y) - (B * z)));
 }

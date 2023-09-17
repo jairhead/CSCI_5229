@@ -35,5 +35,5 @@ class LorenzAttractorHelper {
     static void special(int key, int x, int y);
     static void key(unsigned char ch, int x, int y);
   private:
-    
+    static void computeEulerStep(double &x, double &y, double &z);
 };
