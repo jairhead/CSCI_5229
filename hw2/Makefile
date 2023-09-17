@@ -6,7 +6,7 @@ CLEAN=rm *.exe *.o *.a
 else
 #  OSX
 ifeq "$(shell uname)" "Darwin"
-CFLG=-O3 -Wall -Wno-deprecated-declarations -DRES=2 -Iinclude
+CFLG=-O3 -Wall -Wno-deprecated-declarations -DRES=2 -I.
 LIBS=-framework GLUT -framework OpenGL
 #  Linux/Unix/Solaris
 else
