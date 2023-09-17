@@ -6,7 +6,6 @@
 
  #include <LorenzAttractorHelper.h>
 
-
 // Constructor
 LorenzAttractorHelper::LorenzAttractorHelper() { }
 
