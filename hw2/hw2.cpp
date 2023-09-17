@@ -14,9 +14,6 @@ int main(int argc, char *argv[])
    // Enter program
    std::cout << "hw2::main() starting program" << std::endl;
 
-   // Declare LorenzAttractorHelper object
-   LorenzAttractorHelper* la = new LorenzAttractorHelper();
-
    // Initialize GLUT w/ user args, double buffer
    glutInit(&argc, argv);
    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
@@ -24,13 +21,13 @@ int main(int argc, char *argv[])
    glutCreateWindow("Coordinates");
 
    // Pass callback methods to GLUT
-   glutDisplayFunc(la->display);
-   glutReshapeFunc(la->reshape);
-   glutSpecialFunc(la->special);
-   glutKeyboardFunc(la->key);
+   glutDisplayFunc(LorenzAttractorHelper::display);
+   glutReshapeFunc(LorenzAttractorHelper::reshape);
+   glutSpecialFunc(LorenzAttractorHelper::special);
+   glutKeyboardFunc(LorenzAttractorHelper::key);
 
    // Call GLUT main loop
-   // glutMainLoop();
+   glutMainLoop();
 
    // Exit program
    std::cout << "hw2::main(): exiting program" << std::endl;

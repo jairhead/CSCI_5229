@@ -36,11 +36,4 @@ class LorenzAttractorHelper {
     static void key(unsigned char ch, int x, int y);
   private:
     
-    // Parameters
-    int th = 0;              // Azimuth of view angle
-    int ph = 0;              // Elevation of view angle
-    int mode = 1;            // Dimension (1-4)
-    const double S = 10;
-    const double B = 2.6666; //
-    const double R = 28;
 };

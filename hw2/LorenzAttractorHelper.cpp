@@ -7,6 +7,16 @@
 
  #include <LorenzAttractorHelper.h>
 
+// Globals
+int th = 0;              // Azimuth of view angle
+int ph = 0;              // Elevation of view angle
+int mode = 1;            // Dimension (1-4)
+double z = 0;            // Z variable
+double w = 1;            // W variable
+const double S = 10;
+const double B = 2.6666;
+const double R = 28;
+
 // Constructor
 LorenzAttractorHelper::LorenzAttractorHelper() { }
 
@@ -17,7 +27,30 @@ LorenzAttractorHelper::~LorenzAttractorHelper() { }
 // Primary OpenGL display function
 // Callback for glutDisplayFunc()
 void LorenzAttractorHelper::display() {
-  std::cout << "LorenzAttractorHelper::reshape(): enter function" << std::endl;
+  // Initialize the scene; set initial viewing angle
+  glClear(GL_COLOR_BUFFER_BIT);
+  glLoadIdentity();
+  glRotated(ph, 1, 0, 0);
+  glRotated(th, 0, 1, 0);
+
+  // Set white lines for axes
+  glColor3ub(255, 255, 255);
+  glBegin(GL_LINES);
+
+  // Draw x axis
+  glVertex3d(0, 0, 0);
+  glVertex3d(1, 0, 0);
+
+  // Draw y axis
+  glVertex3d(0, 0, 0);
+  glVertex3d(0, 1, 0);
+
+  // Draw z axis
+  glVertex3d(0, 0, 0);
+  glVertex3d(0, 0, 1);
+
+  //glFLush();
+  glutSwapBuffers();
 }
 
 // reshape() member function
