@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
 {
    // Enter program
    std::cout << "hw2::main() starting program" << std::endl;
+   LorenzAttractorHelper::printLorenzAttractorParameters();
 
    // Initialize GLUT w/ user args, double buffer
    glutInit(&argc, argv);

@@ -8,10 +8,11 @@
  #include <LorenzAttractorHelper.h>
 
 // Display Globals
-int th = 135;   // Azimuth of view angle
-int ph = -30;   // Elevation of view angle
-int mode = 1;   // Mode for modifying Lorenz Attractor values (1-4)
-double w = 1.0; // W variable
+int th = 135;         // Azimuth of view angle
+int ph = -30;         // Elevation of view angle
+int mode = 1;         // Mode for modifying Lorenz Attractor values (1-4)
+double w = 1.0;       // W variable
+const double DIM = 2; // Dimension of orthogonal box
 
 // Lorenz Attractor Globals
 double sigma = 10;                  // sigma value (Lorenz Attractor computation)
@@ -38,7 +39,6 @@ void LorenzAttractorHelper::display() {
   glRotated(th, 0, 1, 0);
 
   // Display the axes and draw Lorenz Attractor
-  printLorenzAttractorParameters();
   createAxes();
   createLorenzAttractor(1.0, 1.0, 1.0);
 
@@ -51,7 +51,19 @@ void LorenzAttractorHelper::display() {
 // Primary OpenGL window resize function
 // Callback for glutReshapeFunc()
 void LorenzAttractorHelper::reshape(int w, int h) {
-  std::cout << "LorenzAttractorHelper::reshape(): entrance" << std::endl; 
+  // Switch to projection matrix; undo previous updates
+  glViewport(0, 0, (RES * w), (RES * h));
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+
+  // Calculate orthogonal projection
+  double asp = 1.0;
+  if (h > 0) { asp = (double)(w / h); }
+  glOrtho((-asp * DIM), (asp * DIM), -DIM, DIM, -DIM, DIM);
+
+  // Switch back to model matrix
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
 }
 
 // display() member function
@@ -77,21 +89,21 @@ void LorenzAttractorHelper::key(unsigned char ch, int x, int y) {
   // Handle alphanumeric keys
   if (ch == 27) { exit(0) ;}
   else if (ch == '0') { th = 0; ph = 0; }
-  else if (ch == '1') { mode = ch - '0'; }
-  else if (ch == '2') { mode = ch - '0'; }
-  else if (ch == '3') { mode = ch - '0'; }
-  else if (ch == '4') { mode = ch - '0'; }
+  else if (ch == '1') { mode = ch - '0'; printLorenzAttractorParameters(); }
+  else if (ch == '2') { mode = ch - '0'; printLorenzAttractorParameters(); }
+  else if (ch == '3') { mode = ch - '0'; printLorenzAttractorParameters(); }
+  else if (ch == '4') { mode = ch - '0'; printLorenzAttractorParameters(); }
   else if (ch == '+') {
-    if (mode == 1) { sigma += 0.1; }
-    else if (mode == 2) { beta += 0.1; }
-    else if (mode == 3) { rho += 1.0; }
-    else if (mode == 4) { dt += 0.001; }
+    if (mode == 1) { sigma += 0.1; std::cout << "[Sigma + 0.1] "; printLorenzAttractorParameters(); }
+    else if (mode == 2) { beta += 0.1; std::cout << "[Beta + 0.1] "; printLorenzAttractorParameters(); }
+    else if (mode == 3) { rho += 1.0; std::cout << "[Rho + 1.0] "; printLorenzAttractorParameters(); }
+    else if (mode == 4) { dt += 0.001; std::cout << "[dt + 0.001] "; printLorenzAttractorParameters(); }
   }
   else if (ch == '-') {
-    if (mode == 1) { sigma -= 0.1; }
-    else if (mode == 2) { beta -= 0.1; }
-    else if (mode == 3) { rho -= 1.0; }
-    else if (mode == 4) { dt -= 0.001; }
+    if (mode == 1) { sigma -= 0.1; std::cout << "[Sigma - 0.1] "; printLorenzAttractorParameters(); }
+    else if (mode == 2) { beta -= 0.1; std::cout << "[Beta - 0.1] "; printLorenzAttractorParameters(); }
+    else if (mode == 3) { rho -= 1.0; std::cout << "[Rho - 1.0] "; printLorenzAttractorParameters(); }
+    else if (mode == 4) { dt -= 0.001; std::cout << "[dt - 0.001] "; printLorenzAttractorParameters(); }
   }
   else { return; }
 
@@ -151,7 +163,6 @@ void LorenzAttractorHelper::createAxes() {
   displayText("y");
   glRasterPos3d(0, 0, 1.1);
   displayText("z");
-  displayText("Test");
   errorCheck("LorenzAttractor::createAxes()");
 }
 

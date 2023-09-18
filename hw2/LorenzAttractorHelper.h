@@ -34,11 +34,11 @@ class LorenzAttractorHelper {
     static void reshape(int w, int h);
     static void special(int key, int x, int y);
     static void key(unsigned char ch, int x, int y);
+    static void printLorenzAttractorParameters();
   private:
     static void computeEulerStep(double &x, double &y, double &z);
     static void displayText(std::string text);
     static void createAxes();
     static void createLorenzAttractor(double x, double y, double z);
     static void errorCheck(std::string where);
-    static void printLorenzAttractorParameters();
 };
