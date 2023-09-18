@@ -37,5 +37,6 @@ class LorenzAttractorHelper {
   private:
     static void computeEulerStep(double &x, double &y, double &z);
     static void displayText(std::string text);
-    static void drawAxes();
+    static void createAxes();
+    static void errorCheck(const char* where);
 };

@@ -9,7 +9,7 @@
 
 // Display Globals
 int th = 50;    // Azimuth of view angle
-int ph = 50;    // Elevation of view angle
+int ph = -50;   // Elevation of view angle
 int mode = 1;   // Dimension (1-4)
 double z = 0.0; // Z variable
 double w = 1.0; // W variable
@@ -37,8 +37,8 @@ void LorenzAttractorHelper::display() {
   glRotated(ph, 1, 0, 0);
   glRotated(th, 0, 1, 0);
 
-  // Draw axes
-  drawAxes();
+  // Display the axes
+  createAxes();
 
   // Draw the Lorenz Attractor
   double x = 1.0;
@@ -94,7 +94,7 @@ void LorenzAttractorHelper::special(int key, int x, int y) {
 // Primary OpenGL keyboard handler function
 // Callback for glutKeyboardFunc()
 void LorenzAttractorHelper::key(unsigned char ch, int x, int y) {
-  // 
+  // Key switch
   switch(ch) {
     // ESC = exit
     case 27:
@@ -123,7 +123,7 @@ void LorenzAttractorHelper::key(unsigned char ch, int x, int y) {
 }
 
 // computeEulerStep() private member function
-// Calculates a single explicit Euler integration step
+// Helper method that calculates a single explicit Euler integration step
 void LorenzAttractorHelper::computeEulerStep(double &x, double &y, double &z) {  
   x += (dt * (sigma * (y - x)));
   y += (dt * ((x * (rho - z)) - y));
@@ -131,16 +131,16 @@ void LorenzAttractorHelper::computeEulerStep(double &x, double &y, double &z) {
 }
 
 // displayText private member function
-// Displays a string to the scene
+// Helper method that displays a string to the scene
 void LorenzAttractorHelper::displayText(std::string text) {
   for (size_t i = 0; i < text.size(); i++) {
     glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, text[i]);
   }
 }
 
-// drawAxes() private member function
-// Draws the x, y, and z axes on the screen and labels them
-void LorenzAttractorHelper::drawAxes() {
+// createAxes() private member function
+// Helper method that displays the x, y, and z axes, puts dots on the ends, and labels them
+void LorenzAttractorHelper::createAxes() {
   // Draw grey x, y, z axes
   glColor3d(0.35, 0.35, 0.35);
   glLineWidth(1.0);
@@ -166,10 +166,20 @@ void LorenzAttractorHelper::drawAxes() {
 
   // Label axes in white
   glColor3d(1, 1, 1);
-  glRasterPos3d(1.02, 0, 0);
+  glRasterPos3d(1.1, 0, 0);
   displayText("x");
-  glRasterPos3d(0, 1.02, 0);
+  glRasterPos3d(0, 1.1, 0);
   displayText("y");
-  glRasterPos3d(0, 0, 1.02);
+  glRasterPos3d(0, 0, 1.1);
   displayText("z");
+}
+
+// errorCheck() private member function
+// Helper method that checks errors from OpenGL
+void LorenzAttractorHelper::errorCheck(const char* where)
+{
+   int error = glGetError();
+   if (error) {
+     std::cout << "LorenzAttractorHelper::errorCheck: [ERROR] " << gluErrorString(error) << where << std::endl;
+   }
 }
