@@ -15,12 +15,12 @@ double z = 0.0; // Z variable
 double w = 1.0; // W variable
 
 // Lorenz Attractor Globals
-double sigma = 10;
-double beta = 2.6666;
-double rho = 28;
-double dt = 0.001;
-const double SCALING_FACTOR = 50.0;
-const int LORENZ_STEPS = 50000;
+double sigma = 10;                  // sigma value (Lorenz Attractor computation)
+double beta = 2.6666;               // beta value (Lorenz Attractor computation)
+double rho = 28;                    // rho value (Lorenz Attractor computation)
+double dt = 0.001;                  // Time step
+const double SCALING_FACTOR = 50.0; // Divide by this to scale down the Lorenz Attractor
+const int LORENZ_STEPS = 50000;     // Number of Explicit Euler Integration steps
 
 // Constructor
 LorenzAttractorHelper::LorenzAttractorHelper() { }

@@ -1,5 +1,5 @@
 /*
- * File: LorenzAttractorHelper.h
+ * File: hw2.cpp
  * Author: Jared McKneely
  * Description: Main runtime for Homework #2 (CSCI 5229)
  */
