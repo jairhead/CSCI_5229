@@ -7,16 +7,19 @@
 
  #include <LorenzAttractorHelper.h>
 
-// Globals
+// Display Globals
 int th = 50;    // Azimuth of view angle
 int ph = 50;    // Elevation of view angle
 int mode = 1;   // Dimension (1-4)
 double z = 0.0; // Z variable
 double w = 1.0; // W variable
+
+// Lorenz Attractor Globals
 const double S = 10;
 const double B = 2.6666;
 const double R = 28;
 const double DT = 0.001;
+const double SCALING_FACTOR = 50.0;
 
 // Constructor
 LorenzAttractorHelper::LorenzAttractorHelper() { }
@@ -52,10 +55,9 @@ void LorenzAttractorHelper::display() {
   double y = 1.0;
   double z = 1.0;
   glColor3f(0.0f, 0.5f, 0.5f);
-  glLineWidth(3.0);
-  glBegin(GL_LINES);
+  glBegin(GL_LINE_STRIP);
   for (int i = 0; i < 50000; i++) {
-    glVertex4f(x, y, z, i);
+    glVertex3d(x / SCALING_FACTOR, y / SCALING_FACTOR, z / SCALING_FACTOR);
     computeEulerStep(x, y, z);
   }
   glEnd();
@@ -76,21 +78,24 @@ void LorenzAttractorHelper::reshape(int w, int h) {
 // Primary OpenGL arrow key handler function
 // Callback for glutSpecialFunc()
 void LorenzAttractorHelper::special(int key, int x, int y) {
+  // Handle key display navigation
   std::cout << "LorenzAttractorHelper::special(): entrance" << std::endl;
   switch(key) {
     case GLUT_KEY_RIGHT:
-      th += 5;
+      th += 2;
       break;
     case GLUT_KEY_LEFT:
-      th -= 5;
+      th -= 2;
       break;
     case GLUT_KEY_UP:
-      ph += 5;
+      ph += 2;
       break;
     case GLUT_KEY_DOWN:
-      ph -= 5;
+      ph -= 2;
       break;
   }
+
+  // Normalize azimuth and elevation
   th %= 360;
   ph %= 360;
   glutPostRedisplay();
@@ -100,6 +105,7 @@ void LorenzAttractorHelper::special(int key, int x, int y) {
 // Primary OpenGL keyboard handler function
 // Callback for glutKeyboardFunc()
 void LorenzAttractorHelper::key(unsigned char ch, int x, int y) {
+  // 
   std::cout << "LorenzAttractorHelper::key(): entrance" << std::endl;
   switch(ch) {
     // ESC = exit
@@ -126,9 +132,9 @@ void LorenzAttractorHelper::key(unsigned char ch, int x, int y) {
 
 // computeEulerStep() member function
 // Calculates a single explicit Euler integration step
-void LorenzAttractorHelper::computeEulerStep(double &x, double &y, double &z) {
-  x += (DT * (S * (y - x)));
-  y += (DT * ((x * (R - z)) - y));
-  z += (DT * ((x * y) - (B * z)));
-
+void LorenzAttractorHelper::computeEulerStep(double &x, double &y, double &z) {  
+  x = x + (DT * (S * (y - x)));
+  y = y + (DT * ((x * (R - z)) - y));
+  z = z + (DT * ((x * y) - (B * z)));
+  //std::cout << "x = " << x << ", y = " << y << ", z = " << z << std::endl;
 }
