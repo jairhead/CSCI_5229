@@ -195,14 +195,14 @@ void LorenzAttractorHelper::errorCheck(std::string where) {
 // printLorenzAttractorParameters() private member function
 // Prints the Lorenz Attractor parameters to the terminal
 void LorenzAttractorHelper::printLorenzAttractorParameters() {
-  // Print Mode
+  // Print mode
   std::cout << "Mode: ";
   if (mode == 1) { std::cout << "1 (Update Sigma)"; }
   else if (mode == 2) { std::cout << "2 (Update Beta)"; }
   else if (mode == 3) { std::cout << "3 (Update Rho)"; }
   else if (mode == 4) { std::cout << "4 (Update dt)"; }
 
-  // Display Lorenz Attractor 
+  // Print lorenz attractor parameters
   std::cout << ", Sigma: " << sigma;
   std::cout << ", Beta: " << beta;
   std::cout << ", Rho: " << rho;
