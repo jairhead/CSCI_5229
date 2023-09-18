@@ -8,8 +8,8 @@
  #include <LorenzAttractorHelper.h>
 
 // Display Globals
-int th = 50;    // Azimuth of view angle
-int ph = -50;   // Elevation of view angle
+int th = 135;   // Azimuth of view angle
+int ph = -30;   // Elevation of view angle
 int mode = 1;   // Dimension (1-4)
 double z = 0.0; // Z variable
 double w = 1.0; // W variable
@@ -20,6 +20,7 @@ double beta = 2.6666;
 double rho = 28;
 double dt = 0.001;
 const double SCALING_FACTOR = 50.0;
+const int LORENZ_STEPS = 50000;
 
 // Constructor
 LorenzAttractorHelper::LorenzAttractorHelper() { }
@@ -37,20 +38,9 @@ void LorenzAttractorHelper::display() {
   glRotated(ph, 1, 0, 0);
   glRotated(th, 0, 1, 0);
 
-  // Display the axes
+  // Display the axes and draw Lorenz Attractor
   createAxes();
-
-  // Draw the Lorenz Attractor
-  double x = 1.0;
-  double y = 1.0;
-  double z = 1.0;
-  glColor3d(0.0, 0.5, 0.5);
-  glBegin(GL_LINE_STRIP);
-  for (int i = 0; i < 50000; i++) {
-    glVertex3d(x / SCALING_FACTOR, y / SCALING_FACTOR, z / SCALING_FACTOR);
-    computeEulerStep(x, y, z);
-  }
-  glEnd();
+  createLorenzAttractor(1.0, 1.0, 1.0);
 
   // Flush and swap buffers
   glFlush();
@@ -152,6 +142,7 @@ void LorenzAttractorHelper::createAxes() {
   glVertex3d(0.0, 0.0, 0.0);
   glVertex3d(0.0, 0.0, 1.0);
   glEnd();
+  errorCheck("LorenzAttractor::createAxes()");
 
   // Draw dots at end of axes
   glPointSize(10);
@@ -163,6 +154,7 @@ void LorenzAttractorHelper::createAxes() {
   glVertex4d(0, 0, 1, w);
   glEnd();
   glDisable(GL_POINT_SMOOTH);
+  errorCheck("LorenzAttractor::createAxes()");
 
   // Label axes in white
   glColor3d(1, 1, 1);
@@ -172,6 +164,23 @@ void LorenzAttractorHelper::createAxes() {
   displayText("y");
   glRasterPos3d(0, 0, 1.1);
   displayText("z");
+  errorCheck("LorenzAttractor::createAxes()");
+}
+
+// createLorenzAttractor() private member function
+// Helper method that computes & displays the Lorenz Attractor
+void LorenzAttractorHelper::createLorenzAttractor(double x, double y, double z) {
+  // Set color and line style
+  glColor3d(0.0, 0.5, 0.5);
+  glBegin(GL_LINE_STRIP);
+
+  // Iterate for Explicit Euler Integration
+  for (int i = 0; i < LORENZ_STEPS; i++) {
+    glVertex3d(x / SCALING_FACTOR, y / SCALING_FACTOR, z / SCALING_FACTOR);
+    computeEulerStep(x, y, z);
+  }
+  glEnd();
+  errorCheck("LorenzAttractor::createLorenzAttractor()");
 }
 
 // errorCheck() private member function
