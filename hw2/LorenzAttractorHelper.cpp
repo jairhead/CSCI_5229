@@ -10,8 +10,7 @@
 // Display Globals
 int th = 135;   // Azimuth of view angle
 int ph = -30;   // Elevation of view angle
-int mode = 1;   // Dimension (1-4)
-double z = 0.0; // Z variable
+int mode = 1;   // Mode for modifying Lorenz Attractor values (1-4)
 double w = 1.0; // W variable
 
 // Lorenz Attractor Globals
@@ -39,6 +38,7 @@ void LorenzAttractorHelper::display() {
   glRotated(th, 0, 1, 0);
 
   // Display the axes and draw Lorenz Attractor
+  printLorenzAttractorParameters();
   createAxes();
   createLorenzAttractor(1.0, 1.0, 1.0);
 
@@ -59,22 +59,12 @@ void LorenzAttractorHelper::reshape(int w, int h) {
 // Callback for glutSpecialFunc()
 void LorenzAttractorHelper::special(int key, int x, int y) {
   // Handle key display navigation
-  switch(key) {
-    case GLUT_KEY_RIGHT:
-      th += 2;
-      break;
-    case GLUT_KEY_LEFT:
-      th -= 2;
-      break;
-    case GLUT_KEY_UP:
-      ph += 2;
-      break;
-    case GLUT_KEY_DOWN:
-      ph -= 2;
-      break;
-  }
+  if (key == GLUT_KEY_RIGHT) { th += 2; }
+  else if (key == GLUT_KEY_LEFT) { th -= 2; }
+  else if (key == GLUT_KEY_UP) { ph += 2; }
+  else if (key == GLUT_KEY_DOWN) { ph -= 2; }
 
-  // Normalize azimuth and elevation
+  // Normalize azimuth and elevation; redisplay
   th %= 360;
   ph %= 360;
   glutPostRedisplay();
@@ -84,32 +74,29 @@ void LorenzAttractorHelper::special(int key, int x, int y) {
 // Primary OpenGL keyboard handler function
 // Callback for glutKeyboardFunc()
 void LorenzAttractorHelper::key(unsigned char ch, int x, int y) {
-  // Key switch
-  switch(ch) {
-    // ESC = exit
-    case 27:
-      exit(0);
-    // 0 = reset viewing angle
-    case 0:
-      th = 0;
-      ph = 0;
-      break;
-    // 1 - 4 = switch dimensions
-    case 1:
-      mode = ch - '0';
-      break;
-    case 2:
-      mode = ch - '0';
-      z = 0;
-      break;
-    case 3:
-      mode = ch - '0';
-      break;
-    case 4:
-      mode = ch - '0';
-      w = 1;
-      break;
+  // Handle alphanumeric keys
+  if (ch == 27) { exit(0) ;}
+  else if (ch == '0') { th = 0; ph = 0; }
+  else if (ch == '1') { mode = ch - '0'; }
+  else if (ch == '2') { mode = ch - '0'; }
+  else if (ch == '3') { mode = ch - '0'; }
+  else if (ch == '4') { mode = ch - '0'; }
+  else if (ch == '+') {
+    if (mode == 1) { sigma += 0.1; }
+    else if (mode == 2) { beta += 0.1; }
+    else if (mode == 3) { rho += 1.0; }
+    else if (mode == 4) { dt += 0.001; }
   }
+  else if (ch == '-') {
+    if (mode == 1) { sigma -= 0.1; }
+    else if (mode == 2) { beta -= 0.1; }
+    else if (mode == 3) { rho -= 1.0; }
+    else if (mode == 4) { dt -= 0.001; }
+  }
+  else { return; }
+
+  // Redisplay
+  glutPostRedisplay();
 }
 
 // computeEulerStep() private member function
@@ -133,7 +120,7 @@ void LorenzAttractorHelper::displayText(std::string text) {
 void LorenzAttractorHelper::createAxes() {
   // Draw grey x, y, z axes
   glColor3d(0.35, 0.35, 0.35);
-  glLineWidth(1.0);
+  glLineWidth(3.0);
   glBegin(GL_LINES);
   glVertex3d(0.0, 0.0, 0.0);
   glVertex3d(1.0, 0.0, 0.0);
@@ -164,6 +151,7 @@ void LorenzAttractorHelper::createAxes() {
   displayText("y");
   glRasterPos3d(0, 0, 1.1);
   displayText("z");
+  displayText("Test");
   errorCheck("LorenzAttractor::createAxes()");
 }
 
@@ -172,11 +160,12 @@ void LorenzAttractorHelper::createAxes() {
 void LorenzAttractorHelper::createLorenzAttractor(double x, double y, double z) {
   // Set color and line style
   glColor3d(0.0, 0.5, 0.5);
+  glLineWidth(1.0);
   glBegin(GL_LINE_STRIP);
 
   // Iterate for Explicit Euler Integration
   for (int i = 0; i < LORENZ_STEPS; i++) {
-    glVertex3d(x / SCALING_FACTOR, y / SCALING_FACTOR, z / SCALING_FACTOR);
+    glVertex4d(x / SCALING_FACTOR, y / SCALING_FACTOR, z / SCALING_FACTOR, w);
     computeEulerStep(x, y, z);
   }
   glEnd();
@@ -185,10 +174,27 @@ void LorenzAttractorHelper::createLorenzAttractor(double x, double y, double z) 
 
 // errorCheck() private member function
 // Helper method that checks errors from OpenGL
-void LorenzAttractorHelper::errorCheck(const char* where)
-{
+void LorenzAttractorHelper::errorCheck(std::string where) {
    int error = glGetError();
    if (error) {
-     std::cout << "LorenzAttractorHelper::errorCheck: [ERROR] " << gluErrorString(error) << where << std::endl;
+     std::cout << "LorenzAttractorHelper::errorCheck: [ERROR] " << gluErrorString(error) << ", " << where << std::endl;
    }
+}
+
+// printLorenzAttractorParameters() private member function
+// Prints the Lorenz Attractor parameters to the terminal
+void LorenzAttractorHelper::printLorenzAttractorParameters() {
+  // Print Mode
+  std::cout << "Mode: ";
+  if (mode == 1) { std::cout << "1 (Update Sigma)"; }
+  else if (mode == 2) { std::cout << "2 (Update Beta)"; }
+  else if (mode == 3) { std::cout << "3 (Update Rho)"; }
+  else if (mode == 4) { std::cout << "4 (Update dt)"; }
+
+  // Display Lorenz Attractor 
+  std::cout << ", Sigma: " << sigma;
+  std::cout << ", Beta: " << beta;
+  std::cout << ", Rho: " << rho;
+  std::cout << ", dt: " << dt;
+  std::cout << std::endl;
 }

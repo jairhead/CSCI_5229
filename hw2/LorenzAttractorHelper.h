@@ -39,5 +39,6 @@ class LorenzAttractorHelper {
     static void displayText(std::string text);
     static void createAxes();
     static void createLorenzAttractor(double x, double y, double z);
-    static void errorCheck(const char* where);
+    static void errorCheck(std::string where);
+    static void printLorenzAttractorParameters();
 };
