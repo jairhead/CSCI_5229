@@ -1,0 +1,30 @@
+Name: Jared McKneely
+Course: CSCI 5229 (Computer Graphics)
+Semester: Fall 2023
+Assignment Homework #2
+
+----- ABOUT THIS PROGRAM -----
+
+--- DESCRIPTION OF FILES ---
+hw2.cpp:
+  - Contains main()
+
+LorenzAttractorHelper.h:
+  - Includes glut.h for the entire project
+  - Declares public and private static methods for OpenGL
+
+LorenzAttractorHelper.cpp:
+  - Defines display() - static callback for glutDisplayFunc();
+  - Defines reshape() - static callback for glutReshapeFunc();
+  - Defines special() - static callback for glutSpecialFunc();
+  - Defines key() - static callback for glutKeyboardFunc();
+
+--- DESCRIPTION OF KEYS ---
+  - arrow keys: change viewing angle
+  - 0: reset viewing angle
+  - 1: set MODE = 1 to update the value of sigma (used in Lorenz Attractor calculations)
+  - 2: set MODE = 2 to update the value of beta (used in Lorenz Attractor calculations)
+  - 3: set MODE = 3 to update the value of rho (used in Lorenz Attractor calculations)
+  - 4: set MODE = 4 to update the value of dt (used in Lorenz Attractor calculations)
+  - +: increase value of current MODE parameter
+  - -: decrease value of current MODE parameter
