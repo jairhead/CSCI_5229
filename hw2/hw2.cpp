@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
    glutInit(&argc, argv);
    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
    glutInitWindowSize(500, 500);
-   glutCreateWindow("Jared McKneely - Homework 2");
+   glutCreateWindow("Jared McKneely - CSCI 5229, Homework 2");
 
    // Pass callback methods to GLUT
    glutDisplayFunc(LorenzAttractorHelper::display);
