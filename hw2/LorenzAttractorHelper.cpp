@@ -19,6 +19,9 @@ double sigma = 10;                  // sigma value (Lorenz Attractor computation
 double beta = 2.6666;               // beta value (Lorenz Attractor computation)
 double rho = 28;                    // rho value (Lorenz Attractor computation)
 double dt = 0.001;                  // Time step
+double lorenz_red = 0;              // Red component of Lorenz Attractor color
+double lorenz_blue = 0.5;           // Blue component of Lorenz Attractor color
+double lorenz_green = 0.5;          // Green component of Lorenz Attractor color
 const double SCALING_FACTOR = 50.0; // Divide by this to scale down the Lorenz Attractor
 const int LORENZ_STEPS = 50000;     // Number of Explicit Euler Integration steps
 
@@ -40,6 +43,7 @@ void LorenzAttractorHelper::display() {
 
   // Display the axes and draw Lorenz Attractor
   createAxes();
+  glColor3d(lorenz_red, lorenz_blue, lorenz_green);
   createLorenzAttractor(1.0, 1.0, 1.0);
 
   // Flush and swap buffers
@@ -93,17 +97,20 @@ void LorenzAttractorHelper::key(unsigned char ch, int x, int y) {
   else if (ch == '2') { mode = ch - '0'; printLorenzAttractorParameters(); }
   else if (ch == '3') { mode = ch - '0'; printLorenzAttractorParameters(); }
   else if (ch == '4') { mode = ch - '0'; printLorenzAttractorParameters(); }
+  else if (ch == '5') { mode = ch - '0'; printLorenzAttractorParameters(); }
   else if (ch == '+') {
     if (mode == 1) { sigma += 0.1; std::cout << "[Sigma + 0.1] "; printLorenzAttractorParameters(); }
     else if (mode == 2) { beta += 0.1; std::cout << "[Beta + 0.1] "; printLorenzAttractorParameters(); }
     else if (mode == 3) { rho += 1.0; std::cout << "[Rho + 1.0] "; printLorenzAttractorParameters(); }
     else if (mode == 4) { dt += 0.001; std::cout << "[dt + 0.001] "; printLorenzAttractorParameters(); }
+    else if (mode == 5) { randomColor(); std::cout << "[RANDOM COLOR] "; printLorenzAttractorParameters(); }
   }
   else if (ch == '-') {
     if (mode == 1) { sigma -= 0.1; std::cout << "[Sigma - 0.1] "; printLorenzAttractorParameters(); }
     else if (mode == 2) { beta -= 0.1; std::cout << "[Beta - 0.1] "; printLorenzAttractorParameters(); }
     else if (mode == 3) { rho -= 1.0; std::cout << "[Rho - 1.0] "; printLorenzAttractorParameters(); }
     else if (mode == 4) { dt -= 0.001; std::cout << "[dt - 0.001] "; printLorenzAttractorParameters(); }
+    else if (mode == 5) { randomColor(); std::cout << "[RANDOM COLOR] "; printLorenzAttractorParameters(); }
   }
   else { return; }
 
@@ -156,7 +163,7 @@ void LorenzAttractorHelper::createAxes() {
   errorCheck("LorenzAttractor::createAxes()");
 
   // Label axes in white
-  glColor3d(1, 1, 1);
+  glColor3d(1.0, 1.0, 1.0);
   glRasterPos3d(1.1, 0, 0);
   displayText("x");
   glRasterPos3d(0, 1.1, 0);
@@ -169,8 +176,7 @@ void LorenzAttractorHelper::createAxes() {
 // createLorenzAttractor() private member function
 // Helper method that computes & displays the Lorenz Attractor
 void LorenzAttractorHelper::createLorenzAttractor(double x, double y, double z) {
-  // Set color and line style
-  glColor3d(0.0, 0.5, 0.5);
+  // Set line style
   glLineWidth(1.0);
   glBegin(GL_LINE_STRIP);
 
@@ -201,11 +207,25 @@ void LorenzAttractorHelper::printLorenzAttractorParameters() {
   else if (mode == 2) { std::cout << "2 (Update Beta)"; }
   else if (mode == 3) { std::cout << "3 (Update Rho)"; }
   else if (mode == 4) { std::cout << "4 (Update dt)"; }
+  else if (mode == 5) { std::cout << "5 (Update color)"; }
 
   // Print lorenz attractor parameters
   std::cout << ", Sigma: " << sigma;
   std::cout << ", Beta: " << beta;
   std::cout << ", Rho: " << rho;
   std::cout << ", dt: " << dt;
+
+  // Print colors
+  std::cout << ", [RED: " << lorenz_red;
+  std::cout << ", BLUE: " << lorenz_blue;
+  std::cout << ", GREEN: " << lorenz_green << "]";
   std::cout << std::endl;
+}
+
+// randomColor() private member function
+// Randomly generates a new color for the Lorenz Attractor to be drawn in
+void LorenzAttractorHelper::randomColor() {
+  lorenz_red = (rand() % 255) / 255.0;
+  lorenz_blue = (rand() % 255) / 255.0;
+  lorenz_green = (rand() % 255) / 255.0;
 }

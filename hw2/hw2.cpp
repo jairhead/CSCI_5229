@@ -5,8 +5,8 @@
  */
 
 #include <stdio.h>
-#include <LorenzAttractorHelper.h>
 #include <iostream>
+#include <LorenzAttractorHelper.h>
 
 // Main
 int main(int argc, char *argv[])
