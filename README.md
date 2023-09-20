@@ -29,4 +29,3 @@ Homework assignments for Computer Graphics
     make
 4.) Run the newly-created executable file stored in the hw1 directory:
     <location>/CSCI_5229/hello_world/hello_world.exe
-
