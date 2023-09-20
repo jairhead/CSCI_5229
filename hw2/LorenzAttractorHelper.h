@@ -42,4 +42,5 @@ class LorenzAttractorHelper {
     static void createLorenzAttractor(double x, double y, double z);
     static void errorCheck(std::string where);
     static void randomColor();
+    static void incrementColor();
 };

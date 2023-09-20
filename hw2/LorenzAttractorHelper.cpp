@@ -98,12 +98,14 @@ void LorenzAttractorHelper::key(unsigned char ch, int x, int y) {
   else if (ch == '3') { mode = ch - '0'; printLorenzAttractorParameters(); }
   else if (ch == '4') { mode = ch - '0'; printLorenzAttractorParameters(); }
   else if (ch == '5') { mode = ch - '0'; printLorenzAttractorParameters(); }
+  else if (ch == '6') { mode = ch - '0'; printLorenzAttractorParameters(); }
   else if (ch == '+') {
     if (mode == 1) { sigma += 0.1; std::cout << "[Sigma + 0.1] "; printLorenzAttractorParameters(); }
     else if (mode == 2) { beta += 0.1; std::cout << "[Beta + 0.1] "; printLorenzAttractorParameters(); }
     else if (mode == 3) { rho += 1.0; std::cout << "[Rho + 1.0] "; printLorenzAttractorParameters(); }
     else if (mode == 4) { dt += 0.001; std::cout << "[dt + 0.001] "; printLorenzAttractorParameters(); }
     else if (mode == 5) { randomColor(); std::cout << "[RANDOM COLOR] "; printLorenzAttractorParameters(); }
+    else if (mode == 6) { randomColor(); }
   }
   else if (ch == '-') {
     if (mode == 1) { sigma -= 0.1; std::cout << "[Sigma - 0.1] "; printLorenzAttractorParameters(); }
@@ -111,6 +113,7 @@ void LorenzAttractorHelper::key(unsigned char ch, int x, int y) {
     else if (mode == 3) { rho -= 1.0; std::cout << "[Rho - 1.0] "; printLorenzAttractorParameters(); }
     else if (mode == 4) { dt -= 0.001; std::cout << "[dt - 0.001] "; printLorenzAttractorParameters(); }
     else if (mode == 5) { randomColor(); std::cout << "[RANDOM COLOR] "; printLorenzAttractorParameters(); }
+    else if (mode == 6) { randomColor(); }
   }
   else { return; }
 
@@ -182,6 +185,7 @@ void LorenzAttractorHelper::createLorenzAttractor(double x, double y, double z) 
 
   // Iterate for Explicit Euler Integration
   for (int i = 0; i < LORENZ_STEPS; i++) {
+    if (mode == 6) { incrementColor(); }
     glVertex4d(x / SCALING_FACTOR, y / SCALING_FACTOR, z / SCALING_FACTOR, w);
     computeEulerStep(x, y, z);
   }
@@ -207,7 +211,8 @@ void LorenzAttractorHelper::printLorenzAttractorParameters() {
   else if (mode == 2) { std::cout << "2 (Update Beta)"; }
   else if (mode == 3) { std::cout << "3 (Update Rho)"; }
   else if (mode == 4) { std::cout << "4 (Update dt)"; }
-  else if (mode == 5) { std::cout << "5 (Update color)"; }
+  else if (mode == 5) { std::cout << "5 (Update color randomly)"; }
+  else if (mode == 6) { std::cout << "6 (CRAZY GRADIENT MODE!)"; }
 
   // Print lorenz attractor parameters
   std::cout << ", Sigma: " << sigma;
@@ -228,4 +233,28 @@ void LorenzAttractorHelper::randomColor() {
   lorenz_red = (rand() % 255) / 255.0;
   lorenz_blue = (rand() % 255) / 255.0;
   lorenz_green = (rand() % 255) / 255.0;
+}
+
+// randomColor() private member function
+// Used when MODE == 6 to generate a crazy gradient every time the viewing perspective changes
+void LorenzAttractorHelper::incrementColor() {
+  // Select random index to increment
+  int colorIndex = (rand() % 3);
+
+  // Increment color value
+  if (colorIndex == 0) {
+    if (lorenz_red >= 1.0) { lorenz_red = 0.0; }
+    else { lorenz_red += 0.001; }
+  }
+  else if (colorIndex == 1) {
+    if (lorenz_blue >= 1.0) { lorenz_blue = 0.0; }
+    else { lorenz_blue += 0.001; }
+  }
+  else {
+    if (lorenz_green >= 1.0) { lorenz_green = 0.0; }
+    else { lorenz_green += 0.001; }
+  }
+
+  // Set color
+  glColor3d(lorenz_red, lorenz_green, lorenz_blue);
 }

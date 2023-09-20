@@ -28,5 +28,6 @@ LorenzAttractorHelper.cpp:
   - 3: set MODE = 3 to update the value of rho (used in Lorenz Attractor calculations)
   - 4: set MODE = 4 to update the value of dt (used in Lorenz Attractor calculations)
   - 5: set MODE = 5 to randomly generate a new color to redraw the Lorenz Attractor with
+  - 6: set MODE = 6 to enter crazy gradient mode!
   - +: increase value of current MODE parameter
   - -: decrease value of current MODE parameter
