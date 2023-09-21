@@ -1,4 +1,4 @@
-SUBDIRS := hello_world ex6 ex7 hw1 hw2
+SUBDIRS := hello_world ex6 ex7 ex8 hw1 hw2
 TARGETS := all clean
 
 default: all
