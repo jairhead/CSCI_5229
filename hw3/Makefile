@@ -18,7 +18,7 @@ CLEAN=rm -f hw3 *.o *.a
 endif
 
 #  Compile and link
-hw3:hw3.cpp
+hw3:hw3.cpp PrimaryGraphicsHelper.cpp
 	g++ $(CFLG) -o $@ $^   $(LIBS)
 
 #  Clean

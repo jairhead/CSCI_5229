@@ -14,7 +14,7 @@
 
 // Include glut header
 #define GL_GLEXT_PROTOTYPES
-#ifdef _APPLE_
+#ifdef __APPLE__
 #include <GLUT/glut.h>
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #else

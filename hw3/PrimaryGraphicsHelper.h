@@ -4,7 +4,6 @@
  * Description: Header file for the PrimaryGraphicsHelper class
  */
 
-#include <stdio.h>
 #include <iostream>
 
 // OpenGL with prototypes for glext
@@ -14,7 +13,7 @@
 
 // Include glut header
 #define GL_GLEXT_PROTOTYPES
-#ifdef _APPLE_
+#ifdef __APPLE__
 #include <GLUT/glut.h>
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #else
@@ -34,6 +33,5 @@ class PrimaryGraphicsHelper {
     static void reshape(int w, int h);
     static void special(int key, int x, int y);
     static void key(unsigned char ch, int x, int y);
-  private:
-    
+    static void initializeGlew();
 };

@@ -4,21 +4,31 @@
  * Description: Main runtime for Homework #3 (CSCI 5229)
  */
 
-#include <stdio.h>
 #include <iostream>
+#include <GlewException.h>
 #include <PrimaryGraphicsHelper.h>
 
 // Main
-int main(int arc,char* argv[])
+int main(int argc,char* argv[])
 {
   // Enter program
   std::cout << "hw3::main(): starting program" << std::endl;
 
-  // Initialize GLUT w/ user args, double buffer
+  // Initialize GLUT w/ user args, z buffer, double buffer
   glutInit(&argc, argv);
-  glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
-  glutInitWindowSize(500, 500);
+  glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
+  glutInitWindowSize(600, 600);
   glutCreateWindow("Jared McKneely - CSCI 5229, Homework 3");
+
+  // Initialize GLEW
+  #ifdef USEGLEW
+  try {
+    PrimaryGraphicsHelper::initializeGlew();
+  }
+  catch (GlewException& e) {
+   std::cout << e.what() << std::endl;
+  }
+  #endif
 
   // Pass callback methods to GLUT
   glutDisplayFunc(PrimaryGraphicsHelper::display);
