@@ -8,23 +8,12 @@
 #include "GenericHomeworkException.h"
 #include "PrimaryGraphicsHelper.h"
 
-// Display Globals
+// Globals
 int th = 135;         // Azimuth of view angle
 int ph = -30;         // Elevation of view angle
 int mode = 1;         // Mode for modifying Lorenz Attractor values (1-4)
 double w = 1.0;       // W variable
 const double DIM = 2; // Dimension of orthogonal box
-
-// Lorenz Attractor Globals
-double sigma = 10;                  // sigma value (Lorenz Attractor computation)
-double beta = 2.6666;               // beta value (Lorenz Attractor computation)
-double rho = 28;                    // rho value (Lorenz Attractor computation)
-double dt = 0.001;                  // Time step
-double lorenz_red = 0;              // Red component of Lorenz Attractor color
-double lorenz_blue = 0.5;           // Blue component of Lorenz Attractor color
-double lorenz_green = 0.5;          // Green component of Lorenz Attractor color
-const double SCALING_FACTOR = 50.0; // Divide by this to scale down the Lorenz Attractor
-const int LORENZ_STEPS = 50000;     // Number of Explicit Euler Integration steps
 
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
