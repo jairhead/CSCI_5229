@@ -5,7 +5,7 @@
  *              used for drawing a complex scene.
  */
 
-#include "GlewException.h"
+#include "GenericHomeworkException.h"
 #include "PrimaryGraphicsHelper.h"
 
 // Display Globals
@@ -94,7 +94,7 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
 // initializeGlew() public helper method
 // Tries to initialize GLEW (throws a GlewException if it fails)
 void PrimaryGraphicsHelper::initializeGlew() {
-  if (glewInit() != GLEW_OK) { throw GlewException(); }
+  if (glewInit() != GLEW_OK) { throw GenericHomeworkException(); }
   std::cout << "PrimaryGraphicsHelper::initializeGlew(): GLEW initialization successful!"
             << std::endl;
 }
