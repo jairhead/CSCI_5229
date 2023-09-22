@@ -47,7 +47,5 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
 // initializeGlew() public helper method
 // Tries to initialize GLEW (throws a GlewException if it fails)
 void PrimaryGraphicsHelper::initializeGlew() {
-    if (1) {
-        throw GlewException();
-    }
+    if (glewInit() != GLEW_OK) { throw GlewException(); }
 }
