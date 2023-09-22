@@ -5,8 +5,8 @@
  */
 
 #include <iostream>
-#include <GlewException.h>
-#include <PrimaryGraphicsHelper.h>
+#include "GlewException.h"
+#include "PrimaryGraphicsHelper.h"
 
 // Main
 int main(int argc,char* argv[])
@@ -22,12 +22,8 @@ int main(int argc,char* argv[])
 
   // Initialize GLEW
   #ifdef USEGLEW
-  try {
-    PrimaryGraphicsHelper::initializeGlew();
-  }
-  catch (GlewException& e) {
-   std::cout << e.what() << std::endl;
-  }
+  try { PrimaryGraphicsHelper::initializeGlew(); }
+  catch (GlewException& e) { std::cout << e.what() << std::endl; }
   #endif
 
   // Pass callback methods to GLUT
