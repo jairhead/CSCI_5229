@@ -34,4 +34,8 @@ class PrimaryGraphicsHelper {
     static void special(int key, int x, int y);
     static void key(unsigned char ch, int x, int y);
     static void initializeGlew();
+  private:
+    static void createAxes();
+    static void displayText(std::string text);
+    static void errorCheck(std::string where);
 };
