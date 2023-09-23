@@ -5,18 +5,24 @@
  *              used for drawing a complex scene.
  */
 
-#include "GenericHomeworkException.h"
 #include "PrimaryGraphicsHelper.h"
+#include "GenericHomeworkException.h"
+#include <Cube.h>
 
-// Globals
+// Display Parameter Globals
 int th = 135;         // Azimuth of view angle
 int ph = -30;         // Elevation of view angle
 int mode = 1;         // Mode for modifying Lorenz Attractor values (1-4)
 double w = 1.0;       // W variable
 const double DIM = 2; // Dimension of orthogonal box
 
+// 3D Object Globals
+Cube *cube;
+
 // Constructor
-PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
+PrimaryGraphicsHelper::PrimaryGraphicsHelper() {
+  cube = new Cube(0.0, 0.0, 0.0, 0.0);
+}
 
 // Destructor
 PrimaryGraphicsHelper::~PrimaryGraphicsHelper() { }
@@ -34,6 +40,7 @@ void PrimaryGraphicsHelper::display() {
 
   // Generate scene
   createAxes();
+  cube->display();
 
   // Flush and swap buffers
   glFlush();

@@ -17,9 +17,15 @@ endif
 CLEAN=rm -f hw3 *.o *.a
 endif
 
-#  Compile and link
-hw3:hw3.cpp PrimaryGraphicsHelper.cpp
-	g++ $(CFLG) -o $@ $^   $(LIBS)
+TARGETS := hw3.o Cube.o PrimaryGraphicsHelper.o
+
+# Compile rules
+.cpp.o:
+	g++ -c $(CFLG) $<
+
+#  Link
+hw3: $(TARGETS)
+	g++ $(CFLG) -o $@ $^ $(LIBS)
 
 #  Clean
 clean:
