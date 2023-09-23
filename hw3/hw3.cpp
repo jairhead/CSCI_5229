@@ -23,7 +23,7 @@ int main(int argc,char* argv[])
   // Initialize GLEW
   #ifdef USEGLEW
   try { PrimaryGraphicsHelper::initializeGlew(); }
-  catch (GenericHomeworkException& e) { std::cout << e.what() << "GLEW initialization failed!" << std::endl; }
+  catch (GenericHomeworkException& e) { std::cout << e.what() << ": GLEW initialization failed!" << std::endl; }
   #endif
 
   // Pass callback methods to GLUT

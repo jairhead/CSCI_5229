@@ -153,10 +153,10 @@ void PrimaryGraphicsHelper::displayText(std::string text) {
 // errorCheck() private member function
 // Helper method that checks errors from OpenGL
 void PrimaryGraphicsHelper::errorCheck(std::string where) {
-   int error = glGetError();
-   if (error) {
-     std::cout << "LorenzAttractorHelper::errorCheck(): [ERROR] "
-               << gluErrorString(error) << ", " << where
-               << std::endl;
-   }
+  int error = glGetError();
+  if (error) {
+    std::cout << "LorenzAttractorHelper::errorCheck(): [ERROR] "
+              << gluErrorString(error) << ", " << where
+              << std::endl;
+  }
 }
