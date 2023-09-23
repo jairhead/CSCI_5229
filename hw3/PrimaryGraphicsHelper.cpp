@@ -20,14 +20,18 @@ const double DIM = 2; // Dimension of orthogonal box
 Cube *cube;
 
 // Constructor
-PrimaryGraphicsHelper::PrimaryGraphicsHelper() {
-  cube = new Cube(0.0, 0.0, 0.0, 0.0);
-}
+PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
 
 // Destructor
 PrimaryGraphicsHelper::~PrimaryGraphicsHelper() { }
 
-// display() member function
+// init() public member function
+// Initializes all objects for displaying
+void PrimaryGraphicsHelper::init() {
+  cube = new Cube(0.0, 0.0, 0.0, 0.25, 0.25, 0.25, 0.0);
+}
+
+// display() public member function
 // Primary OpenGL display function
 // Callback for glutDisplayFunc()
 void PrimaryGraphicsHelper::display() {
@@ -40,14 +44,14 @@ void PrimaryGraphicsHelper::display() {
 
   // Generate scene
   createAxes();
-  cube->display();
+  cube->draw();
 
   // Flush and swap buffers
   glFlush();
   glutSwapBuffers();
 }
 
-// reshape() member function
+// reshape() public member function
 // Primary OpenGL window resize function
 // Callback for glutReshapeFunc()
 void PrimaryGraphicsHelper::reshape(int w, int h) {
@@ -66,7 +70,7 @@ void PrimaryGraphicsHelper::reshape(int w, int h) {
   glLoadIdentity();
 }
 
-// special() member function
+// special() public member function
 // Primary OpenGL arrow key handler function
 // Callback for glutSpecialFunc()
 void PrimaryGraphicsHelper::special(int key, int x, int y) {
@@ -82,7 +86,7 @@ void PrimaryGraphicsHelper::special(int key, int x, int y) {
   glutPostRedisplay();
 }
 
-// key() member function
+// key() public member function
 // Primary OpenGL keyboard handler function
 // Callback for glutKeyboardFunc()
 void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
@@ -95,7 +99,7 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
   glutPostRedisplay();
 }
 
-// initializeGlew() public helper method
+// initializeGlew() public member function
 // Tries to initialize GLEW (throws a GlewException if it fails)
 void PrimaryGraphicsHelper::initializeGlew() {
   if (glewInit() != GLEW_OK) { throw GenericHomeworkException(); }

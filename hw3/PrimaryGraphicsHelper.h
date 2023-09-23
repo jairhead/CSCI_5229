@@ -29,6 +29,7 @@ class PrimaryGraphicsHelper {
   public:
     PrimaryGraphicsHelper();
     ~PrimaryGraphicsHelper();
+    static void init();
     static void display();
     static void reshape(int w, int h);
     static void special(int key, int x, int y);

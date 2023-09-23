@@ -16,17 +16,18 @@ int main(int argc,char* argv[])
 
   // Initialize GLUT w/ user args, z buffer, double buffer
   glutInit(&argc, argv);
-  glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
   glutInitWindowSize(600, 600);
+  glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
   glutCreateWindow("Jared McKneely - CSCI 5229, Homework 3");
 
   // Initialize GLEW
   #ifdef USEGLEW
-  try { PrimaryGraphicsHelper::initializeGlew(); }
+  try {PrimaryGraphicsHelper::initializeGlew();}
   catch (GenericHomeworkException& e) { std::cout << e.what() << ": GLEW initialization failed!" << std::endl; }
   #endif
 
   // Pass callback methods to GLUT
+  PrimaryGraphicsHelper::init();
   glutDisplayFunc(PrimaryGraphicsHelper::display);
   glutReshapeFunc(PrimaryGraphicsHelper::reshape);
   glutSpecialFunc(PrimaryGraphicsHelper::special);
