@@ -10,8 +10,8 @@
 #include <Cube.h>
 
 // Display Parameter Globals
-int th = 135;         // Azimuth of view angle
-int ph = -30;         // Elevation of view angle
+int th = -45;         // Azimuth of view angle
+int ph = 30;          // Elevation of view angle
 int mode = 1;         // Mode for modifying Lorenz Attractor values (1-4)
 double w = 1.0;       // W variable
 const double DIM = 2; // Dimension of orthogonal box
@@ -43,8 +43,8 @@ void PrimaryGraphicsHelper::display() {
   glRotated(th, 0, 1, 0);
 
   // Generate scene
-  createAxes();
   cube->draw();
+  createAxes();
 
   // Flush and swap buffers
   glFlush();
