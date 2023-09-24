@@ -1,7 +1,8 @@
 /*
  * File: Cube.cpp
  * Author: Jared McKneely
- * Description: Implementation file for the Cube class
+ * Description: Implementation file for the Cube class, a child class
+ *              of the BaseObject abstract class.
  */
 
 #include "Cube.h"
