@@ -14,7 +14,7 @@ Sun::Sun() { }
 Sun::~Sun() { }
 
 // scale() public member function
-// Sets the rectangular prism's scaling values
+// Sets the sun's scaling values
 void Sun::scale(double dx, double dy, double dz) {
   xScaling = dx;
   yScaling = dy;
@@ -22,7 +22,7 @@ void Sun::scale(double dx, double dy, double dz) {
 }
 
 // translate() public member function
-// Sets the rectangular prism's coordinate values
+// Sets the sun's coordinate values
 void Sun::translate(double x, double y, double z) {
   xPos = x;
   yPos = y;
@@ -30,7 +30,7 @@ void Sun::translate(double x, double y, double z) {
 }
 
 // color() public member function
-// Sets the rectangular prism's color values
+// Sets the sun's color values
 void Sun::color(double r, double g, double b) {
   red = r;
   green = g;
@@ -46,15 +46,13 @@ void Sun::rotate(double th) {
 // draw() public member function
 // Contains logic to draw the sun
 void Sun::draw() {
-  // Save transformation and set up
+  // Save transformation, set color, translate and rotate
   glPushMatrix();
-
-  // Set scale, translate, and color
   glColor3d(red, green, blue);
   glTranslated(xPos, yPos, zPos);
   glRotated(90, 1, 0, 0);
 
-  // Front of sun
+  // Draw the disc of the sun
   glBegin(GL_TRIANGLE_FAN);
   glVertex3d(0, 0, 0);
   for (int th = 0; th <= 360; th += d) {
@@ -62,7 +60,7 @@ void Sun::draw() {
   }
   glEnd();
 
-  // Create sun rays  
+  // Draw the sun rays  
   for (int th = theta; th <= 360; th += 30) {
     glBegin(GL_TRIANGLES);
     glVertex3d((xScaling + 0.05) * cosine(th), 0, (zScaling + 0.05) * sine(th));

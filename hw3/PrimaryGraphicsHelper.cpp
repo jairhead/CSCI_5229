@@ -12,6 +12,7 @@
 #include "Sphere.h"
 #include "RectangularPrism.h"
 #include "Sun.h"
+#include "Road.h"
 
 // Display Parameter Globals
 int th = -45;         // Azimuth of view angle
@@ -25,6 +26,7 @@ RectangularPrism *grass;
 RectangularPrism *skyLeft;
 RectangularPrism *skyRight;
 RectangularPrism *skyBack;
+Road *road;
 Sun *sun;
 
 // Constructor
@@ -40,6 +42,7 @@ void PrimaryGraphicsHelper::init() {
   skyLeft = new RectangularPrism();
   skyRight = new RectangularPrism();
   skyBack = new RectangularPrism();
+  road = new Road();
   sun = new Sun();
 }
 
@@ -62,6 +65,10 @@ void PrimaryGraphicsHelper::display() {
   grass->color(0.3, 0.69, 0.12);
   grass->draw();
   errorCheck("PrimaryGraphicsHelper::display() grass");
+
+  // Draw the road
+  road->draw();
+  errorCheck("PrimaryGraphicsHelper::display() road");
 
   // Draw sky
   double skyRed = 0.0; double skyGreen = 0.24; double skyBlue = 0.76;
