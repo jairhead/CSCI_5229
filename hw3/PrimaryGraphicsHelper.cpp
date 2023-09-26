@@ -7,7 +7,9 @@
 
 #include "PrimaryGraphicsHelper.h"
 #include "GenericHomeworkException.h"
-#include <Cube.h>
+
+#include "Cube.h"
+#include "Sphere.h"
 
 // Display Parameter Globals
 int th = -45;         // Azimuth of view angle
@@ -18,6 +20,7 @@ const double DIM = 2; // Dimension of orthogonal box
 
 // 3D Object Globals
 Cube *cube;
+Sphere *sphere;
 
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
@@ -29,6 +32,7 @@ PrimaryGraphicsHelper::~PrimaryGraphicsHelper() { }
 // Initializes all objects for displaying
 void PrimaryGraphicsHelper::init() {
   cube = new Cube(0.0, 0.0, 0.0, 0.25, 0.25, 0.25, 0.0);
+  sphere = new Sphere(0.0, 0.0, 0.0, 1.0, 0.0);
 }
 
 // display() public member function
@@ -43,7 +47,8 @@ void PrimaryGraphicsHelper::display() {
   glRotated(th, 0, 1, 0);
 
   // Generate scene
-  cube->draw();
+  //cube->draw();
+  sphere->draw();
   createAxes();
 
   // Flush and swap buffers

@@ -9,9 +9,11 @@
 
 // Globals
 double scalingFactor;
-double theta;
 
-// Constructor
+// Default Constructor
+Sphere::Sphere() { }
+
+// OVerloaded Constructor
 Sphere::Sphere(double x, double y, double z,
                double s, double th) {
   xPos = x;
@@ -26,13 +28,16 @@ Sphere::~Sphere() { }
 
 // display() member function
 // Contains to display the sphere
-void Sphere::display() {
+void Sphere::draw() {
   // Save transformation and set up
   glPushMatrix();
   glTranslated(xPos, yPos, zPos);
   glRotated(theta, 0, 1, 0);
   glScaled(scalingFactor, scalingFactor, scalingFactor);
+
+  // Draw the south pole cap
   glBegin(GL_TRIANGLE_FAN);
+  Vertex(0, -90);
 
   // End and pop transformation
   glEnd();

@@ -11,9 +11,11 @@
 double xScaling;
 double yScaling;
 double zScaling;
-double theta;
 
-// Constructor
+// Default Constructor
+Cube::Cube() { }
+
+// Overloaded Constructor
 Cube::Cube(double x, double y, double z,
            double dx, double dy, double dz,
            double th) {
