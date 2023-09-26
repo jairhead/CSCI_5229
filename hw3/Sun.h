@@ -16,14 +16,18 @@ class Sun : public BaseObject {
     void scale(double dx, double dy, double dz);
     void translate(double x, double y, double z);
     void color(double r, double g, double b);
+    void rotate(double th);
     void draw();
   protected:
-    double xScaling = 1.0;
-    double yScaling = 1.0;
-    double zScaling = 1.0;
-    double red = 0.85;
-    double green = 0.57;
-    double blue = 0.0;
+    double sine(double angle);
+    double cosine(double angle);
+    double xScaling = 0.15;
+    double yScaling = 0.15;
+    double zScaling = 0.15;
+    double red = 0.83;
+    double green = 0.6;
+    double blue = 0.14;
+    const int d = 15;
 };
 
 #endif

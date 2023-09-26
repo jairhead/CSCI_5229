@@ -5,11 +5,7 @@
  *              of the BaseObject abstract class.
  */
 
- #include "Sphere.h"
-
-// Globals
-double scalingFactor;
-const int d = 15;
+#include "Sphere.h"
 
 // Default Constructor
 Sphere::Sphere() { }
@@ -38,26 +34,41 @@ void Sphere::draw() {
 
   // Draw south cap
   glBegin(GL_TRIANGLE_FAN);
-  Vertex(0, -90);
-  for (int th = 0; th <= 360; th += d) { Vertex(th, d - 90); }
+  vertex(0, -90);
+  for (int th = 0; th <= 360; th += d) { vertex(th, d - 90); }
   glEnd();
 
   // Draw latitude bands
   for (int ph = d - 90; ph <= 90 - (2 * d); ph += d) {
     glBegin(GL_QUAD_STRIP);
     for (int th = 0; th <= 360; th += d) {
-      Vertex(th, ph);
-      Vertex(th, ph + d);
+      vertex(th, ph);
+      vertex(th, ph + d);
     }
     glEnd();
   }
 
   // Draw north cap
   glBegin(GL_TRIANGLE_FAN);
-  Vertex(0, 90);
-  for (int th = 0; th <= 360; th += d) { Vertex(th, 90 - d); }
+  vertex(0, 90);
+  for (int th = 0; th <= 360; th += d) { vertex(th, 90 - d); }
   glEnd();
 
   // Pop transformation
   glPopMatrix();
 }
+
+// vertex() private member function
+// Draws a triangle with th and ph
+void Sphere::vertex(double th, double ph) {
+  glColor3f(cosine(th) * cosine(th), sine(ph) * sine(ph), sine(th) * sine(th));
+  glVertex3d(sine(th) * cosine(ph), sine(ph), cosine(th) * cosine(ph));
+}
+
+// sine() private member function
+// Returns the sine of the provided angle in degrees
+double Sphere::sine(double angle) { return sin(angle * (3.14159265 / 180)); }
+
+// cosine() private member function
+// Returns the cosine of the provided angle in degrees
+double Sphere::cosine(double angle) { return cos(angle * (3.14159265 / 180)); }

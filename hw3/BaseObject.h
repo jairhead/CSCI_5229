@@ -29,12 +29,6 @@
 #define RES 1
 #endif
 
-// Cosine and Sine in degrees
-#define Cos(x) (cos(x * (3.14159265 / 180)))
-#define Sin(x) (sin(x * (3.14159265 / 180)))
-
-// Common Globals
-
 class BaseObject {
   public:
     void setX(double x) {xPos = x;}
@@ -49,10 +43,6 @@ class BaseObject {
     double yPos = 0.0;
     double zPos = 0.0;
     double theta = 0.0;
-    void Vertex(double th, double ph) {
-      glColor3f(Cos(th) * Cos(th), Sin(ph) * Sin(ph), Sin(th) * Sin(th));
-      glVertex3d(Sin(th) * Cos(ph), Sin(ph), Cos(th) * Cos(ph));
-    }
 };
 
 #endif

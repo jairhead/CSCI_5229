@@ -16,6 +16,12 @@ class Sphere : public BaseObject {
            double s, double th);
     ~Sphere();
     void draw();
+  protected:
+    double sine(double angle);
+    double cosine(double angle);
+    void vertex(double th, double ph);
+    double scalingFactor = 1.0;
+    const int d = 15;
 };
 
 #endif

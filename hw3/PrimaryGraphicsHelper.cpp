@@ -11,6 +11,7 @@
 #include "Cube.h"
 #include "Sphere.h"
 #include "RectangularPrism.h"
+#include "Sun.h"
 
 // Display Parameter Globals
 int th = -45;         // Azimuth of view angle
@@ -24,6 +25,7 @@ RectangularPrism *grass;
 RectangularPrism *skyLeft;
 RectangularPrism *skyRight;
 RectangularPrism *skyBack;
+Sun *sun;
 
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
@@ -38,6 +40,7 @@ void PrimaryGraphicsHelper::init() {
   skyLeft = new RectangularPrism();
   skyRight = new RectangularPrism();
   skyBack = new RectangularPrism();
+  sun = new Sun();
 }
 
 // display() public member function
@@ -50,6 +53,9 @@ void PrimaryGraphicsHelper::display() {
   glLoadIdentity();
   glRotated(ph, 1, 0, 0);
   glRotated(th, 0, 1, 0);
+
+  // Draw axes
+  createAxes();
 
   // Draw grass
   grass->scale(1.0, 0.01, 1.0);
@@ -72,6 +78,11 @@ void PrimaryGraphicsHelper::display() {
   skyRight->draw();
   skyBack->draw();
   errorCheck("PrimaryGraphicsHelper::display() sky");
+
+  // Draw the sun
+  sun->translate(0.25, 0.5, -0.97);
+  sun->draw();
+  errorCheck("PrimaryGraphicsHelper::display() sun");
 
   // Flush and swap buffers
   glFlush();
