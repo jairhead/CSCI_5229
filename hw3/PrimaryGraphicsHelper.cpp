@@ -14,7 +14,7 @@
 // Display Parameter Globals
 int th = -45;         // Azimuth of view angle
 int ph = 30;          // Elevation of view angle
-int mode = 1;         // Mode for modifying Lorenz Attractor values (1-4)
+int mode = 1;         // Mode for modifying display values
 double w = 1.0;       // W variable
 const double DIM = 2; // Dimension of orthogonal box
 
@@ -49,6 +49,7 @@ void PrimaryGraphicsHelper::display() {
   // Generate scene
   //cube->draw();
   sphere->draw();
+  errorCheck("PrimaryGraphicsHelper::display() draw sphere");
   createAxes();
 
   // Flush and swap buffers
@@ -126,7 +127,7 @@ void PrimaryGraphicsHelper::createAxes() {
   glVertex3d(0.0, 0.0, 0.0);
   glVertex3d(0.0, 0.0, 1.0);
   glEnd();
-  errorCheck("PrimaryGraphicsHelper::createAxes()");
+  errorCheck("PrimaryGraphicsHelper::createAxes() draw axes");
 
   // Draw dots at end of axes
   glPointSize(10);
@@ -138,7 +139,7 @@ void PrimaryGraphicsHelper::createAxes() {
   glVertex4d(0, 0, 1, w);
   glEnd();
   glDisable(GL_POINT_SMOOTH);
-  errorCheck("PrimaryGraphicsHelper::createAxes()");
+  errorCheck("PrimaryGraphicsHelper::createAxes() draw dots");
 
   // Label axes in white
   glColor3d(1.0, 1.0, 1.0);
@@ -148,7 +149,7 @@ void PrimaryGraphicsHelper::createAxes() {
   displayText("y");
   glRasterPos3d(0, 0, 1.1);
   displayText("z");
-  errorCheck("PrimaryGraphicsHelper::createAxes()");
+  errorCheck("PrimaryGraphicsHelper::createAxes() label axes");
 }
 
 // displayText private member function
@@ -164,7 +165,7 @@ void PrimaryGraphicsHelper::displayText(std::string text) {
 void PrimaryGraphicsHelper::errorCheck(std::string where) {
   int error = glGetError();
   if (error) {
-    std::cout << "LorenzAttractorHelper::errorCheck(): [ERROR] "
+    std::cout << "PrimaryGraphicsHelper::errorCheck(): [ERROR] "
               << gluErrorString(error) << ", " << where
               << std::endl;
   }

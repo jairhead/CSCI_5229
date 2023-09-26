@@ -9,11 +9,12 @@
 
 // Globals
 double scalingFactor;
+const int d = 15;
 
 // Default Constructor
 Sphere::Sphere() { }
 
-// OVerloaded Constructor
+// Overloaded Constructor
 Sphere::Sphere(double x, double y, double z,
                double s, double th) {
   xPos = x;
@@ -35,11 +36,28 @@ void Sphere::draw() {
   glRotated(theta, 0, 1, 0);
   glScaled(scalingFactor, scalingFactor, scalingFactor);
 
-  // Draw the south pole cap
+  // Draw south cap
   glBegin(GL_TRIANGLE_FAN);
   Vertex(0, -90);
-
-  // End and pop transformation
+  for (int th = 0; th <= 360; th += d) { Vertex(th, d - 90); }
   glEnd();
+
+  // Draw latitude bands
+  for (int ph = d - 90; ph <= 90 - (2 * d); ph += d) {
+    glBegin(GL_QUAD_STRIP);
+    for (int th = 0; th <= 360; th += d) {
+      Vertex(th, ph);
+      Vertex(th, ph + d);
+    }
+    glEnd();
+  }
+
+  // Draw north cap
+  glBegin(GL_TRIANGLE_FAN);
+  Vertex(0, 90);
+  for (int th = 0; th <= 360; th += d) { Vertex(th, 90 - d); }
+  glEnd();
+
+  // Pop transformation
   glPopMatrix();
 }
