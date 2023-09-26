@@ -7,11 +7,6 @@
 
 #include "Cube.h"
 
-// Globals
-double xScaling;
-double yScaling;
-double zScaling;
-
 // Default Constructor
 Cube::Cube() { }
 
@@ -31,8 +26,8 @@ Cube::Cube(double x, double y, double z,
 // Destructor
 Cube::~Cube() { }
 
-// display() member function
-// Contains logic to display the cube
+// draw() member function
+// Contains logic to draw the cube
 void Cube::draw() {
   // Save transformation and set up
   glPushMatrix();

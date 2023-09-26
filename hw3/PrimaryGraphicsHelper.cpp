@@ -10,6 +10,7 @@
 
 #include "Cube.h"
 #include "Sphere.h"
+#include "RectangularPrism.h"
 
 // Display Parameter Globals
 int th = -45;         // Azimuth of view angle
@@ -19,8 +20,10 @@ double w = 1.0;       // W variable
 const double DIM = 2; // Dimension of orthogonal box
 
 // 3D Object Globals
-Cube *cube;
-Sphere *sphere;
+RectangularPrism *grass;
+RectangularPrism *skyLeft;
+RectangularPrism *skyRight;
+RectangularPrism *skyBack;
 
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
@@ -31,8 +34,10 @@ PrimaryGraphicsHelper::~PrimaryGraphicsHelper() { }
 // init() public member function
 // Initializes all objects for displaying
 void PrimaryGraphicsHelper::init() {
-  cube = new Cube(0.0, 0.0, 0.0, 0.25, 0.25, 0.25, 0.0);
-  sphere = new Sphere(0.0, 0.0, 0.0, 1.0, 0.0);
+  grass = new RectangularPrism();
+  skyLeft = new RectangularPrism();
+  skyRight = new RectangularPrism();
+  skyBack = new RectangularPrism();
 }
 
 // display() public member function
@@ -46,11 +51,27 @@ void PrimaryGraphicsHelper::display() {
   glRotated(ph, 1, 0, 0);
   glRotated(th, 0, 1, 0);
 
-  // Generate scene
-  //cube->draw();
-  sphere->draw();
-  errorCheck("PrimaryGraphicsHelper::display() draw sphere");
-  createAxes();
+  // Draw grass
+  grass->scale(1.0, 0.01, 1.0);
+  grass->color(0.3, 0.69, 0.12);
+  grass->draw();
+  errorCheck("PrimaryGraphicsHelper::display() grass");
+
+  // Draw sky
+  double skyRed = 0.0; double skyGreen = 0.24; double skyBlue = 0.76;
+  skyLeft->scale(0.01, 0.5, 1.0);
+  skyLeft->translate(-1.0, 0.5, 0.0);
+  skyLeft->color(skyRed, skyGreen, skyBlue);
+  skyRight->scale(0.01, 0.5, 1.0);
+  skyRight->translate(1.0, 0.5, 0.0);
+  skyRight->color(skyRed, skyGreen, skyBlue);
+  skyBack->scale(1.0, 0.5, 0.01);
+  skyBack->translate(0.0, 0.5, -1.0);
+  skyBack->color(skyRed, skyGreen, skyBlue);
+  skyLeft->draw();
+  skyRight->draw();
+  skyBack->draw();
+  errorCheck("PrimaryGraphicsHelper::display() sky");
 
   // Flush and swap buffers
   glFlush();

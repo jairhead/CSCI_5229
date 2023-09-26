@@ -17,6 +17,10 @@ class Cube : public BaseObject {
          double th);
     ~Cube();
     void draw();
+  protected:
+    double xScaling = 1.0;
+    double yScaling = 1.0;
+    double zScaling = 1.0;
 };
 
 #endif
