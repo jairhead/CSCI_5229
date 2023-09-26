@@ -7,15 +7,8 @@
 
 #include "RectangularPrism.h"
 
-// Default Constructor
+// Constructor
 RectangularPrism::RectangularPrism() { }
-
-// Overloaded Constructor
-RectangularPrism::RectangularPrism(double r, double g, double b) {
-  red = r;
-  green = g;
-  blue = b;
-}
 
 // Destructor
 RectangularPrism::~RectangularPrism() { }

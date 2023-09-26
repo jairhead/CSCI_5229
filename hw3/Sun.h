@@ -1,18 +1,18 @@
-#ifndef _RECTANGULAR_PRISM_H
-#define _RECTANGULAR_PRISM_H
+#ifndef _SUN_H
+#define _SUN_H
 /*
- * File: RectangularPrism.h
+ * File: Sun.h
  * Author: Jared McKneely
- * Description: Header file for the Rectangular Prism class
+ * Description: Header file for the Sun class
  */
 
- #include <iostream>
- #include "BaseObject.h"
+#include <iostream>
+#include "BaseObject.h"
 
-class RectangularPrism : public BaseObject {
+class Sun : public BaseObject {
   public:
-    RectangularPrism();
-    ~RectangularPrism();
+    Sun();
+    ~Sun();
     void scale(double dx, double dy, double dz);
     void translate(double x, double y, double z);
     void color(double r, double g, double b);
@@ -21,8 +21,8 @@ class RectangularPrism : public BaseObject {
     double xScaling = 1.0;
     double yScaling = 1.0;
     double zScaling = 1.0;
-    double red = 0.0;
-    double green = 0.0;
+    double red = 0.85;
+    double green = 0.57;
     double blue = 0.0;
 };
 

@@ -17,7 +17,7 @@ endif
 CLEAN=rm -f hw3 *.o *.a
 endif
 
-TARGETS := hw3.o Cube.o RectangularPrism.o Sphere.o PrimaryGraphicsHelper.o
+TARGETS := hw3.o Sun.o Cube.o RectangularPrism.o Sphere.o PrimaryGraphicsHelper.o
 
 # Compile rules
 .cpp.o:
