@@ -99,7 +99,7 @@ void House::draw() {
   glEnd();
 
   // Right Roof
-  glColor3d(0.17, 0.17, 0.17);
+  glColor3d(0.0, 0.0, 0.0);
   glBegin(GL_QUADS);
   glVertex3f(+xScaling, +yScaling, +zScaling);
   glVertex3f(0, +yScaling + yScaling * 0.25, +zScaling);
@@ -111,6 +111,23 @@ void House::draw() {
   glVertex3f(0, +yScaling + yScaling * 0.25, +zScaling);
   glVertex3f(0, (+yScaling + yScaling * 0.25), -zScaling);
   glVertex3f(-xScaling, +yScaling, -zScaling);
+  glEnd();
+
+  // Front Window
+  glColor3d(0.87, 0.77, 0);
+  glBegin(GL_QUADS);
+  glVertex3f((xScaling * 0.25), (yScaling * 0.25), zScaling + 0.01);
+  glVertex3f((xScaling * 0.25) + 0.05, (yScaling * 0.25), zScaling + 0.01);
+  glVertex3f((xScaling * 0.25) + 0.05, (yScaling * 0.25) + 0.1, zScaling + 0.01);
+  glVertex3f((xScaling * 0.25), (yScaling * 0.25) + 0.1, zScaling + 0.01);
+  glEnd();
+
+  // Left Window
+  glBegin(GL_QUADS);
+  glVertex3f(-(xScaling + 0.01), (yScaling * 0.25), (zScaling * 0.25));
+  glVertex3f(-(xScaling + 0.01), (yScaling * 0.25), (zScaling * 0.25) + 0.1);
+  glVertex3f(-(xScaling + 0.01), (yScaling * 0.25) + 0.1, (zScaling * 0.25) + 0.1);
+  glVertex3f(-(xScaling + 0.01), (yScaling * 0.25) + 0.1, (zScaling * 0.25));
   glEnd();
 
   // Undo transformations
