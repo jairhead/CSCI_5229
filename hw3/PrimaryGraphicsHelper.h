@@ -34,6 +34,7 @@ class PrimaryGraphicsHelper {
     static void reshape(int w, int h);
     static void special(int key, int x, int y);
     static void key(unsigned char ch, int x, int y);
+    static void idle();
     static void initializeGlew();
   private:
     static void createAxes();

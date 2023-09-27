@@ -54,34 +54,34 @@ void House::draw() {
 
   // Front
   glBegin(GL_QUADS);
-  glVertex3f(-xScaling, -yScaling, +zScaling);
-  glVertex3f(+xScaling, -yScaling, +zScaling);
+  glVertex3f(-xScaling, 0, +zScaling);
+  glVertex3f(+xScaling, 0, +zScaling);
   glVertex3f(+xScaling, +yScaling, +zScaling);
   glVertex3f(-xScaling, +yScaling, +zScaling);
 
   // Back
-  glVertex3f(+xScaling, -yScaling, -zScaling);
-  glVertex3f(-xScaling, -yScaling, -zScaling);
+  glVertex3f(+xScaling, 0, -zScaling);
+  glVertex3f(-xScaling, 0, -zScaling);
   glVertex3f(-xScaling, +yScaling, -zScaling);
   glVertex3f(+xScaling, +yScaling, -zScaling);
 
   // Right Side
-  glVertex3f(+xScaling, -yScaling, +zScaling);
-  glVertex3f(+xScaling, -yScaling, -zScaling);
+  glVertex3f(+xScaling, 0, +zScaling);
+  glVertex3f(+xScaling, 0, -zScaling);
   glVertex3f(+xScaling, +yScaling, -zScaling);
   glVertex3f(+xScaling, +yScaling, +zScaling);
 
   // Left Side
-  glVertex3f(-xScaling, -yScaling, -zScaling);
-  glVertex3f(-xScaling, -yScaling, +zScaling);
+  glVertex3f(-xScaling, 0, -zScaling);
+  glVertex3f(-xScaling, 0, +zScaling);
   glVertex3f(-xScaling, +yScaling, +zScaling);
   glVertex3f(-xScaling, +yScaling, -zScaling);
 
   // Bottom
-  glVertex3f(-xScaling, -yScaling, -zScaling);
-  glVertex3f(+xScaling, -yScaling, -zScaling);
-  glVertex3f(+xScaling, -yScaling, +zScaling);
-  glVertex3f(-xScaling, -yScaling, +zScaling);
+  glVertex3f(-xScaling, 0, -zScaling);
+  glVertex3f(+xScaling, 0, -zScaling);
+  glVertex3f(+xScaling, 0, +zScaling);
+  glVertex3f(-xScaling, 0, +zScaling);
   glEnd();
 
   // Front Gable
@@ -124,10 +124,18 @@ void House::draw() {
 
   // Left Window
   glBegin(GL_QUADS);
-  glVertex3f(-(xScaling + 0.01), (yScaling * 0.25), (zScaling * 0.25));
-  glVertex3f(-(xScaling + 0.01), (yScaling * 0.25), (zScaling * 0.25) + 0.1);
+  glVertex3f(-(xScaling + 0.01), (yScaling * 0.25) + 0.05, (zScaling * 0.25));
+  glVertex3f(-(xScaling + 0.01), (yScaling * 0.25) + 0.05, (zScaling * 0.25) + 0.1);
   glVertex3f(-(xScaling + 0.01), (yScaling * 0.25) + 0.1, (zScaling * 0.25) + 0.1);
   glVertex3f(-(xScaling + 0.01), (yScaling * 0.25) + 0.1, (zScaling * 0.25));
+  glEnd();
+
+  // Right Window
+  glBegin(GL_QUADS);
+  glVertex3f(xScaling + 0.01, (yScaling * 0.25) + 0.05, (zScaling * 0.25));
+  glVertex3f(xScaling + 0.01, (yScaling * 0.25) + 0.05, (zScaling * 0.25) - 0.20);
+  glVertex3f(xScaling + 0.01, (yScaling * 0.25) + 0.1, (zScaling * 0.25) - 0.20);
+  glVertex3f(xScaling + 0.01, (yScaling * 0.25) + 0.1, (zScaling * 0.25));
   glEnd();
 
   // Undo transformations

@@ -5,6 +5,7 @@
  *              used for drawing a complex scene.
  */
 
+#include <time.h>
 #include "PrimaryGraphicsHelper.h"
 #include "GenericHomeworkException.h"
 
@@ -19,8 +20,8 @@
 #include "DryGrass.h"
 
 // Display Parameter Globals
-int th = -45;         // Azimuth of view angle
-int ph = 30;          // Elevation of view angle
+int th = -10;         // Azimuth of view angle
+int ph = 20;          // Elevation of view angle
 int mode = 1;         // Mode for modifying display values
 double w = 1.0;       // W variable
 const double DIM = 2; // Dimension of orthogonal box
@@ -246,6 +247,17 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
 
   // Redisplay
   glutPostRedisplay();
+}
+
+// idle() public member function
+// Primary OpenGL idle handler function
+// Callback for glutIdleFunc()
+void PrimaryGraphicsHelper::idle() {
+  // Wait
+  //sleep()
+
+  // Redisplay
+  //glutPostRedisplay();
 }
 
 // initializeGlew() public member function
