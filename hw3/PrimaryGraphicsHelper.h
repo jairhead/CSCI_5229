@@ -39,5 +39,8 @@ class PrimaryGraphicsHelper {
   private:
     static void createAxes();
     static void displayText(std::string text);
+    static void displayParams();
     static void errorCheck(std::string where);
+    static void transitionToNight();
+    static void transitionToDay();
 };

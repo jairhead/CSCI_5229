@@ -16,6 +16,7 @@ class Road : public BaseObject {
     ~Road();
     void scale(double s);
     void translate(double x, double y, double z);
+    void color(bool day);
     void rotate(double th);
     void draw();
   protected:
@@ -25,6 +26,9 @@ class Road : public BaseObject {
     RectangularPrism *rightStripe;
     RectangularPrism *centerLeftStripe;
     RectangularPrism *centerRightStripe;
+    double asphaltC[3][3] = {{0.17,0.17,0.17},{0.17,0.17,0.17},{0,0,0}};
+    double whiteStripeC[3][3] = {{0.86,0.86,0.86},{0.86,0.86,0.86},{0,0,0}};
+    double orangeStripeC[3][3] = {{0.92,0.56,0.0},{0.92,0.56,0.0},{0,0,0}};
 };
 
 #endif

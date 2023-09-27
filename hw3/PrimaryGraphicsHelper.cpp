@@ -5,7 +5,7 @@
  *              used for drawing a complex scene.
  */
 
-#include <time.h>
+#include <unistd.h>
 #include "PrimaryGraphicsHelper.h"
 #include "GenericHomeworkException.h"
 
@@ -20,11 +20,14 @@
 #include "DryGrass.h"
 
 // Display Parameter Globals
-int th = -10;         // Azimuth of view angle
-int ph = 20;          // Elevation of view angle
-int mode = 1;         // Mode for modifying display values
-double w = 1.0;       // W variable
-const double DIM = 2; // Dimension of orthogonal box
+int th = -10;                     // Azimuth of view angle
+int ph = 20;                      // Elevation of view angle
+int mode = 1;                     // Mode for modifying display values
+double w = 1.0;                   // W variable
+const double DIM = 2;             // Dimension of orthogonal box
+const int IDLE_TIME = 2500;       // Time to pass between idle transitions
+int prevTime = 0;                 // Time of previous transition
+bool dayTime = true;              // Is the scene in daytime or nighttime?
 
 // 3D Object Globals
 RectangularPrism *grass;
@@ -46,18 +49,16 @@ Star *star1;
 Star *star2;
 Star *star3;
 
-// Colors
-double grassRD = 0.3; double grassGD = 0.69; double grassBD = 0.12;
-double skyRD = 0.0; double skyGD = 0.24; double skyBD = 0.76;
-double skyRN = 0.0; double skyGN = 0.0; double skyBN = 0.11;
-double rHouseRD = 0.61; double rHouseGD = 0.15; double rHouseBD = 0.15;
-double bHouseRD = 0.21; double bHouseGD = 0.42; double bHouseBD = 0.61;
-double gHouseRD = 0.21; double gHouseGD = 0.61; double gHouseBD = 0.34;
-double yHouseRD = 0.61; double yHouseGD = 0.59; double yHouseBD = 0.21;
-double dryGrsRD = 0.26; double dryGrsGD = 0.29; double dryGrsBD = 0.14;
-double spaceRD = skyRD; double spaceGD = skyGD; double spaceBD = skyBD;
-double spaceRN = 0.64; double spaceGN = 0.64; double spaceBN = 0.64;
-double objRN = 0.0; double objGN = 0.0; double objBN = 0.0;
+// Color / Position Globals {Current RGB, Day RGB, Night RGB, RGB Step}
+double grassC[3][3] = {{0.14,0.82,0.0},{0.14,0.82,0.0},{0,0,0}};
+double skyC[3][3] = {{0.0,0.24,0.76},{0.0,0.24,0.76},{0,0,0.11}};
+double rHouseC[3][3] = {{0.61,0.15,0.15},{0.61,0.15,0.15},{0.0,0.0,0.0}};
+double bHouseC[3][3] = {{0.21,0.42,0.61},{0.21,0.42,0.61},{0.0,0.0,0.0}};
+double gHouseC[3][3] = {{0.21,0.61,0.34},{0.21,0.61,0.34},{0.0,0.0,0.0}};
+double yHouseC[3][3] = {{0.61,0.59,0.21},{0.61,0.59,0.21},{0.0,0.0,0.0}};
+double dryGrsC[3][3] = {{0.26,0.29,0.14},{0.26,0.29,0.14},{0.0,0.0,0.0}};
+double spaceC[3][3] = {{0.0,0.24,0.76},{0.0,0.24,0.76},{0.64,0.64,0.64}};
+double moonZ = -1.03; double sunZ = -0.97;
 
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
@@ -104,7 +105,7 @@ void PrimaryGraphicsHelper::display() {
 
   // Draw grass
   grass->scale(1.0, 0.01, 1.0);
-  grass->color(0.3, 0.69, 0.12);
+  grass->color(grassC[0][0], grassC[0][1], grassC[0][2]);
   grass->draw();
   errorCheck("PrimaryGraphicsHelper::display() grass");
 
@@ -115,27 +116,27 @@ void PrimaryGraphicsHelper::display() {
   // Draw sky
   skyLeft->scale(0.01, 0.5, 1.0);
   skyLeft->translate(-1.0, 0.5, 0.0);
-  skyLeft->color(skyRD, skyGD, skyBD);
+  skyLeft->color(skyC[0][0], skyC[0][1], skyC[0][2]);
   skyRight->scale(0.01, 0.5, 1.0);
   skyRight->translate(1.0, 0.5, 0.0);
-  skyRight->color(skyRD, skyGD, skyBD);
+  skyRight->color(skyC[0][0], skyC[0][1], skyC[0][2]);
   skyBack->scale(1.0, 0.5, 0.01);
   skyBack->translate(0.0, 0.5, -1.0);
-  skyBack->color(skyRD, skyGD, skyBD);
+  skyBack->color(skyC[0][0], skyC[0][1], skyC[0][2]);
   skyLeft->draw();
   skyRight->draw();
   skyBack->draw();
   errorCheck("PrimaryGraphicsHelper::display() sky");
 
   // Draw the red house
-  redHouse->color(rHouseRD, rHouseGD, rHouseBD);
+  redHouse->color(rHouseC[0][0], rHouseC[0][1], rHouseC[0][2]);
   redHouse->translate(-0.60, 0.0, 0.55);
   redHouse->rotate(90.0);
   redHouse->draw();
   errorCheck("PrimaryGraphicsHelper::display() red house");
 
   // Draw the blue house
-  blueHouse->color(bHouseRD, bHouseGD, bHouseBD);
+  blueHouse->color(bHouseC[0][0], bHouseC[0][1], bHouseC[0][2]);
   blueHouse->scale(0.15, 0.15, 0.20);
   blueHouse->translate(-0.55, 0.0, 0.10);
   blueHouse->rotate(90.0);
@@ -143,7 +144,7 @@ void PrimaryGraphicsHelper::display() {
   errorCheck("PrimaryGraphicsHelper::display() blue house");
 
   // Draw the green house
-  greenHouse->color(gHouseRD, gHouseGD, gHouseBD);
+  greenHouse->color(gHouseC[0][0], gHouseC[0][1], gHouseC[0][2]);
   greenHouse->scale(0.15, 0.15, 0.22);
   greenHouse->translate(-0.57, 0.0, -0.35);
   greenHouse->rotate(90.0);
@@ -151,7 +152,7 @@ void PrimaryGraphicsHelper::display() {
   errorCheck("PrimaryGraphicsHelper::display() green house");
 
   // Draw the yellow house
-  yellowHouse->color(yHouseRD, yHouseGD, yHouseBD);
+  yellowHouse->color(yHouseC[0][0], yHouseC[0][1], yHouseC[0][2]);
   yellowHouse->translate(0.60, 0.0, 0.10);
   yellowHouse->rotate(270.0);
   yellowHouse->draw();
@@ -169,32 +170,37 @@ void PrimaryGraphicsHelper::display() {
   errorCheck("PrimaryGraphicsHelper::display() dry grass");
 
   // Draw the sun
-  sun->translate(0.25, 0.5, -0.97);
+  sun->translate(0.25, 0.5, sunZ);
   sun->rotate(90.0);
   sun->draw();
   errorCheck("PrimaryGraphicsHelper::display() sun");
 
   // Draw the moon
-  moon->color(spaceRD, spaceGD, spaceBD);
-  moon->translate(0.12, 0.45, -0.98);
+  moon->translate(0.12, 0.45, moonZ);
   moon->rotate(90.0);
   moon->draw();
   errorCheck("PrimaryGraphicsHelper::display() moon");
 
   // Draw stars
-  star1->color(spaceRD, spaceGD, spaceBD);
+  star1->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
   star1->translate(-0.7, 0.7, -0.97);
   star1->scale(0.1, 0.1, 0.1);
   star1->draw();
-  star2->color(spaceRD, spaceGD, spaceBD);
+  star2->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
   star2->translate(-0.45, 0.45, -0.97);
   star2->scale(0.05, 0.05, 0.05);
   star2->draw();
-  star3->color(spaceRD, spaceGD, spaceBD);
+  star3->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
   star3->translate(0.8, 0.8, -0.97);
   star3->scale(0.07, 0.07, 0.07);
   star3->draw();
   errorCheck("PrimaryGraphicsHelper::display() stars");
+
+  // Display parameters
+  glColor3d(1.0, 1.0, 1.0);
+  glWindowPos2i(5,5);
+  displayParams();
+  errorCheck("PrimaryGraphicsHelper::display() display parameters");
 
   // Flush and swap buffers
   glFlush();
@@ -253,11 +259,13 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
 // Primary OpenGL idle handler function
 // Callback for glutIdleFunc()
 void PrimaryGraphicsHelper::idle() {
-  // Wait
-  //sleep()
-
-  // Redisplay
-  //glutPostRedisplay();
+  int currTime = glutGet(GLUT_ELAPSED_TIME);
+  if (currTime - prevTime > IDLE_TIME) {
+    if (dayTime) { transitionToNight(); dayTime = false; }
+    else { transitionToDay(); dayTime = true; }
+    prevTime = currTime;
+    glutPostRedisplay();
+  }
 }
 
 // initializeGlew() public member function
@@ -315,6 +323,21 @@ void PrimaryGraphicsHelper::displayText(std::string text) {
   }
 }
 
+// displayParams private member function
+// Helper method that displays parameters to the window
+void PrimaryGraphicsHelper::displayParams() {
+  // Create string
+  std::string parameters;
+  parameters += "th = "; parameters += std::to_string(th);
+  parameters += ", ph = "; parameters += std::to_string(ph);
+  parameters += ", time: ";
+  if (dayTime) { parameters += "day"; }
+  else { parameters += "night"; }
+
+  // Display
+  displayText(parameters);
+}
+
 // errorCheck() private member function
 // Helper method that checks errors from OpenGL
 void PrimaryGraphicsHelper::errorCheck(std::string where) {
@@ -324,4 +347,36 @@ void PrimaryGraphicsHelper::errorCheck(std::string where) {
               << gluErrorString(error) << ", " << where
               << std::endl;
   }
+}
+
+// transitionToNight() private member function
+// Transitions the scene to a nocturnal one
+void PrimaryGraphicsHelper::transitionToNight() {
+  grassC[0][0] = grassC[2][0]; grassC[0][1] = grassC[2][1]; grassC[0][2] = grassC[2][2];
+  skyC[0][0] = skyC[2][0]; skyC[0][1] = skyC[2][1]; skyC[0][2] = skyC[2][2];
+  rHouseC[0][0] = rHouseC[2][0]; rHouseC[0][1] = rHouseC[2][1]; rHouseC[0][2] = rHouseC[2][2];
+  bHouseC[0][0] = bHouseC[2][0]; bHouseC[0][1] = bHouseC[2][1]; bHouseC[0][2] = bHouseC[2][2];
+  gHouseC[0][0] = gHouseC[2][0]; gHouseC[0][1] = gHouseC[2][1]; gHouseC[0][2] = gHouseC[2][2];
+  yHouseC[0][0] = yHouseC[2][0]; yHouseC[0][1] = yHouseC[2][1]; yHouseC[0][2] = yHouseC[2][2];
+  dryGrsC[0][0] = dryGrsC[2][0]; dryGrsC[0][1] = dryGrsC[2][1]; dryGrsC[0][2] = dryGrsC[2][2];
+  spaceC[0][0] = spaceC[2][0]; spaceC[0][1] = spaceC[2][1]; spaceC[0][2] = spaceC[2][2];
+  road->color(false);
+  moonZ = -0.97; sunZ = -1.03;
+  glutPostRedisplay();
+}
+
+// transitionToDay() private member function
+// Transitions the scene to a nocturnal one
+void PrimaryGraphicsHelper::transitionToDay() {
+  grassC[0][0] = grassC[1][0]; grassC[0][1] = grassC[1][1]; grassC[0][2] = grassC[1][2];
+  skyC[0][0] = skyC[1][0]; skyC[0][1] = skyC[1][1]; skyC[0][2] = skyC[1][2];
+  rHouseC[0][0] = rHouseC[1][0]; rHouseC[0][1] = rHouseC[1][1]; rHouseC[0][2] = rHouseC[1][2];
+  bHouseC[0][0] = bHouseC[1][0]; bHouseC[0][1] = bHouseC[1][1]; bHouseC[0][2] = bHouseC[1][2];
+  gHouseC[0][0] = gHouseC[1][0]; gHouseC[0][1] = gHouseC[1][1]; gHouseC[0][2] = gHouseC[1][2];
+  yHouseC[0][0] = yHouseC[1][0]; yHouseC[0][1] = yHouseC[1][1]; yHouseC[0][2] = yHouseC[1][2];
+  dryGrsC[0][0] = dryGrsC[1][0]; dryGrsC[0][1] = dryGrsC[1][1]; dryGrsC[0][2] = dryGrsC[1][2];
+  spaceC[0][0] = spaceC[1][0]; spaceC[0][1] = spaceC[1][1]; spaceC[0][2] = spaceC[1][2];
+  road->color(false);
+  moonZ = -1.03; sunZ = -0.97;
+  glutPostRedisplay();
 }

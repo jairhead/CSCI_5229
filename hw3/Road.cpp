@@ -33,6 +33,33 @@ void Road::translate(double x, double y, double z) {
   zPos = z;
 }
 
+void Road::color(bool day) {
+  if (day) {
+    std::cout << "Here!" << std::endl;
+    asphaltC[0][0] = asphaltC[1][0];
+    asphaltC[0][1] = asphaltC[1][1];
+    asphaltC[0][2] = asphaltC[1][2];
+    whiteStripeC[0][0] = whiteStripeC[1][0];
+    whiteStripeC[0][1] = whiteStripeC[1][1];
+    whiteStripeC[0][2] = whiteStripeC[1][2];
+    orangeStripeC[0][0] = orangeStripeC[1][0];
+    orangeStripeC[0][1] = orangeStripeC[1][1];
+    orangeStripeC[0][2] = orangeStripeC[1][2];
+  }
+  else {
+    std::cout << "Other Here!" << std::endl;
+    asphaltC[0][0] = asphaltC[2][0];
+    asphaltC[0][1] = asphaltC[2][1];
+    asphaltC[0][2] = asphaltC[2][2];
+    whiteStripeC[0][0] = whiteStripeC[2][0];
+    whiteStripeC[0][1] = whiteStripeC[2][1];
+    whiteStripeC[0][2] = whiteStripeC[2][2];
+    orangeStripeC[0][0] = orangeStripeC[2][0];
+    orangeStripeC[0][1] = orangeStripeC[2][1];
+    orangeStripeC[0][2] = orangeStripeC[2][2];
+  }
+}
+
 // rotate() public member function
 // Sets the angle for drawing the road
 void Road::rotate(double th) {
@@ -48,30 +75,30 @@ void Road::draw() {
   glRotated(theta, 1, 0, 0);
   
   // Draw the asphalt
-  asphalt->color(0.17, 0.17, 0.17);
+  asphalt->color(asphaltC[0][0], asphaltC[0][1], asphaltC[0][2]);
   asphalt->scale(0.25, 0.02, 1.0);
   asphalt->draw();
 
   // Draw the left white stripe
-  leftStripe->color(0.86, 0.86, 0.86);
+  leftStripe->color(whiteStripeC[0][0], whiteStripeC[0][1], whiteStripeC[0][2]);
   leftStripe->scale(0.01, 0.03, 1.0);
   leftStripe->translate(-0.2, 0.0, 0.0);
   leftStripe->draw();
 
   // Draw the right white stripe
-  rightStripe->color(0.86, 0.86, 0.86);
+  rightStripe->color(whiteStripeC[0][0], whiteStripeC[0][1], whiteStripeC[0][2]);
   rightStripe->scale(0.01, 0.03, 1.0);
   rightStripe->translate(0.2, 0.0, 0.0);
   rightStripe->draw();
 
   // Draw the center left stripe
-  centerLeftStripe->color(0.92, 0.56, 0);
+  centerLeftStripe->color(orangeStripeC[0][0], orangeStripeC[0][1], orangeStripeC[0][2]);
   centerLeftStripe->scale(0.01, 0.03, 1.0);
   centerLeftStripe->translate(-0.03, 0.0, 0.0);
   centerLeftStripe->draw();
 
   // Draw the center right stripe
-  centerRightStripe->color(0.92, 0.56, 0);
+  centerRightStripe->color(orangeStripeC[0][0], orangeStripeC[0][1], orangeStripeC[0][2]);
   centerRightStripe->scale(0.01, 0.03, 1.0);
   centerRightStripe->translate(0.03, 0.0, 0.0);
   centerRightStripe->draw();
