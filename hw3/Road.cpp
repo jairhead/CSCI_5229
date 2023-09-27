@@ -35,7 +35,6 @@ void Road::translate(double x, double y, double z) {
 
 void Road::color(bool day) {
   if (day) {
-    std::cout << "Here!" << std::endl;
     asphaltC[0][0] = asphaltC[1][0];
     asphaltC[0][1] = asphaltC[1][1];
     asphaltC[0][2] = asphaltC[1][2];
@@ -47,7 +46,6 @@ void Road::color(bool day) {
     orangeStripeC[0][2] = orangeStripeC[1][2];
   }
   else {
-    std::cout << "Other Here!" << std::endl;
     asphaltC[0][0] = asphaltC[2][0];
     asphaltC[0][1] = asphaltC[2][1];
     asphaltC[0][2] = asphaltC[2][2];

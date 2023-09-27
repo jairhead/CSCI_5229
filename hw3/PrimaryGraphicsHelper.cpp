@@ -18,6 +18,7 @@
 #include "Road.h"
 #include "House.h"
 #include "DryGrass.h"
+#include "MountainBackdrop.h"
 
 // Display Parameter Globals
 int th = -10;                     // Azimuth of view angle
@@ -48,6 +49,7 @@ DryGrass *dryGrass4;
 Star *star1;
 Star *star2;
 Star *star3;
+MountainBackdrop *mountains;
 
 // Color / Position Globals {Current RGB, Day RGB, Night RGB, RGB Step}
 double grassC[3][3] = {{0.14,0.82,0.0},{0.14,0.82,0.0},{0,0,0}};
@@ -87,6 +89,7 @@ void PrimaryGraphicsHelper::init() {
   star1 = new Star();
   star2 = new Star();
   star3 = new Star();
+  mountains = new MountainBackdrop();
 }
 
 // display() public member function
@@ -195,6 +198,11 @@ void PrimaryGraphicsHelper::display() {
   star3->scale(0.07, 0.07, 0.07);
   star3->draw();
   errorCheck("PrimaryGraphicsHelper::display() stars");
+
+  // Draw mountains
+  mountains->translate(0.0, 0.0, -0.96);
+  mountains->draw();
+  errorCheck("PrimaryGraphicsHelper::display() mountains");
 
   // Display parameters
   glColor3d(1.0, 1.0, 1.0);
