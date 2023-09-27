@@ -184,7 +184,7 @@ void PrimaryGraphicsHelper::display() {
   errorCheck("PrimaryGraphicsHelper::display() sun");
 
   // Draw the moon
-  moon->translate(0.12, 0.48, moonZ);
+  moon->translate(0.12, 0.58, moonZ);
   moon->rotate(90.0);
   moon->draw();
   errorCheck("PrimaryGraphicsHelper::display() moon");
