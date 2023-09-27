@@ -40,16 +40,14 @@ void RectangularPrism::color(double r, double g, double b) {
 // draw() member function
 // Contains logic to draw the rectangular prism
 void RectangularPrism::draw() {
-  // Save transformation and set up
+  // Save transformation, set color, translate and rotate
   glPushMatrix();
-
-  // Set scale, translate, and color
-  glTranslated(xPos, yPos, zPos);
   glColor3d(red, green, blue);
+  glTranslated(xPos, yPos, zPos);
   glRotated(theta, 0, 1, 0);
-  glBegin(GL_QUADS);
 
   // Front face
+  glBegin(GL_QUADS);
   glVertex3f(-xScaling, -yScaling, +zScaling);
   glVertex3f(+xScaling, -yScaling, +zScaling);
   glVertex3f(+xScaling, +yScaling, +zScaling);

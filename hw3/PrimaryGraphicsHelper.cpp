@@ -13,6 +13,7 @@
 #include "RectangularPrism.h"
 #include "Sun.h"
 #include "Road.h"
+#include "House.h"
 
 // Display Parameter Globals
 int th = -45;         // Azimuth of view angle
@@ -28,6 +29,10 @@ RectangularPrism *skyRight;
 RectangularPrism *skyBack;
 Road *road;
 Sun *sun;
+House *redHouse;
+House *blueHouse;
+House *greenHouse;
+House *yellowHouse;
 
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
@@ -44,6 +49,10 @@ void PrimaryGraphicsHelper::init() {
   skyBack = new RectangularPrism();
   road = new Road();
   sun = new Sun();
+  redHouse = new House();
+  blueHouse = new House();
+  greenHouse = new House();
+  yellowHouse = new House();
 }
 
 // display() public member function
@@ -86,8 +95,39 @@ void PrimaryGraphicsHelper::display() {
   skyBack->draw();
   errorCheck("PrimaryGraphicsHelper::display() sky");
 
+  // Draw the red house
+  redHouse->color(0.61, 0.15, 0.15);
+  redHouse->translate(-0.60, 0.0, 0.55);
+  redHouse->rotate(90.0);
+  redHouse->draw();
+  errorCheck("PrimaryGraphicsHelper::display() red house");
+
+  // Draw the blue house
+  blueHouse->color(0.21, 0.42, 0.61);
+  blueHouse->scale(0.15, 0.15, 0.20);
+  blueHouse->translate(-0.55, 0.0, 0.10);
+  blueHouse->rotate(90.0);
+  blueHouse->draw();
+  errorCheck("PrimaryGraphicsHelper::display() blue house");
+
+  // Draw the green house
+  greenHouse->color(0.21, 0.61, 0.34);
+  greenHouse->scale(0.15, 0.15, 0.22);
+  greenHouse->translate(-0.57, 0.0, -0.35);
+  greenHouse->rotate(90.0);
+  greenHouse->draw();
+  errorCheck("PrimaryGraphicsHelper::display() green house");
+
+  // Draw the yellow house
+  redHouse->color(0.61, 0.15, 0.15);
+  redHouse->translate(-0.60, 0.0, 0.55);
+  redHouse->rotate(90.0);
+  redHouse->draw();
+  errorCheck("PrimaryGraphicsHelper::display() red house");
+
   // Draw the sun
   sun->translate(0.25, 0.5, -0.97);
+  sun->rotate(90.0);
   sun->draw();
   errorCheck("PrimaryGraphicsHelper::display() sun");
 

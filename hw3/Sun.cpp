@@ -50,9 +50,9 @@ void Sun::draw() {
   glPushMatrix();
   glColor3d(red, green, blue);
   glTranslated(xPos, yPos, zPos);
-  glRotated(90, 1, 0, 0);
+  glRotated(90.0, 1, 0, 0);
 
-  // Draw the disc of the sun
+  // Draw the disc of sun
   glBegin(GL_TRIANGLE_FAN);
   glVertex3d(0, 0, 0);
   for (int th = 0; th <= 360; th += d) {
@@ -61,7 +61,7 @@ void Sun::draw() {
   glEnd();
 
   // Draw the sun rays  
-  for (int th = theta; th <= 360; th += 30) {
+  for (int th = theta; th <= theta + 360; th += 30) {
     glBegin(GL_TRIANGLES);
     glVertex3d((xScaling + 0.05) * cosine(th), 0, (zScaling + 0.05) * sine(th));
     glVertex3d((xScaling + 0.2) * cosine(th + 2), 0, (zScaling + 0.2) * sine(th + 2));
