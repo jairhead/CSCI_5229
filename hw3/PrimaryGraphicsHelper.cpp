@@ -19,6 +19,7 @@
 #include "House.h"
 #include "DryGrass.h"
 #include "MountainBackdrop.h"
+#include "StreetLamp.h"
 
 // Display Parameter Globals
 int th = -10;                     // Azimuth of view angle
@@ -50,6 +51,8 @@ Star *star1;
 Star *star2;
 Star *star3;
 MountainBackdrop *mountains;
+StreetLamp *streetLamp1;
+StreetLamp *streetLamp2;
 
 // Color / Position Globals {Current RGB, Day RGB, Night RGB, RGB Step}
 double grassC[3][3] = {{0.14,0.82,0.0},{0.14,0.82,0.0},{0,0,0}};
@@ -90,6 +93,8 @@ void PrimaryGraphicsHelper::init() {
   star2 = new Star();
   star3 = new Star();
   mountains = new MountainBackdrop();
+  streetLamp1 = new StreetLamp();
+  streetLamp2 = new StreetLamp();
 }
 
 // display() public member function
@@ -179,7 +184,7 @@ void PrimaryGraphicsHelper::display() {
   errorCheck("PrimaryGraphicsHelper::display() sun");
 
   // Draw the moon
-  moon->translate(0.12, 0.45, moonZ);
+  moon->translate(0.12, 0.48, moonZ);
   moon->rotate(90.0);
   moon->draw();
   errorCheck("PrimaryGraphicsHelper::display() moon");
@@ -203,6 +208,14 @@ void PrimaryGraphicsHelper::display() {
   mountains->translate(0.0, 0.0, -0.96);
   mountains->draw();
   errorCheck("PrimaryGraphicsHelper::display() mountains");
+
+  // Draw street lamp
+  streetLamp1->translate(-0.25, 0.0, -0.4);
+  streetLamp1->draw();
+  streetLamp2->translate(0.25, 0.0, 0.4);
+  streetLamp2->rotate(180);
+  streetLamp2->draw();
+  errorCheck("PrimaryGraphicsHelper::display() street lamps");
 
   // Display parameters
   glColor3d(1.0, 1.0, 1.0);
@@ -368,6 +381,8 @@ void PrimaryGraphicsHelper::transitionToNight() {
   yHouseC[0][0] = yHouseC[2][0]; yHouseC[0][1] = yHouseC[2][1]; yHouseC[0][2] = yHouseC[2][2];
   dryGrsC[0][0] = dryGrsC[2][0]; dryGrsC[0][1] = dryGrsC[2][1]; dryGrsC[0][2] = dryGrsC[2][2];
   spaceC[0][0] = spaceC[2][0]; spaceC[0][1] = spaceC[2][1]; spaceC[0][2] = spaceC[2][2];
+  streetLamp1->color(false);
+  streetLamp2->color(false);
   road->color(false);
   moonZ = -0.97; sunZ = -1.03;
   glutPostRedisplay();
@@ -384,6 +399,8 @@ void PrimaryGraphicsHelper::transitionToDay() {
   yHouseC[0][0] = yHouseC[1][0]; yHouseC[0][1] = yHouseC[1][1]; yHouseC[0][2] = yHouseC[1][2];
   dryGrsC[0][0] = dryGrsC[1][0]; dryGrsC[0][1] = dryGrsC[1][1]; dryGrsC[0][2] = dryGrsC[1][2];
   spaceC[0][0] = spaceC[1][0]; spaceC[0][1] = spaceC[1][1]; spaceC[0][2] = spaceC[1][2];
+  streetLamp1->color(true);
+  streetLamp2->color(true);
   road->color(false);
   moonZ = -1.03; sunZ = -0.97;
   glutPostRedisplay();
