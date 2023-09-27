@@ -12,6 +12,7 @@
 #include "Sphere.h"
 #include "RectangularPrism.h"
 #include "Sun.h"
+#include "Moon.h"
 #include "Road.h"
 #include "House.h"
 #include "DryGrass.h"
@@ -30,6 +31,7 @@ RectangularPrism *skyRight;
 RectangularPrism *skyBack;
 Road *road;
 Sun *sun;
+Moon *moon;
 House *redHouse;
 House *blueHouse;
 House *greenHouse;
@@ -54,6 +56,7 @@ void PrimaryGraphicsHelper::init() {
   skyBack = new RectangularPrism();
   road = new Road();
   sun = new Sun();
+  moon = new Moon();
   redHouse = new House();
   blueHouse = new House();
   greenHouse = new House();
@@ -150,6 +153,12 @@ void PrimaryGraphicsHelper::display() {
   sun->rotate(90.0);
   sun->draw();
   errorCheck("PrimaryGraphicsHelper::display() sun");
+
+  // Draw the moon
+  moon->translate(0.12, 0.45, -0.98);
+  moon->rotate(90.0);
+  moon->draw();
+  errorCheck("PrimaryGraphicsHelper::display() moon");
 
   // Flush and swap buffers
   glFlush();
