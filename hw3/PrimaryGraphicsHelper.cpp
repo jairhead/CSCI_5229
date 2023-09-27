@@ -14,6 +14,7 @@
 #include "Sun.h"
 #include "Road.h"
 #include "House.h"
+#include "DryGrass.h"
 
 // Display Parameter Globals
 int th = -45;         // Azimuth of view angle
@@ -33,6 +34,10 @@ House *redHouse;
 House *blueHouse;
 House *greenHouse;
 House *yellowHouse;
+DryGrass *dryGrass1;
+DryGrass *dryGrass2;
+DryGrass *dryGrass3;
+DryGrass *dryGrass4;
 
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
@@ -53,6 +58,10 @@ void PrimaryGraphicsHelper::init() {
   blueHouse = new House();
   greenHouse = new House();
   yellowHouse = new House();
+  dryGrass1 = new DryGrass();
+  dryGrass2 = new DryGrass();
+  dryGrass3 = new DryGrass();
+  dryGrass4 = new DryGrass();
 }
 
 // display() public member function
@@ -119,11 +128,22 @@ void PrimaryGraphicsHelper::display() {
   errorCheck("PrimaryGraphicsHelper::display() green house");
 
   // Draw the yellow house
-  redHouse->color(0.61, 0.15, 0.15);
-  redHouse->translate(-0.60, 0.0, 0.55);
+  redHouse->color(0.61, 0.59, 0.21);
+  redHouse->translate(0.60, 0.0, 0.10);
   redHouse->rotate(90.0);
   redHouse->draw();
   errorCheck("PrimaryGraphicsHelper::display() red house");
+
+  // Draw the unkempt grass
+  dryGrass1->translate(0.60, 0.0, 0.45);
+  dryGrass1->draw();
+  dryGrass2->translate(0.45, 0.0, -0.60);
+  dryGrass2->draw();
+  dryGrass3->translate(-0.45, 0.0, -0.72);
+  dryGrass3->draw();
+  dryGrass4->translate(0.55, 0.0, 0.67);
+  dryGrass4->draw();
+  errorCheck("PrimaryGraphicsHelper::display() dry grass");
 
   // Draw the sun
   sun->translate(0.25, 0.5, -0.97);
