@@ -44,7 +44,7 @@ void Moon::rotate(double th) {
 }
 
 // draw() public member function
-// Contains logic to draw the sun
+// Contains logic to draw the moon
 void Moon::draw() {
   // Save transformation, set color, translate and rotate
   glPushMatrix();

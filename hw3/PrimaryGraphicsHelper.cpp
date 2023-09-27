@@ -13,6 +13,7 @@
 #include "RectangularPrism.h"
 #include "Sun.h"
 #include "Moon.h"
+#include "Star.h"
 #include "Road.h"
 #include "House.h"
 #include "DryGrass.h"
@@ -40,6 +41,9 @@ DryGrass *dryGrass1;
 DryGrass *dryGrass2;
 DryGrass *dryGrass3;
 DryGrass *dryGrass4;
+Star *star1;
+Star *star2;
+Star *star3;
 
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
@@ -65,6 +69,9 @@ void PrimaryGraphicsHelper::init() {
   dryGrass2 = new DryGrass();
   dryGrass3 = new DryGrass();
   dryGrass4 = new DryGrass();
+  star1 = new Star();
+  star2 = new Star();
+  star3 = new Star();
 }
 
 // display() public member function
@@ -159,6 +166,18 @@ void PrimaryGraphicsHelper::display() {
   moon->rotate(90.0);
   moon->draw();
   errorCheck("PrimaryGraphicsHelper::display() moon");
+
+  // Draw stars
+  star1->translate(-0.7, 0.7, -0.97);
+  star1->scale(0.1, 0.1, 0.1);
+  star1->draw();
+  star2->translate(-0.45, 0.45, -0.97);
+  star2->scale(0.05, 0.05, 0.05);
+  star2->draw();
+  star3->translate(0.8, 0.8, -0.97);
+  star3->scale(0.07, 0.07, 0.07);
+  star3->draw();
+  errorCheck("PrimaryGraphicsHelper::display() stars");
 
   // Flush and swap buffers
   glFlush();
