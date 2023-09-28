@@ -1,0 +1,44 @@
+# Example 10
+EXE=hw4
+
+# Main target
+all: $(EXE)
+
+#  Msys/MinGW
+ifeq "$(OS)" "Windows_NT"
+CFLG=-O3 -Wall -DUSEGLEW -I.
+LIBS=-lfreeglut -lglew32 -lglu32 -lopengl32 -lm
+CLEAN=rm -f *.exe *.o *.a
+else
+#  OSX
+ifeq "$(shell uname)" "Darwin"
+RES=$(shell uname -r|sed -E 's/(.).*/\1/'|tr 12 21)
+CFLG=-O3 -Wall -Wno-deprecated-declarations -DRES=$(RES) -I.
+LIBS=-framework GLUT -framework OpenGL
+#  Linux/Unix/Solaris
+else
+CFLG=-O3 -Wall -I.
+LIBS=-lglut -lGLU -lGL -lm
+endif
+#  OSX/Linux/Unix/Solaris
+CLEAN=rm -f $(EXE) *.o *.a
+endif
+
+# Dependencies
+hw4.o: hw4.cpp
+
+#  Create archive
+libhw4.a:
+	ar -rcs $@ $^
+
+# Compile rules
+.cpp.o:
+	g++ -c $(CFLG)  $<
+
+#  Link
+hw4:hw4.o   libhw4.a
+	g++ $(CFLG) -o $@ $^  $(LIBS)
+
+#  Clean
+clean:
+	$(CLEAN)
