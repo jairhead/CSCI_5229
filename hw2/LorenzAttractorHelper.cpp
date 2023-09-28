@@ -70,7 +70,7 @@ void LorenzAttractorHelper::reshape(int w, int h) {
   glLoadIdentity();
 }
 
-// display() member function
+// special() member function
 // Primary OpenGL arrow key handler function
 // Callback for glutSpecialFunc()
 void LorenzAttractorHelper::special(int key, int x, int y) {
@@ -86,7 +86,7 @@ void LorenzAttractorHelper::special(int key, int x, int y) {
   glutPostRedisplay();
 }
 
-// display() member function
+// key() member function
 // Primary OpenGL keyboard handler function
 // Callback for glutKeyboardFunc()
 void LorenzAttractorHelper::key(unsigned char ch, int x, int y) {
@@ -235,7 +235,7 @@ void LorenzAttractorHelper::randomColor() {
   lorenz_green = (rand() % 255) / 255.0;
 }
 
-// randomColor() private member function
+// incrementColor() private member function
 // Used when MODE == 6 to generate a crazy gradient every time the viewing perspective changes
 void LorenzAttractorHelper::incrementColor() {
   // Select random index to increment

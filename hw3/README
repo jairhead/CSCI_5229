@@ -1,0 +1,36 @@
+Name: Jared McKneely
+Course: CSCI 5229 (Computer Graphics)
+Semester: Fall 2023
+Assignment Homework #3
+
+----- ABOUT THIS PROGRAM -----
+
+--- DESCRIPTION OF FILES ---
+hw3.cpp:
+  - Contains main()
+
+PrimaryGraphicsHelper.h:
+  - Includes glut.h for the entire project
+  - Declares public and private static methods for OpenGL
+
+PrimaryGraphicsHelper.cpp:
+  - Defines display() - static callback for glutDisplayFunc();
+  - Defines reshape() - static callback for glutReshapeFunc();
+  - Defines special() - static callback for glutSpecialFunc();
+  - Defines key() - static callback for glutKeyboardFunc();
+  - Defines idle() - static callback for glutIdleFunc();
+  - Defines other private member functions to assist with drawing objects to the screen (comments describe functionality)
+
+BaseObject.h & BaseObject.cpp:
+  - Abstract class for all other objects in the project
+
+*.h & *.cpp:
+  - Child classes of BaseObject that draw various objects to the scene
+
+--- DESCRIPTION OF KEYS ---
+  - arrow keys: change viewing angle
+  - 0: reset viewing angle
+  - ESC: exit the program
+
+--- EXTERNAL RESOURCES ---
+  - Color picker: https://keiwando.com/color-picker/

@@ -1,10 +1,9 @@
 /*
- * File: LorenzAttractorHelper.h
+ * File: PrimaryGraphicsHelper.h
  * Author: Jared McKneely
- * Description: Header file for the LorenzAttractorHelper object
+ * Description: Header file for the PrimaryGraphicsHelper class
  */
 
-#include <stdio.h>
 #include <iostream>
 
 // OpenGL with prototypes for glext
@@ -26,21 +25,22 @@
 #define RES 1
 #endif
 
-class LorenzAttractorHelper {
+class PrimaryGraphicsHelper {
   public:
-    LorenzAttractorHelper();
-    ~LorenzAttractorHelper();
+    PrimaryGraphicsHelper();
+    ~PrimaryGraphicsHelper();
+    static void init();
     static void display();
     static void reshape(int w, int h);
     static void special(int key, int x, int y);
     static void key(unsigned char ch, int x, int y);
-    static void printLorenzAttractorParameters();
+    static void idle();
+    static void initializeGlew();
   private:
-    static void computeEulerStep(double &x, double &y, double &z);
-    static void displayText(std::string text);
     static void createAxes();
-    static void createLorenzAttractor(double x, double y, double z);
+    static void displayText(std::string text);
+    static void displayParams();
     static void errorCheck(std::string where);
-    static void randomColor();
-    static void incrementColor();
+    static void transitionToNight();
+    static void transitionToDay();
 };
