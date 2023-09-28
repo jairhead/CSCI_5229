@@ -31,3 +31,6 @@ BaseObject.h & BaseObject.cpp:
   - arrow keys: change viewing angle
   - 0: reset viewing angle
   - ESC: exit the program
+
+--- EXTERNAL RESOURCES ---
+  - Color picker: https://keiwando.com/color-picker/
