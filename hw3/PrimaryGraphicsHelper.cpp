@@ -5,7 +5,6 @@
  *              used for drawing a complex scene.
  */
 
-#include <unistd.h>
 #include "PrimaryGraphicsHelper.h"
 #include "GenericHomeworkException.h"
 
