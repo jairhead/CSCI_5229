@@ -1,8 +1,5 @@
-# Example 10
+# Homework 4
 EXE=hw4
-
-# Main target
-all: $(EXE)
 
 #  Msys/MinGW
 ifeq "$(OS)" "Windows_NT"
@@ -24,11 +21,19 @@ endif
 CLEAN=rm -f $(EXE) *.o *.a
 endif
 
+OBJS := Sun.o Moon.o Star.o Cube.o RectangularPrism.o Sphere.o Road.o House.o DryGrass.o MountainBackdrop.o StreetLamp.o PrimaryGraphicsHelper.o
+
+# Default
+default: all
+
+# All
+all: $(EXE)
+
 # Dependencies
 hw4.o: hw4.cpp
 
-#  Create archive
-libhw4.a:
+# Create archive / library
+libhw4.a:$(OBJS)
 	ar -rcs $@ $^
 
 # Compile rules
@@ -36,7 +41,7 @@ libhw4.a:
 	g++ -c $(CFLG)  $<
 
 #  Link
-hw4:hw4.o   libhw4.a
+hw4:hw4.o libhw4.a
 	g++ $(CFLG) -o $@ $^  $(LIBS)
 
 #  Clean
