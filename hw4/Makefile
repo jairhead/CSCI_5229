@@ -4,7 +4,7 @@ EXE=hw4
 #  Msys/MinGW
 ifeq "$(OS)" "Windows_NT"
 CFLG=-O3 -Wall -DUSEGLEW -I.
-LIBS=-lfreeglut -lglew32 -lglu32 -lopengl32 -lm
+LIBS=-lfreeglut -lglew32 -lglu32 -lopengl32
 CLEAN=rm -f *.exe *.o *.a
 else
 #  OSX
@@ -21,7 +21,19 @@ endif
 CLEAN=rm -f $(EXE) *.o *.a
 endif
 
-OBJS := Sun.o Moon.o Star.o Cube.o RectangularPrism.o Sphere.o Road.o House.o DryGrass.o MountainBackdrop.o StreetLamp.o PrimaryGraphicsHelper.o
+OBJS := PrimaryGraphicsHelper.o \
+				ProjectionManager.o \
+				RectangularPrism.o \
+				Cube.o \
+				Sphere.o \
+        Sun.o \
+				Moon.o \
+				Star.o \
+				Road.o \
+				House.o \
+				DryGrass.o \
+				MountainBackdrop.o \
+				StreetLamp.o
 
 # Default
 default: all

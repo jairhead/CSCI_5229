@@ -291,7 +291,7 @@ void PrimaryGraphicsHelper::idle() {
 // initializeGlew() public member function
 // Tries to initialize GLEW (throws a GlewException if it fails)
 void PrimaryGraphicsHelper::initializeGlew() {
-  if (glewInit() != GLEW_OK) { throw GenericHomeworkException(); }
+  if (glewInit() != GLEW_OK) {throw GenericHomeworkException();}
   std::cout << "PrimaryGraphicsHelper::initializeGlew(): GLEW initialization successful!"
             << std::endl;
 }

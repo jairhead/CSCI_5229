@@ -11,17 +11,17 @@ int main(int argc,char* argv[]) {
   // Enter program
   std::cout << "hw4::main(): starting program" << std::endl;
 
-  // Initialize GLEW
-  #ifdef USEGLEW
-  try {PrimaryGraphicsHelper::initializeGlew();}
-  catch (GenericHomeworkException& e) {std::cout << e.what() << ": GLEW initialization failed!" << std::endl;}
-  #endif
-
   // Initialize GLUT w/ user args, z-buffer, double buffer
   glutInit(&argc, argv);
   glutInitWindowSize(600, 600);
   glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
   glutCreateWindow("Jared McKneely - CSCI 5229, Homework 4");
+
+  // Initialize GLEW
+  #ifdef USEGLEW
+  try {PrimaryGraphicsHelper::initializeGlew();}
+  catch (GenericHomeworkException& e) {std::cout << e.what() << ": GLEW initialization failed!" << std::endl; exit(1);}
+  #endif
 
   // Pass callback methods to GLUT & call GLUT main loop
   PrimaryGraphicsHelper::init();
