@@ -14,7 +14,7 @@ CFLG=-O3 -Wall -I.
 LIBS=-lglut -lGLU -lGL -lm
 endif
 # OSX/Linux/Unix/Solaris
-CLEAN=rm -f $(EXE) *.o *.a
+CLEAN=rm -f hw3 *.o *.a
 endif
 
 #  Link
