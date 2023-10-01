@@ -34,3 +34,4 @@ BaseObject.h & BaseObject.cpp:
 
 --- EXTERNAL RESOURCES ---
   - Color picker: https://keiwando.com/color-picker/
+  - Received assistance from Doncey Albin on correcting MacBook / OS X compiler issues that were not present on Windows
