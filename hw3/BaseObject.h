@@ -37,7 +37,8 @@ class BaseObject {
     double getX() {return xPos;}
     double getY() {return yPos;}
     double getZ() {return zPos;}
-    virtual void draw();
+    virtual void draw() = 0;
+    virtual ~BaseObject() {}
   protected:
     double xPos = 0.0;
     double yPos = 0.0;

@@ -30,4 +30,15 @@ class ProjectionManager {
   public:
     ProjectionManager();
     ~ProjectionManager();
+    void setOrthogonal();
+    void setDimension(double dim);
+    void setAspectRatio(double asp);
+    void setFieldOfView(double fov);
+    double getDimension();
+    double getAspectRatio();
+    double getFieldOfView();
+  private:
+    double dimension = 2.0;
+    double aspectRatio = 1.0;
+    double fieldOfView = 1.0;
 };

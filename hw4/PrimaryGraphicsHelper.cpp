@@ -7,6 +7,7 @@
 
 #include "PrimaryGraphicsHelper.h"
 #include "GenericHomeworkException.h"
+#include "ProjectionManager.h"
 
 #include "Cube.h"
 #include "Sphere.h"
@@ -21,14 +22,15 @@
 #include "StreetLamp.h"
 
 // Display Parameter Globals
-int th = -10;                     // Azimuth of view angle
-int ph = 20;                      // Elevation of view angle
-int mode = 1;                     // Mode for modifying display values
-double w = 1.0;                   // W variable
-const double DIM = 2;             // Dimension of orthogonal box
-const int IDLE_TIME = 2500;       // Time to pass between idle transitions
-int prevTime = 0;                 // Time of previous transition
-bool dayTime = true;              // Is the scene in daytime or nighttime?
+int th = -10;               // Azimuth of view angle
+int ph = 20;                // Elevation of view angle
+int mode = 1;               // Mode for modifying display values
+double w = 1.0;             // W variable
+const double DIM = 2;       // Dimension of orthogonal box
+const int IDLE_TIME = 2500; // Time to pass between idle transitions
+int prevTime = 0;           // Time of previous transition
+bool dayTime = true;        // Is the scene in daytime or nighttime?
+ProjectionManager *pm;      // Object that swaps between projection modes     
 
 // 3D Object Globals
 RectangularPrism *grass;
@@ -73,6 +75,10 @@ PrimaryGraphicsHelper::~PrimaryGraphicsHelper() { }
 // init() public member function
 // Initializes all objects for displaying
 void PrimaryGraphicsHelper::init() {
+  // Initialize projection object
+  pm = new ProjectionManager();
+
+  // Initialize 3D objects
   grass = new RectangularPrism();
   skyLeft = new RectangularPrism();
   skyRight = new RectangularPrism();
