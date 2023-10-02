@@ -22,8 +22,8 @@
 #include "StreetLamp.h"
 
 // Display Parameter Globals
-int th = -10;               // Azimuth of view angle
-int ph = 20;                // Elevation of view angle
+int th = 0;                 // Azimuth of view angle
+int ph = 0;                 // Elevation of view angle
 int mode = 1;               // Mode for modifying display values
 double w = 1.0;             // W variable
 const double DIM = 2;       // Dimension of orthogonal box
@@ -239,7 +239,8 @@ void PrimaryGraphicsHelper::display() {
 void PrimaryGraphicsHelper::reshape(int w, int h) {
   // Switch to projection matrix; undo previous updates
   glViewport(0, 0, (RES * w), (RES * h));
-  glMatrixMode(GL_PROJECTION);
+  pm->setOrthogonal();
+  /*glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
 
   // Calculate orthogonal projection
@@ -249,7 +250,7 @@ void PrimaryGraphicsHelper::reshape(int w, int h) {
 
   // Switch back to model matrix
   glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
+  glLoadIdentity();*/
 }
 
 // special() public member function
@@ -276,16 +277,16 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
   if (ch == 27) { exit(0) ;}
   else if (ch == '0') { th = 0; ph = 0; }
   else if (ch == '1') { pm->setOrthogonal(); }
-  else if (ch == '2') { pm->setProjection(); }
+  else if (ch == '2') { pm->setProjection(th, ph); }
   else if (ch == '+') {
-    double fovy = pm->getFieldOfView() + 0.5;
+    double fovy = pm->getFieldOfView() + 2.0;
     pm->setFieldOfView(fovy);
-    pm->setProjection();
+    pm->setProjection(th, ph);
   }
   else if (ch == '-') {
-    double fovy = pm->getFieldOfView() - 0.5;
+    double fovy = pm->getFieldOfView() - 2.0;
     pm->setFieldOfView(fovy);
-    pm->setProjection();
+    pm->setProjection(th, ph);
   }
   else { return; }
 

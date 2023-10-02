@@ -39,7 +39,7 @@ class ProjectionManager {
     double getFieldOfView();
     double getClippingDistanceFactor();
     void setOrthogonal();
-    void setProjection();
+    void setProjection(double th, double ph);
     void setFirstPerson();
   private:
     double dimension = 5.0;

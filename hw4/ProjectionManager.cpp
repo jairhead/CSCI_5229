@@ -54,7 +54,7 @@ void ProjectionManager::setOrthogonal() {
 
 // setProjection
 // Sets up a projection
-void ProjectionManager::setProjection() {
+void ProjectionManager::setProjection(double th, double ph) {
   // Modify projection matrix, undo previous transforms
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
@@ -63,7 +63,10 @@ void ProjectionManager::setProjection() {
   gluPerspective(fieldOfViewY, aspectRatio, (dimension / clipDistFactor), (dimension * clipDistFactor));
 
   // TODO: fix Ex, Ey, and Ez in this call
-  gluLookAt(0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, cosine(45.0), 0.0);
+  double Ex = (dimension * sine(th) * cosine(ph));
+  double Ey = (dimension * sine(th));
+  double Ez = (dimension * cosine(th) * cosine(ph));
+  gluLookAt(Ex, Ey, Ez, 0.0, 0.0, 0.0, 0.0, cosine(ph), 0.0);
 
   // Set back to model view, undo previous transforms
   glMatrixMode(GL_MODELVIEW);
