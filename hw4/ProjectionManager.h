@@ -30,15 +30,20 @@ class ProjectionManager {
   public:
     ProjectionManager();
     ~ProjectionManager();
-    void setOrthogonal();
     void setDimension(double dim);
     void setAspectRatio(double asp);
-    void setFieldOfView(double fov);
+    void setFieldOfView(double fovy);
+    void setClippingDistanceFactor(double cdf);
     double getDimension();
     double getAspectRatio();
     double getFieldOfView();
+    double getClippingDistanceFactor();
+    void setOrthogonal();
+    void setProjection();
+    void setFirstPerson();
   private:
     double dimension = 2.0;
     double aspectRatio = 1.0;
-    double fieldOfView = 1.0;
+    double fieldOfViewY = 90.0;
+    double clipDistFactor = 10.0;
 };
