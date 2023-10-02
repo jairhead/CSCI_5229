@@ -251,7 +251,7 @@ void PrimaryGraphicsHelper::special(int key, int x, int y) {
   else if (key == GLUT_KEY_UP) {ph += 1;}
   else if (key == GLUT_KEY_DOWN) {ph -= 1;}
 
-  // Normalize azimuth and elevation
+  // Normalize azimuth & elevation
   if (th < 0) {th = 359;}
   else if (th > 360) {th = 0;}
   if (ph < 0) {ph = 359;}
@@ -280,7 +280,7 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
     pm->setFieldOfView(fovy);
     pm->setProjection(th, ph);
   }
-  else { return; }
+  else {return;}
 
   // Redisplay
   glutPostRedisplay();
