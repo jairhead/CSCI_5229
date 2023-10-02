@@ -13,6 +13,21 @@ ProjectionManager::ProjectionManager() { }
 // Destructor
 ProjectionManager::~ProjectionManager() { }
 
+
+// Theta Setter
+void ProjectionManager::setTheta(double th) {
+  if (th < 0) {th = 359;}
+  else if (th > 360) {th = 0;}
+  theta = th;
+}
+
+// Phi Setter
+void ProjectionManager::setPhi(double ph) {
+  if (ph < 0) {ph = 359;}
+  else if (ph > 360) {ph = 0;}
+  phi = ph;
+}
+
 // Dimension Setter
 void ProjectionManager::setDimension(double dim) {dimension = dim;}
 
@@ -24,6 +39,12 @@ void ProjectionManager::setFieldOfView(double fovy) {fieldOfViewY = fovy;}
 
 // Clipping Distance Factor Setter
 void ProjectionManager::setClippingDistanceFactor(double cdf) {clipDistFactor = cdf;}
+
+// Theta Getter
+double ProjectionManager::getTheta() {return theta;}
+
+// Phi Getter
+double ProjectionManager::getPhi() {return phi;}
 
 // Dimension Getter
 double ProjectionManager::getDimension() {return dimension;}
@@ -52,6 +73,10 @@ void ProjectionManager::setOrthogonal() {
           (-clipCorrection * dimension),
           (clipCorrection * dimension));
 
+  // Rotate
+  glRotated(phi, 1, 0, 0);
+  glRotated(theta, 0, 1, 0);
+
   // Set back to model view, undo previous transforms
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
@@ -59,7 +84,7 @@ void ProjectionManager::setOrthogonal() {
 
 // setProjection
 // Sets up a projection
-void ProjectionManager::setProjection(double th, double ph) {
+void ProjectionManager::setProjection() {
   // Modify projection matrix, undo previous transforms
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
@@ -69,15 +94,21 @@ void ProjectionManager::setProjection(double th, double ph) {
                  (dimension / clipDistFactor),
                  (dimension * clipDistFactor));
 
-  // TODO: fix Ex, Ey, and Ez in this call
-  double Ex = (-lookAtCorrection * dimension * sine(th) * cosine(ph));
-  double Ey = (lookAtCorrection * dimension * sine(th));
-  double Ez = (lookAtCorrection * dimension * cosine(th) * cosine(ph));
-  gluLookAt(Ex, Ey, Ez, 0.0, 0.0, 0.0, 0.0, cosine(ph), 0.0);
+  // Call setLookAt()
+  setLookAt();
 
   // Set back to model view, undo previous transforms
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
+}
+
+// setLookAt
+// Sets up the camera in a projection view
+void ProjectionManager::setLookAt() {
+  double Ex = (-lookAtCorrection * dimension * sine(theta) * cosine(phi));
+  double Ey = (lookAtCorrection * dimension * sine(phi));
+  double Ez = (lookAtCorrection * dimension * cosine(theta) * cosine(phi));
+  gluLookAt(Ex, Ey, Ez, 0.0, 0.0, 0.0, 0.0, cosine(phi), 0.0);
 }
 
 // setFirstPerson

@@ -6,6 +6,7 @@
  */
 
 #include "PrimaryGraphicsHelper.h"
+
 #include "GenericHomeworkException.h"
 #include "ProjectionManager.h"
 
@@ -22,8 +23,6 @@
 #include "StreetLamp.h"
 
 // Display Parameter Globals
-int th = 0;                 // Azimuth of view angle
-int ph = 0;                 // Elevation of view angle
 int mode = 1;               // Mode for modifying display values
 double w = 1.0;             // w value
 const int IDLE_TIME = 2500; // Time to pass between idle transitions
@@ -109,8 +108,14 @@ void PrimaryGraphicsHelper::display() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glEnable(GL_DEPTH_TEST);
   glLoadIdentity();
-  glRotated(ph, 1, 0, 0);
-  glRotated(th, 0, 1, 0);
+  
+
+  if (mode == 2) {
+    pm->setProjection();
+  }
+  else {
+    pm->setOrthogonal();
+  }
 
   // Draw axes
   createAxes();
@@ -246,16 +251,16 @@ void PrimaryGraphicsHelper::reshape(int w, int h) {
 // Callback for glutSpecialFunc()
 void PrimaryGraphicsHelper::special(int key, int x, int y) {
   // Handle key display navigation
+  double th = pm->getTheta();
+  double ph = pm->getPhi();
   if (key == GLUT_KEY_RIGHT) {th += 1;}
   else if (key == GLUT_KEY_LEFT) {th -= 1;}
   else if (key == GLUT_KEY_UP) {ph += 1;}
   else if (key == GLUT_KEY_DOWN) {ph -= 1;}
 
-  // Normalize azimuth & elevation
-  if (th < 0) {th = 359;}
-  else if (th > 360) {th = 0;}
-  if (ph < 0) {ph = 359;}
-  else if (ph > 360) {ph = 0;}
+  // Set theta and phi
+  pm->setTheta(th);
+  pm->setPhi(ph);
 
   // Redisplay
   glutPostRedisplay();
@@ -266,19 +271,17 @@ void PrimaryGraphicsHelper::special(int key, int x, int y) {
 // Callback for glutKeyboardFunc()
 void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
   // Handle alphanumeric keys
-  if (ch == 27) { exit(0) ;}
-  else if (ch == '0') { th = 0; ph = 0; }
-  else if (ch == '1') { pm->setOrthogonal(); mode = 1; }
-  else if (ch == '2') { pm->setProjection(th, ph); mode = 2; }
+  if (ch == 27) {exit(0);}
+  else if (ch == '0') { pm->setTheta(0.0); pm->setPhi(0.0); }
+  else if (ch == '1') {mode = 1;}
+  else if (ch == '2') {mode = 2;}
   else if (ch == '+' && mode == 2) {
     double fovy = pm->getFieldOfView() + 2.0;
     pm->setFieldOfView(fovy);
-    pm->setProjection(th, ph);
   }
   else if (ch == '-' && mode == 2) {
     double fovy = pm->getFieldOfView() - 2.0;
     pm->setFieldOfView(fovy);
-    pm->setProjection(th, ph);
   }
   else {return;}
 
@@ -359,8 +362,8 @@ void PrimaryGraphicsHelper::displayText(std::string text) {
 void PrimaryGraphicsHelper::displayParams() {
   // Create string
   std::string parameters;
-  parameters += "th = "; parameters += std::to_string(th);
-  parameters += ", ph = "; parameters += std::to_string(ph);
+  parameters += "th = "; parameters += std::to_string(pm->getTheta());
+  parameters += ", ph = "; parameters += std::to_string(pm->getPhi());
   parameters += ", time: ";
   if (dayTime) { parameters += "day"; }
   else { parameters += "night"; }

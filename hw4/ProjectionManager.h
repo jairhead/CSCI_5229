@@ -5,43 +5,31 @@
  */
 
 #include <iostream>
-#include <math.h>
-
-// OpenGL with prototypes for glext
-#ifdef USEGLEW
-#include <GL/glew.h>
-#endif
-
-// Include glut header
-#define GL_GLEXT_PROTOTYPES
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-#else
-#include <GL/glut.h>
-#endif
-
-// Default resolution
-#ifndef RES
-#define RES 1
-#endif
+#include "GlutIncludes.h"
 
 class ProjectionManager {
   public:
     ProjectionManager();
     ~ProjectionManager();
+    void setTheta(double th);
+    void setPhi(double ph);
     void setDimension(double dim);
     void setAspectRatio(double asp);
     void setFieldOfView(double fovy);
     void setClippingDistanceFactor(double cdf);
+    double getTheta();
+    double getPhi();
     double getDimension();
     double getAspectRatio();
     double getFieldOfView();
     double getClippingDistanceFactor();
     void setOrthogonal();
-    void setProjection(double th, double ph);
+    void setProjection();
+    void setLookAt();
     void setFirstPerson();
   private:
+    double theta = 0.0;
+    double phi = 0.0;
     double dimension = 1.0;
     double aspectRatio = 5.0;
     double orthoCorrection = 0.25;
