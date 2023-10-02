@@ -62,6 +62,9 @@ void ProjectionManager::setProjection() {
   // Multiply by a projection matrix
   gluPerspective(fieldOfViewY, aspectRatio, (dimension / clipDistFactor), (dimension * clipDistFactor));
 
+  // TODO: fix Ex, Ey, and Ez in this call
+  gluLookAt(0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, cosine(45.0), 0.0);
+
   // Set back to model view, undo previous transforms
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
@@ -70,3 +73,11 @@ void ProjectionManager::setProjection() {
 // setFirstPerson
 // Sets up a first person view
 void ProjectionManager::setFirstPerson() { }
+
+// sine() private member function
+// Returns the sine of the provided angle in degrees
+double ProjectionManager::sine(double angle) {return sin(angle * (3.14159265 / 180));}
+
+// cosine() private member function
+// Returns the cosine of the provided angle in degrees
+double ProjectionManager::cosine(double angle) {return cos(angle * (3.14159265 / 180));}

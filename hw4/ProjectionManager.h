@@ -42,8 +42,10 @@ class ProjectionManager {
     void setProjection();
     void setFirstPerson();
   private:
-    double dimension = 2.0;
+    double dimension = 5.0;
     double aspectRatio = 1.0;
-    double fieldOfViewY = 90.0;
+    double fieldOfViewY = 55.0;
     double clipDistFactor = 10.0;
+    double sine(double angle);
+    double cosine(double angle);
 };

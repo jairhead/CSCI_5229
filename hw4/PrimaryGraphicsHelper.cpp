@@ -275,6 +275,18 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
   // Handle alphanumeric keys
   if (ch == 27) { exit(0) ;}
   else if (ch == '0') { th = 0; ph = 0; }
+  else if (ch == '1') { pm->setOrthogonal(); }
+  else if (ch == '2') { pm->setProjection(); }
+  else if (ch == '+') {
+    double fovy = pm->getFieldOfView() + 0.5;
+    pm->setFieldOfView(fovy);
+    pm->setProjection();
+  }
+  else if (ch == '-') {
+    double fovy = pm->getFieldOfView() - 0.5;
+    pm->setFieldOfView(fovy);
+    pm->setProjection();
+  }
   else { return; }
 
   // Redisplay
