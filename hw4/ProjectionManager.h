@@ -44,8 +44,11 @@ class ProjectionManager {
   private:
     double dimension = 1.0;
     double aspectRatio = 5.0;
-    double fieldOfViewY = 55.0;
+    double orthoCorrection = 0.25;
+    double fieldOfViewY = 90.0;
     double clipDistFactor = 10.0;
+    double clipCorrection = 4.0;
+    double lookAtCorrection = 2.5;
     double sine(double angle);
     double cosine(double angle);
 };

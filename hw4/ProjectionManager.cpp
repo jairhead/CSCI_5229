@@ -45,7 +45,12 @@ void ProjectionManager::setOrthogonal() {
   glLoadIdentity();
 
   // Multiply by orthographic matrix
-  glOrtho((-aspectRatio * dimension) - 0.25, (aspectRatio * dimension) + 0.25, -dimension - 0.25, dimension + 0.25, -dimension, 4 * dimension);
+  glOrtho((-aspectRatio * dimension) - orthoCorrection,
+          (aspectRatio * dimension) + orthoCorrection,
+          (-dimension - orthoCorrection),
+          (dimension + orthoCorrection),
+          (-clipCorrection * dimension),
+          (clipCorrection * dimension));
 
   // Set back to model view, undo previous transforms
   glMatrixMode(GL_MODELVIEW);
@@ -60,12 +65,14 @@ void ProjectionManager::setProjection(double th, double ph) {
   glLoadIdentity();
 
   // Multiply by a projection matrix
-  gluPerspective(fieldOfViewY, aspectRatio, (dimension / clipDistFactor), (dimension * clipDistFactor));
+  gluPerspective(fieldOfViewY, aspectRatio,
+                 (dimension / clipDistFactor),
+                 (dimension * clipDistFactor));
 
   // TODO: fix Ex, Ey, and Ez in this call
-  double Ex = (dimension * sine(th) * cosine(ph));
-  double Ey = (dimension * sine(th));
-  double Ez = (dimension * cosine(th) * cosine(ph));
+  double Ex = (-lookAtCorrection * dimension * sine(th) * cosine(ph));
+  double Ey = (lookAtCorrection * dimension * sine(th));
+  double Ez = (lookAtCorrection * dimension * cosine(th) * cosine(ph));
   gluLookAt(Ex, Ey, Ez, 0.0, 0.0, 0.0, 0.0, cosine(ph), 0.0);
 
   // Set back to model view, undo previous transforms

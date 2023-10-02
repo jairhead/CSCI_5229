@@ -25,8 +25,7 @@
 int th = 0;                 // Azimuth of view angle
 int ph = 0;                 // Elevation of view angle
 int mode = 1;               // Mode for modifying display values
-double w = 1.0;             // W variable
-const double DIM = 2;       // Dimension of orthogonal box
+double w = 1.0;             // w value
 const int IDLE_TIME = 2500; // Time to pass between idle transitions
 int prevTime = 0;           // Time of previous transition
 bool dayTime = true;        // Is the scene in daytime or nighttime?
@@ -229,7 +228,6 @@ void PrimaryGraphicsHelper::display() {
   errorCheck("PrimaryGraphicsHelper::display() display parameters");
 
   // Flush and swap buffers
-  pm->setOrthogonal();
   glFlush();
   glutSwapBuffers();
 }
@@ -238,7 +236,7 @@ void PrimaryGraphicsHelper::display() {
 // Primary OpenGL window resize function
 // Callback for glutReshapeFunc()
 void PrimaryGraphicsHelper::reshape(int w, int h) {
-  if (h > 0) {pm->setAspectRatio((double)w / (double)h);}
+  if (h > 0) {pm->setAspectRatio((double)w / h);}
   glViewport(0, 0, w, h);
   pm->setOrthogonal();
 }
@@ -248,14 +246,18 @@ void PrimaryGraphicsHelper::reshape(int w, int h) {
 // Callback for glutSpecialFunc()
 void PrimaryGraphicsHelper::special(int key, int x, int y) {
   // Handle key display navigation
-  if (key == GLUT_KEY_RIGHT) { th += 1; }
-  else if (key == GLUT_KEY_LEFT) { th -= 1; }
-  else if (key == GLUT_KEY_UP) { ph += 1; }
-  else if (key == GLUT_KEY_DOWN) { ph -= 1; }
+  if (key == GLUT_KEY_RIGHT) {th += 1;}
+  else if (key == GLUT_KEY_LEFT) {th -= 1;}
+  else if (key == GLUT_KEY_UP) {ph += 1;}
+  else if (key == GLUT_KEY_DOWN) {ph -= 1;}
 
-  // Normalize azimuth and elevation; redisplay
-  th %= 360;
-  ph %= 360;
+  // Normalize azimuth and elevation
+  if (th < 0) {th = 359;}
+  else if (th > 360) {th = 0;}
+  if (ph < 0) {ph = 359;}
+  else if (ph > 360) {ph = 0;}
+
+  // Redisplay
   glutPostRedisplay();
 }
 
@@ -266,14 +268,14 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
   // Handle alphanumeric keys
   if (ch == 27) { exit(0) ;}
   else if (ch == '0') { th = 0; ph = 0; }
-  else if (ch == '1') { pm->setOrthogonal(); }
-  else if (ch == '2') { pm->setProjection(th, ph); }
-  else if (ch == '+') {
+  else if (ch == '1') { pm->setOrthogonal(); mode = 1; }
+  else if (ch == '2') { pm->setProjection(th, ph); mode = 2; }
+  else if (ch == '+' && mode == 2) {
     double fovy = pm->getFieldOfView() + 2.0;
     pm->setFieldOfView(fovy);
     pm->setProjection(th, ph);
   }
-  else if (ch == '-') {
+  else if (ch == '-' && mode == 2) {
     double fovy = pm->getFieldOfView() - 2.0;
     pm->setFieldOfView(fovy);
     pm->setProjection(th, ph);
