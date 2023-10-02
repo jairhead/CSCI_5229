@@ -229,6 +229,7 @@ void PrimaryGraphicsHelper::display() {
   errorCheck("PrimaryGraphicsHelper::display() display parameters");
 
   // Flush and swap buffers
+  pm->setOrthogonal();
   glFlush();
   glutSwapBuffers();
 }
@@ -237,20 +238,9 @@ void PrimaryGraphicsHelper::display() {
 // Primary OpenGL window resize function
 // Callback for glutReshapeFunc()
 void PrimaryGraphicsHelper::reshape(int w, int h) {
-  // Switch to projection matrix; undo previous updates
-  glViewport(0, 0, (RES * w), (RES * h));
+  if (h > 0) {pm->setAspectRatio((double)w / (double)h);}
+  glViewport(0, 0, w, h);
   pm->setOrthogonal();
-  /*glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-
-  // Calculate orthogonal projection
-  double asp = 1.0;
-  if (h > 0) { asp = (double)(w / h); }
-  glOrtho((-asp * DIM), (asp * DIM), -DIM, DIM, -DIM, DIM);
-
-  // Switch back to model matrix
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();*/
 }
 
 // special() public member function

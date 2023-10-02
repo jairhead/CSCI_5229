@@ -45,7 +45,7 @@ void ProjectionManager::setOrthogonal() {
   glLoadIdentity();
 
   // Multiply by orthographic matrix
-  glOrtho((-aspectRatio * dimension), (aspectRatio * dimension), -dimension, dimension, -dimension, dimension);
+  glOrtho((-aspectRatio * dimension) - 0.25, (aspectRatio * dimension) + 0.25, -dimension - 0.25, dimension + 0.25, -dimension, 4 * dimension);
 
   // Set back to model view, undo previous transforms
   glMatrixMode(GL_MODELVIEW);

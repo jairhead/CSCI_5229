@@ -29,7 +29,7 @@ int main(int argc,char* argv[]) {
   glutReshapeFunc(PrimaryGraphicsHelper::reshape);
   glutSpecialFunc(PrimaryGraphicsHelper::special);
   glutKeyboardFunc(PrimaryGraphicsHelper::key);
-  glutIdleFunc(PrimaryGraphicsHelper::idle);
+  //glutIdleFunc(PrimaryGraphicsHelper::idle);
   glutMainLoop();
 
   // Exit program
