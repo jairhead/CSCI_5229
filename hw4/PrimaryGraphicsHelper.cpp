@@ -109,13 +109,10 @@ void PrimaryGraphicsHelper::display() {
   glEnable(GL_DEPTH_TEST);
   glLoadIdentity();
   
-
-  if (mode == 2) {
-    pm->setProjection();
-  }
-  else {
-    pm->setOrthogonal();
-  }
+  // Set view
+  if (mode == 1) {pm->setOrthogonal();}
+  else if (mode == 2) {pm->setProjection();}
+  else if (mode == 3) {pm->setFirstPerson();}
 
   // Draw axes
   createAxes();
@@ -226,6 +223,10 @@ void PrimaryGraphicsHelper::display() {
   streetLamp2->draw();
   errorCheck("PrimaryGraphicsHelper::display() street lamps");
 
+  // Set day or night
+  if (dayTime) {transitionToDay();}
+  else if (!dayTime) {transitionToNight();}
+
   // Display parameters
   glColor3d(1.0, 1.0, 1.0);
   glWindowPos2i(5,5);
@@ -273,8 +274,8 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
   // Handle alphanumeric keys
   if (ch == 27) {exit(0);}
   else if (ch == '0') { pm->setTheta(0.0); pm->setPhi(0.0); }
-  else if (ch == '1') {mode = 1;}
-  else if (ch == '2') {mode = 2;}
+  else if (ch == '1') {mode += 1; mode %= 3;}
+  else if (ch == '2') {dayTime = !dayTime;}
   else if (ch == '+' && mode == 2) {
     double fovy = pm->getFieldOfView() + 2.0;
     pm->setFieldOfView(fovy);
@@ -362,9 +363,12 @@ void PrimaryGraphicsHelper::displayText(std::string text) {
 void PrimaryGraphicsHelper::displayParams() {
   // Create string
   std::string parameters;
-  parameters += "th = "; parameters += std::to_string(pm->getTheta());
-  parameters += ", ph = "; parameters += std::to_string(pm->getPhi());
-  parameters += ", time: ";
+  parameters += "th = "; parameters += std::to_string(pm->getTheta()); parameters += ", ";
+  parameters += "ph = "; parameters += std::to_string(pm->getPhi()); parameters += ", ";
+  if (mode == 1) {parameters += "view mode: ortho, ";}
+  else if (mode == 2) {parameters += "view mode: projection, ";}
+  else if (mode == 3) {parameters += "view mode: first person, ";}
+  parameters += "time: ";
   if (dayTime) { parameters += "day"; }
   else { parameters += "night"; }
 
