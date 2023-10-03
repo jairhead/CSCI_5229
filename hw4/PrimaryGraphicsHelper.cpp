@@ -254,10 +254,14 @@ void PrimaryGraphicsHelper::special(int key, int x, int y) {
   // Handle key display navigation
   double th = pm->getTheta();
   double ph = pm->getPhi();
-  if (key == GLUT_KEY_RIGHT) {th += 1;}
-  else if (key == GLUT_KEY_LEFT) {th -= 1;}
-  else if (key == GLUT_KEY_UP) {ph += 1;}
-  else if (key == GLUT_KEY_DOWN) {ph -= 1;}
+  if (key == GLUT_KEY_RIGHT && mode != 3) {th += 1;}
+  else if (key == GLUT_KEY_LEFT && mode != 3) {th -= 1;}
+  else if (key == GLUT_KEY_UP && mode != 3) {ph += 1;}
+  else if (key == GLUT_KEY_DOWN && mode != 3) {ph -= 1;}
+  else if (key == GLUT_KEY_RIGHT && mode == 3) {pm->turnRight();}
+  else if (key == GLUT_KEY_LEFT && mode == 3) {pm->turnLeft();}
+  else if (key == GLUT_KEY_UP && mode == 3) {pm->lookUp();}
+  else if (key == GLUT_KEY_DOWN && mode == 3) {pm->lookDown();}
 
   // Set theta and phi
   pm->setTheta(th);
@@ -285,9 +289,9 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
     pm->setFieldOfView(fovy);
   }
   else if (ch == 'w' && mode == 3) {pm->moveForward();}
-  else if (ch == 'a' && mode == 3) {pm->turnLeft();}
+  else if (ch == 'a' && mode == 3) {pm->moveLeft();}
   else if (ch == 's' && mode == 3) {pm->moveBackward();}
-  else if (ch == 'd' && mode == 3) {pm->turnRight();}
+  else if (ch == 'd' && mode == 3) {pm->moveRight();}
   else {return;}
 
   // Redisplay

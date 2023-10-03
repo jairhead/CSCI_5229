@@ -118,7 +118,7 @@ void ProjectionManager::setFirstPerson() {
                  (dimension * (clipDistFactor * 10.0)));
 
   // Call gluLookAt()
-  gluLookAt(fpXPos, fpHeight, fpZPos, fpCx, fpHeight, fpCz, 0.0, cosine(phi), 0.0);
+  gluLookAt(fpXPos, fpHeight, fpZPos, fpCx, fpHeight, fpCz, 0.0, cosine(fpPhi), 0.0);
 
   // Set back to model view, undo previous transforms
   glMatrixMode(GL_MODELVIEW);
@@ -143,6 +143,18 @@ void ProjectionManager::moveBackward() {
   fpCz = fpCz - (movementSpeed * sine(fpTheta));
 }
 
+// moveRight
+// Moves the first person character to the right
+void ProjectionManager::moveRight() {
+  // TODO: implement this method
+}
+
+// moveLeft
+// Moves the first person character to the left
+void ProjectionManager::moveLeft() {
+  // TODO: implement this method
+}
+
 // turnRight
 // Rotates the first person character to the right
 void ProjectionManager::turnRight() {
@@ -159,6 +171,20 @@ void ProjectionManager::turnLeft() {
   fpCz = fpZPos + (movementSpeed * sine(fpTheta));
 }
 
+// lookUp
+// Rotates the first person character's head upward
+void ProjectionManager::lookUp() {
+  // TODO : implement this method
+  fpPhi += turnSpeed;
+}
+
+// lookDown
+// Rotates the first person character's head upward
+void ProjectionManager::lookDown() {
+  // TODO : implement this method
+  fpPhi -= turnSpeed;
+}
+
 // sine() private member function
 // Returns the sine of the provided angle in degrees
 double ProjectionManager::sine(double angle) {return sin(angle * (3.14159265 / 180));}
@@ -166,7 +192,3 @@ double ProjectionManager::sine(double angle) {return sin(angle * (3.14159265 / 1
 // cosine() private member function
 // Returns the cosine of the provided angle in degrees
 double ProjectionManager::cosine(double angle) {return cos(angle * (3.14159265 / 180));}
-
-// tangent() private member function
-// Returns the tangent of the provided angle in degrees
-double ProjectionManager::tangent(double angle) {return tan(angle * (3.14159265 / 180));}

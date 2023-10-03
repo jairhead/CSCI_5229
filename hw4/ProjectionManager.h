@@ -28,8 +28,12 @@ class ProjectionManager {
     void setFirstPerson();
     void moveForward();
     void moveBackward();
+    void moveRight();
+    void moveLeft();
     void turnRight();
     void turnLeft();
+    void lookUp();
+    void lookDown();
   private:
     // Ortho and Projection Variables
     double theta = 0.0;
@@ -47,13 +51,14 @@ class ProjectionManager {
     double fpXPos = 0.01;
     double fpZPos = 0.01;
     double fpCx = 0.02;
+    double fpCy = 0.1;
     double fpCz = 0.02;
     double fpTheta = 45.0;
+    double fpPhi = 0.0;
     double movementSpeed = 0.01;
     double turnSpeed = 1.0;
 
     // Angle Computations
     double sine(double angle);
     double cosine(double angle);
-    double tangent(double angle);
 };
