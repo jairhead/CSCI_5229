@@ -25,8 +25,11 @@ class ProjectionManager {
     double getClippingDistanceFactor();
     void setOrthogonal();
     void setProjection();
-    void setLookAt();
     void setFirstPerson();
+    void moveForward();
+    void moveBackward();
+    void turnRight();
+    void turnLeft();
   private:
     double theta = 0.0;
     double phi = 0.0;
@@ -35,8 +38,19 @@ class ProjectionManager {
     double orthoCorrection = 0.25;
     double fieldOfViewY = 90.0;
     double clipDistFactor = 10.0;
-    double clipCorrection = 4.0;
+    double clipCorrection = 10.0;
     double lookAtCorrection = 2.5;
+
+    double fpHeight = 0.1;
+    double fpXPos = 0.01;
+    double fpZPos = 0.01;
+    double fpCx = 0.02;
+    double fpCz = 0.02;
+    double fpTheta = 45.0;
+    double movementSpeed = 0.01;
+    double turnSpeed = 1.0;
+
     double sine(double angle);
     double cosine(double angle);
+    double tangent(double angle);
 };

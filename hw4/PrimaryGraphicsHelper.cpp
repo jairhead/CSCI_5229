@@ -273,8 +273,8 @@ void PrimaryGraphicsHelper::special(int key, int x, int y) {
 void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
   // Handle alphanumeric keys
   if (ch == 27) {exit(0);}
-  else if (ch == '0') { pm->setTheta(0.0); pm->setPhi(0.0); }
-  else if (ch == '1') {mode += 1; mode %= 3;}
+  else if (ch == '0') {pm->setTheta(0.0); pm->setPhi(0.0);}
+  else if (ch == '1') {mode += 1; if (mode > 3) {mode = 1;}}
   else if (ch == '2') {dayTime = !dayTime;}
   else if (ch == '+' && mode == 2) {
     double fovy = pm->getFieldOfView() + 2.0;
@@ -284,6 +284,10 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
     double fovy = pm->getFieldOfView() - 2.0;
     pm->setFieldOfView(fovy);
   }
+  else if (ch == 'w' && mode == 3) {pm->moveForward();}
+  else if (ch == 'a' && mode == 3) {pm->turnLeft();}
+  else if (ch == 's' && mode == 3) {pm->moveBackward();}
+  else if (ch == 'd' && mode == 3) {pm->turnRight();}
   else {return;}
 
   // Redisplay
@@ -418,7 +422,7 @@ void PrimaryGraphicsHelper::transitionToDay() {
   spaceC[0][0] = spaceC[1][0]; spaceC[0][1] = spaceC[1][1]; spaceC[0][2] = spaceC[1][2];
   streetLamp1->color(true);
   streetLamp2->color(true);
-  road->color(false);
+  road->color(true);
   moonZ = -1.03; sunZ = -0.97;
   glutPostRedisplay();
 }

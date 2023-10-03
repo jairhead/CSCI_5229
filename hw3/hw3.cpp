@@ -5,8 +5,8 @@
  */
 
 #include <iostream>
-#include "GenericHomeworkException.h"
 #include "PrimaryGraphicsHelper.h"
+#include "GenericHomeworkException.h"
 
 // Main
 int main(int argc,char* argv[])
@@ -22,8 +22,9 @@ int main(int argc,char* argv[])
 
   // Initialize GLEW
   #ifdef USEGLEW
-  try {PrimaryGraphicsHelper::initializeGlew();}
-  catch (GenericHomeworkException& e) { std::cout << e.what() << ": GLEW initialization failed!" << std::endl; }
+  if (glewInit() != GLEW_OK) { throw GenericHomeworkException(); }
+  std::cout << "hw3::main(): GLEW initialization successful!"
+            << std::endl;
   #endif
 
   // Pass callback methods to GLUT

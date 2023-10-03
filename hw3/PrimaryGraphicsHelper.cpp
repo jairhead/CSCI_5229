@@ -6,7 +6,6 @@
  */
 
 #include "PrimaryGraphicsHelper.h"
-#include "GenericHomeworkException.h"
 
 #include "Cube.h"
 #include "Sphere.h"
@@ -218,7 +217,9 @@ void PrimaryGraphicsHelper::display() {
 
   // Display parameters
   glColor3d(1.0, 1.0, 1.0);
+  #ifdef USEGLEW
   glWindowPos2i(5,5);
+  #endif
   displayParams();
   errorCheck("PrimaryGraphicsHelper::display() display parameters");
 
@@ -288,14 +289,6 @@ void PrimaryGraphicsHelper::idle() {
   }
 }
 
-// initializeGlew() public member function
-// Tries to initialize GLEW (throws a GlewException if it fails)
-void PrimaryGraphicsHelper::initializeGlew() {
-  if (glewInit() != GLEW_OK) { throw GenericHomeworkException(); }
-  std::cout << "PrimaryGraphicsHelper::initializeGlew(): GLEW initialization successful!"
-            << std::endl;
-}
-
 // createAxes() private member function
 // Helper method that displays the x, y, and z axes, puts dots on the ends, and labels them
 void PrimaryGraphicsHelper::createAxes() {
@@ -355,7 +348,11 @@ void PrimaryGraphicsHelper::displayParams() {
   else { parameters += "night"; }
 
   // Display
+  #ifdef USEGLEW
   displayText(parameters);
+  #else
+  std::cout << parameters << std::endl;
+  #endif
 }
 
 // errorCheck() private member function
