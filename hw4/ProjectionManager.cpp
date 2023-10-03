@@ -130,8 +130,8 @@ void ProjectionManager::setFirstPerson() {
 void ProjectionManager::moveForward() {
   fpXPos += (movementSpeed * cosine(fpTheta));
   fpZPos += (movementSpeed * sine(fpTheta));
-  fpCx = fpCx + (movementSpeed * cosine(fpTheta));
-  fpCz = fpCz + (movementSpeed * sine(fpTheta));
+  fpCx += (movementSpeed * cosine(fpTheta));
+  fpCz += (movementSpeed * sine(fpTheta));
 }
 
 // moveBackward
@@ -139,20 +139,26 @@ void ProjectionManager::moveForward() {
 void ProjectionManager::moveBackward() {
   fpXPos -= (movementSpeed * cosine(fpTheta));
   fpZPos -= (movementSpeed * sine(fpTheta));
-  fpCx = fpCx - (movementSpeed * cosine(fpTheta));
-  fpCz = fpCz - (movementSpeed * sine(fpTheta));
+  fpCx -= (movementSpeed * cosine(fpTheta));
+  fpCz -= (movementSpeed * sine(fpTheta));
 }
 
 // moveRight
 // Moves the first person character to the right
 void ProjectionManager::moveRight() {
-  // TODO: implement this method
+  fpXPos -= (movementSpeed * cosine(fpTheta));
+  fpZPos += (movementSpeed * sine(fpTheta));
+  fpCx -= (movementSpeed * cosine(fpTheta));
+  fpCz += (movementSpeed * sine(fpTheta));
 }
 
 // moveLeft
 // Moves the first person character to the left
 void ProjectionManager::moveLeft() {
-  // TODO: implement this method
+  fpXPos += (movementSpeed * cosine(fpTheta));
+  fpZPos -= (movementSpeed * sine(fpTheta));
+  fpCx += (movementSpeed * cosine(fpTheta));
+  fpCz -= (movementSpeed * sine(fpTheta));
 }
 
 // turnRight
