@@ -31,6 +31,7 @@ class ProjectionManager {
     void turnRight();
     void turnLeft();
   private:
+    // Ortho and Projection Variables
     double theta = 0.0;
     double phi = 0.0;
     double dimension = 1.0;
@@ -41,6 +42,7 @@ class ProjectionManager {
     double clipCorrection = 10.0;
     double lookAtCorrection = 2.5;
 
+    // First Person Navigation Variables
     double fpHeight = 0.1;
     double fpXPos = 0.01;
     double fpZPos = 0.01;
@@ -50,6 +52,7 @@ class ProjectionManager {
     double movementSpeed = 0.01;
     double turnSpeed = 1.0;
 
+    // Angle Computations
     double sine(double angle);
     double cosine(double angle);
     double tangent(double angle);
