@@ -17,14 +17,8 @@ endif
 CLEAN=rm -f hw3 *.o *.a
 endif
 
-TARGETS := hw3.o Sun.o Moon.o Star.o Cube.o RectangularPrism.o Sphere.o Road.o House.o DryGrass.o MountainBackdrop.o StreetLamp.o PrimaryGraphicsHelper.o
-
-# Compile rules
-.cpp.o:
-	g++ -c $(CFLG) $<
-
 #  Link
-hw3: $(TARGETS)
+hw3:hw3.cpp PrimaryGraphicsHelper.cpp Cube.cpp RectangularPrism.cpp Sphere.cpp Sun.cpp Moon.cpp Star.cpp Road.cpp House.cpp DryGrass.cpp MountainBackdrop.cpp StreetLamp.cpp
 	g++ $(CFLG) -o $@ $^ $(LIBS)
 
 #  Clean

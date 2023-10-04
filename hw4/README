@@ -1,12 +1,12 @@
 Name: Jared McKneely
 Course: CSCI 5229 (Computer Graphics)
 Semester: Fall 2023
-Assignment Homework #3
+Assignment Homework #4
 
 ----- ABOUT THIS PROGRAM -----
 
 --- DESCRIPTION OF FILES ---
-hw3.cpp:
+hw4.cpp:
   - Contains main()
 
 PrimaryGraphicsHelper.h:
@@ -21,6 +21,10 @@ PrimaryGraphicsHelper.cpp:
   - Defines idle() - static callback for glutIdleFunc();
   - Defines other private member functions to assist with drawing objects to the screen (comments describe functionality)
 
+ProjectionManager.h & .cpp:
+  - Manages all three view modes
+  - Manages first person navigation
+
 BaseObject.h & BaseObject.cpp:
   - Abstract class for all other objects in the project
 
@@ -31,7 +35,21 @@ BaseObject.h & BaseObject.cpp:
   - arrow keys: change viewing angle
   - 0: reset viewing angle
   - ESC: exit the program
+  - 't': toggle between auto day/night cycle and manual
+  - 'T': toggle between day and night
+  - 'r': print parameters to terminal (only without GLEW)
+  - 'm': cycle between three display modes (ortho, projection, first person)
+  - In ortho and projection display modes:
+    - arrow keys: change viewing angle
+  - In projection display mode:
+    - '+': increase field of view
+    - '-': decrease field of view
+  - In first person display mode:
+    - arrow keys: turn left, turn right, look up, look down
+    - 'w': move forward
+    - 'a': move left
+    - 's': move backward
+    - 'd': move right
 
 --- EXTERNAL RESOURCES ---
   - Color picker: https://keiwando.com/color-picker/
-  - Received assistance from Doncey Albin on correcting MacBook / OS X compiler issues that were not present on Windows

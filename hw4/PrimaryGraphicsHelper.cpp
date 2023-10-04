@@ -7,6 +7,9 @@
 
 #include "PrimaryGraphicsHelper.h"
 
+#include "GenericHomeworkException.h"
+#include "ProjectionManager.h"
+
 #include "Cube.h"
 #include "Sphere.h"
 #include "RectangularPrism.h"
@@ -18,22 +21,28 @@
 #include "DryGrass.h"
 #include "MountainBackdrop.h"
 #include "StreetLamp.h"
+#include "Cloud.h"
+#include "Tree.h"
 
 // Display Parameter Globals
-int th = -10;                     // Azimuth of view angle
-int ph = 20;                      // Elevation of view angle
-int mode = 1;                     // Mode for modifying display values
-double w = 1.0;                   // W variable
-const double DIM = 2;             // Dimension of orthogonal box
-const int IDLE_TIME = 2500;       // Time to pass between idle transitions
-int prevTime = 0;                 // Time of previous transition
-bool dayTime = true;              // Is the scene in daytime or nighttime?
+int displayMode = 1;        // displayMode for modifying display values
+double w = 1.0;             // w value
+const int IDLE_TIME = 2500; // Time to pass between idle transitions
+int prevTime = 0;           // Time of previous transition
+int timeMode = 1;           // Is the scene in auto or manual?
+bool dayTime = true;        // Day or night?
+bool axesMode = true;       // Draw axes, or no?
+ProjectionManager *pm;      // Object that swaps between projection displayModes     
 
 // 3D Object Globals
 RectangularPrism *grass;
 RectangularPrism *skyLeft;
 RectangularPrism *skyRight;
 RectangularPrism *skyBack;
+RectangularPrism *skyFront;
+RectangularPrism *skyTop;
+Cloud *cloud1;
+Cloud *cloud2;
 Road *road;
 Sun *sun;
 Moon *moon;
@@ -41,6 +50,12 @@ House *redHouse;
 House *blueHouse;
 House *greenHouse;
 House *yellowHouse;
+Tree *tree1;
+Tree *tree2;
+Tree *tree3;
+Tree *tree4;
+Tree *tree5;
+Tree *tree6;
 DryGrass *dryGrass1;
 DryGrass *dryGrass2;
 DryGrass *dryGrass3;
@@ -48,6 +63,8 @@ DryGrass *dryGrass4;
 Star *star1;
 Star *star2;
 Star *star3;
+Star *star4;
+Star *star5;
 MountainBackdrop *mountains;
 StreetLamp *streetLamp1;
 StreetLamp *streetLamp2;
@@ -61,7 +78,6 @@ double gHouseC[3][3] = {{0.21,0.61,0.34},{0.21,0.61,0.34},{0.0,0.0,0.0}};
 double yHouseC[3][3] = {{0.61,0.59,0.21},{0.61,0.59,0.21},{0.0,0.0,0.0}};
 double dryGrsC[3][3] = {{0.26,0.29,0.14},{0.26,0.29,0.14},{0.0,0.0,0.0}};
 double spaceC[3][3] = {{0.0,0.24,0.76},{0.0,0.24,0.76},{0.64,0.64,0.64}};
-double moonZ = -1.03; double sunZ = -0.97;
 
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
@@ -72,10 +88,18 @@ PrimaryGraphicsHelper::~PrimaryGraphicsHelper() { }
 // init() public member function
 // Initializes all objects for displaying
 void PrimaryGraphicsHelper::init() {
+  // Initialize projection object
+  pm = new ProjectionManager();
+
+  // Initialize 3D objects
   grass = new RectangularPrism();
   skyLeft = new RectangularPrism();
   skyRight = new RectangularPrism();
   skyBack = new RectangularPrism();
+  skyFront = new RectangularPrism();
+  skyTop = new RectangularPrism();
+  cloud1 = new Cloud();
+  cloud2 = new Cloud();
   road = new Road();
   sun = new Sun();
   moon = new Moon();
@@ -83,6 +107,12 @@ void PrimaryGraphicsHelper::init() {
   blueHouse = new House();
   greenHouse = new House();
   yellowHouse = new House();
+  tree1 = new Tree();
+  tree2 = new Tree();
+  tree3 = new Tree();
+  tree4 = new Tree();
+  tree5 = new Tree();
+  tree6 = new Tree();
   dryGrass1 = new DryGrass();
   dryGrass2 = new DryGrass();
   dryGrass3 = new DryGrass();
@@ -90,6 +120,8 @@ void PrimaryGraphicsHelper::init() {
   star1 = new Star();
   star2 = new Star();
   star3 = new Star();
+  star4 = new Star();
+  star5 = new Star();
   mountains = new MountainBackdrop();
   streetLamp1 = new StreetLamp();
   streetLamp2 = new StreetLamp();
@@ -103,11 +135,14 @@ void PrimaryGraphicsHelper::display() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glEnable(GL_DEPTH_TEST);
   glLoadIdentity();
-  glRotated(ph, 1, 0, 0);
-  glRotated(th, 0, 1, 0);
+  
+  // Set view
+  if (displayMode == 1) {pm->setOrthogonal();}
+  else if (displayMode == 2) {pm->setProjection();}
+  else if (displayMode == 3) {pm->setFirstPerson();}
 
   // Draw axes
-  createAxes();
+  if (axesMode) {createAxes();}
 
   // Draw grass
   grass->scale(1.0, 0.01, 1.0);
@@ -129,10 +164,28 @@ void PrimaryGraphicsHelper::display() {
   skyBack->scale(1.0, 0.5, 0.01);
   skyBack->translate(0.0, 0.5, -1.0);
   skyBack->color(skyC[0][0], skyC[0][1], skyC[0][2]);
+  skyFront->scale(1.0, 0.5, 0.01);
+  skyFront->translate(0.0, 0.5, 1.0);
+  skyFront->color(skyC[0][0], skyC[0][1], skyC[0][2]);
+  skyTop->scale(1.0, 0.01, 1.0);
+  skyTop->translate(0.0, 1.0, 0.0);
+  skyTop->color(skyC[0][0], skyC[0][1], skyC[0][2]);
   skyLeft->draw();
   skyRight->draw();
   skyBack->draw();
+  if (displayMode == 3) {
+    skyFront->draw();
+    skyTop->draw();
+  }
   errorCheck("PrimaryGraphicsHelper::display() sky");
+
+  // Draw the clouds
+  cloud1->translate(0.45, 0.7, 0.25);
+  cloud1->draw();
+  cloud2->translate(-0.45, 0.7, -0.25);
+  cloud2->rotate(180);
+  cloud2->draw();
+  errorCheck("PrimaryGraphicsHelper::display() clouds");
 
   // Draw the red house
   redHouse->color(rHouseC[0][0], rHouseC[0][1], rHouseC[0][2]);
@@ -164,6 +217,21 @@ void PrimaryGraphicsHelper::display() {
   yellowHouse->draw();
   errorCheck("PrimaryGraphicsHelper::display() red house");
 
+  // Draw the trees
+  tree1->translate(0.28, 0.0, 0.0);
+  tree1->draw();
+  tree2->translate(-0.28, 0.0, 0.0);
+  tree2->draw();
+  tree3->translate(0.28, 0.0, -0.65);
+  tree3->draw();
+  tree4->translate(-0.28, 0.0, -0.65);
+  tree4->draw();
+  tree5->translate(0.28, 0.0, 0.65);
+  tree5->draw();
+  tree6->translate(-0.28, 0.0, 0.65);
+  tree6->draw();
+  errorCheck("PrimaryGraphicsHelper::display() trees");
+
   // Draw the unkempt grass
   dryGrass1->translate(0.60, 0.0, 0.45);
   dryGrass1->draw();
@@ -175,39 +243,49 @@ void PrimaryGraphicsHelper::display() {
   dryGrass4->draw();
   errorCheck("PrimaryGraphicsHelper::display() dry grass");
 
-  // Draw the sun
-  sun->translate(0.25, 0.5, sunZ);
-  sun->rotate(90.0);
-  sun->draw();
-  errorCheck("PrimaryGraphicsHelper::display() sun");
-
-  // Draw the moon
-  moon->translate(0.12, 0.58, moonZ);
-  moon->rotate(90.0);
-  moon->draw();
-  errorCheck("PrimaryGraphicsHelper::display() moon");
-
-  // Draw stars
-  star1->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
-  star1->translate(-0.7, 0.7, -0.97);
-  star1->scale(0.1, 0.1, 0.1);
-  star1->draw();
-  star2->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
-  star2->translate(-0.45, 0.45, -0.97);
-  star2->scale(0.05, 0.05, 0.05);
-  star2->draw();
-  star3->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
-  star3->translate(0.8, 0.8, -0.97);
-  star3->scale(0.07, 0.07, 0.07);
-  star3->draw();
-  errorCheck("PrimaryGraphicsHelper::display() stars");
+  // Draw the sun or moon and stars
+  if (dayTime) {
+    sun->translate(0.25, 0.5, -0.97);
+    sun->rotate(90.0);
+    sun->draw();
+    errorCheck("PrimaryGraphicsHelper::display() sun");
+  }
+  else {
+    moon->translate(0.12, 0.58, -0.97);
+    moon->rotate(90.0);
+    moon->draw();
+    star1->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
+    star1->translate(-0.7, 0.7, -0.97);
+    star1->scale(0.1, 0.1, 0.1);
+    star2->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
+    star2->translate(-0.45, 0.45, -0.97);
+    star2->scale(0.05, 0.05, 0.05);
+    star3->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
+    star3->translate(0.8, 0.8, -0.97);
+    star3->scale(0.07, 0.07, 0.07);
+    star3->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
+    star1->draw();
+    star2->draw();
+    star3->draw();
+    if (displayMode == 3) {
+      star4->translate(-0.45, 0.45, 0.97);
+      star4->scale(0.07, 0.07, 0.07);
+      star4->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
+      star5->translate(0.5, 0.7, 0.97);
+      star5->scale(0.06, 0.06, 0.06);
+      star5->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
+      star4->draw();
+      star5->draw();
+    }
+    errorCheck("PrimaryGraphicsHelper::display() moon and stars");
+  }
 
   // Draw mountains
   mountains->translate(0.0, 0.0, -0.96);
   mountains->draw();
   errorCheck("PrimaryGraphicsHelper::display() mountains");
 
-  // Draw street lamp
+  // Draw street lamps
   streetLamp1->translate(-0.25, 0.0, -0.4);
   streetLamp1->draw();
   streetLamp2->translate(0.25, 0.0, 0.4);
@@ -215,12 +293,16 @@ void PrimaryGraphicsHelper::display() {
   streetLamp2->draw();
   errorCheck("PrimaryGraphicsHelper::display() street lamps");
 
+  // Set day or night
+  if (dayTime) {transitionToDay();}
+  else if (!dayTime) {transitionToNight();}
+
   // Display parameters
   glColor3d(1.0, 1.0, 1.0);
   #ifdef USEGLEW
   glWindowPos2i(5,5);
-  #endif
   displayParams();
+  #endif
   errorCheck("PrimaryGraphicsHelper::display() display parameters");
 
   // Flush and swap buffers
@@ -232,19 +314,9 @@ void PrimaryGraphicsHelper::display() {
 // Primary OpenGL window resize function
 // Callback for glutReshapeFunc()
 void PrimaryGraphicsHelper::reshape(int w, int h) {
-  // Switch to projection matrix; undo previous updates
-  glViewport(0, 0, (RES * w), (RES * h));
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-
-  // Calculate orthogonal projection
-  double asp = 1.0;
-  if (h > 0) { asp = (double)(w / h); }
-  glOrtho((-asp * DIM), (asp * DIM), -DIM, DIM, -DIM, DIM);
-
-  // Switch back to model matrix
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
+  if (h > 0) {pm->setAspectRatio((double)w / h);}
+  glViewport(0, 0, w, h);
+  pm->setOrthogonal();
 }
 
 // special() public member function
@@ -252,14 +324,22 @@ void PrimaryGraphicsHelper::reshape(int w, int h) {
 // Callback for glutSpecialFunc()
 void PrimaryGraphicsHelper::special(int key, int x, int y) {
   // Handle key display navigation
-  if (key == GLUT_KEY_RIGHT) { th += 1; }
-  else if (key == GLUT_KEY_LEFT) { th -= 1; }
-  else if (key == GLUT_KEY_UP) { ph += 1; }
-  else if (key == GLUT_KEY_DOWN) { ph -= 1; }
+  double th = pm->getTheta();
+  double ph = pm->getPhi();
+  if (key == GLUT_KEY_RIGHT && displayMode != 3) {th += 1;}
+  else if (key == GLUT_KEY_LEFT && displayMode != 3) {th -= 1;}
+  else if (key == GLUT_KEY_UP && displayMode != 3) {ph += 1;}
+  else if (key == GLUT_KEY_DOWN && displayMode != 3) {ph -= 1;}
+  else if (key == GLUT_KEY_RIGHT && displayMode == 3) {pm->turnRight();}
+  else if (key == GLUT_KEY_LEFT && displayMode == 3) {pm->turnLeft();}
+  else if (key == GLUT_KEY_UP && displayMode == 3) {pm->lookUp();}
+  else if (key == GLUT_KEY_DOWN && displayMode == 3) {pm->lookDown();}
 
-  // Normalize azimuth and elevation; redisplay
-  th %= 360;
-  ph %= 360;
+  // Set theta and phi
+  pm->setTheta(th);
+  pm->setPhi(ph);
+
+  // Redisplay
   glutPostRedisplay();
 }
 
@@ -268,9 +348,50 @@ void PrimaryGraphicsHelper::special(int key, int x, int y) {
 // Callback for glutKeyboardFunc()
 void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
   // Handle alphanumeric keys
-  if (ch == 27) { exit(0) ;}
-  else if (ch == '0') { th = 0; ph = 0; }
-  else { return; }
+  if (ch == 27) {exit(0);}
+  else if (ch == '0') {pm->setTheta(0.0); pm->setPhi(0.0);}
+  else if (ch == 'c') {axesMode = !axesMode;}
+  else if (ch == 'm') {
+    displayMode += 1;
+    if (displayMode > 3) {displayMode = 1;}
+    #ifndef USEGLEW
+    displayParams();
+    #endif
+  }
+  else if (ch == 't') {
+    timeMode += 1;
+    if (timeMode > 2) {timeMode = 1;}
+  }
+  else if (ch == 'T') {
+    dayTime = !dayTime;
+    #ifndef USEGLEW
+    displayParams();
+    #endif
+  }
+  else if (ch == '+' && displayMode == 2) {
+    double fovy = pm->getFieldOfView() + 2.0;
+    pm->setFieldOfView(fovy);
+    #ifndef USEGLEW
+    displayParams();
+    #endif
+  }
+  else if (ch == '-' && displayMode == 2) {
+    double fovy = pm->getFieldOfView() - 2.0;
+    pm->setFieldOfView(fovy);
+    #ifndef USEGLEW
+    displayParams();
+    #endif
+  }
+  else if (ch == 'w' && displayMode == 3) {pm->moveForward();}
+  else if (ch == 'a' && displayMode == 3) {pm->moveLeft();}
+  else if (ch == 's' && displayMode == 3) {pm->moveBackward();}
+  else if (ch == 'd' && displayMode == 3) {pm->moveRight();}
+  else if (ch == 'r') {
+    #ifndef USEGLEW
+    displayParams();
+    #endif
+  }
+  else {return;}
 
   // Redisplay
   glutPostRedisplay();
@@ -281,12 +402,25 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
 // Callback for glutIdleFunc()
 void PrimaryGraphicsHelper::idle() {
   int currTime = glutGet(GLUT_ELAPSED_TIME);
-  if (currTime - prevTime > IDLE_TIME) {
-    if (dayTime) { transitionToNight(); dayTime = false; }
-    else { transitionToDay(); dayTime = true; }
+  if (currTime - prevTime > IDLE_TIME && timeMode == 1) {
+    if (dayTime) { transitionToNight(); }
+    else { transitionToDay(); }
     prevTime = currTime;
     glutPostRedisplay();
   }
+}
+
+// initializeGlew() public member function
+// Tries to initialize GLEW (throws a GlewException if it fails)
+void PrimaryGraphicsHelper::initializeGlew() {
+  #ifdef USEGLEW
+  if (glewInit() != GLEW_OK) {throw GenericHomeworkException();}
+  std::cout << "PrimaryGraphicsHelper::initializeGlew(): GLEW initialization successful!"
+            << std::endl;
+  #else
+  std::cout << "PrimaryGraphicsHelper::initializeGlew(): Skipped GLEW initialization"
+            << std::endl;
+  #endif
 }
 
 // createAxes() private member function
@@ -341,9 +475,23 @@ void PrimaryGraphicsHelper::displayText(std::string text) {
 void PrimaryGraphicsHelper::displayParams() {
   // Create string
   std::string parameters;
-  parameters += "th = "; parameters += std::to_string(th);
-  parameters += ", ph = "; parameters += std::to_string(ph);
-  parameters += ", time: ";
+  if (displayMode == 3) {
+    parameters += "th = "; parameters += std::to_string((int)pm->getFirstPersonTheta()); parameters += ", ";
+    parameters += "view: first person, ";
+    parameters += "xPos = "; parameters += std::to_string(pm->getFirstPersonX()); parameters += ", ";
+    parameters += "yPos = "; parameters += std::to_string(pm->getFirstPersonY()); parameters += ", ";
+    parameters += "zPos = "; parameters += std::to_string(pm->getFirstPersonZ()); parameters += ", ";
+  }
+  else {
+    parameters += "th = "; parameters += std::to_string((int)pm->getTheta()); parameters += ", ";
+    parameters += "ph = "; parameters += std::to_string((int)pm->getPhi()); parameters += ", ";
+    if (displayMode == 1) {parameters += "view: ortho, ";}
+    else if (displayMode == 2) {parameters += "view: projection, fovy = "; parameters += std::to_string(pm->getFieldOfView()); parameters += ", ";}
+  }
+  parameters += "day / night cycle: ";
+  if (timeMode == 1) { parameters += "auto, "; }
+  else { parameters += "manual, "; }
+  parameters += "time: ";
   if (dayTime) { parameters += "day"; }
   else { parameters += "night"; }
 
@@ -379,8 +527,16 @@ void PrimaryGraphicsHelper::transitionToNight() {
   spaceC[0][0] = spaceC[2][0]; spaceC[0][1] = spaceC[2][1]; spaceC[0][2] = spaceC[2][2];
   streetLamp1->color(false);
   streetLamp2->color(false);
+  tree1->color(false);
+  tree2->color(false);
+  tree3->color(false);
+  tree4->color(false);
+  tree5->color(false);
+  tree6->color(false);
+  cloud1->color(false);
+  cloud2->color(false);
   road->color(false);
-  moonZ = -0.97; sunZ = -1.03;
+  dayTime = false;
   glutPostRedisplay();
 }
 
@@ -397,7 +553,15 @@ void PrimaryGraphicsHelper::transitionToDay() {
   spaceC[0][0] = spaceC[1][0]; spaceC[0][1] = spaceC[1][1]; spaceC[0][2] = spaceC[1][2];
   streetLamp1->color(true);
   streetLamp2->color(true);
-  road->color(false);
-  moonZ = -1.03; sunZ = -0.97;
+  tree1->color(true);
+  tree2->color(true);
+  tree3->color(true);
+  tree4->color(true);
+  tree5->color(true);
+  tree6->color(true);
+  cloud1->color(true);
+  cloud2->color(true);
+  road->color(true);
+  dayTime = true;
   glutPostRedisplay();
 }

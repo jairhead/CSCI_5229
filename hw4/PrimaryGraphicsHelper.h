@@ -5,25 +5,7 @@
  */
 
 #include <iostream>
-
-// OpenGL with prototypes for glext
-#ifdef USEGLEW
-#include <GL/glew.h>
-#endif
-
-// Include glut header
-#define GL_GLEXT_PROTOTYPES
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-#else
-#include <GL/glut.h>
-#endif
-
-// Default resolution
-#ifndef RES
-#define RES 1
-#endif
+#include "GlutIncludes.h"
 
 class PrimaryGraphicsHelper {
   public:
@@ -35,6 +17,7 @@ class PrimaryGraphicsHelper {
     static void special(int key, int x, int y);
     static void key(unsigned char ch, int x, int y);
     static void idle();
+    static void initializeGlew();
   private:
     static void createAxes();
     static void displayText(std::string text);
