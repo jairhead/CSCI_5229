@@ -35,6 +35,8 @@ RectangularPrism *grass;
 RectangularPrism *skyLeft;
 RectangularPrism *skyRight;
 RectangularPrism *skyBack;
+RectangularPrism *skyFront;
+RectangularPrism *skyTop;
 Road *road;
 Sun *sun;
 Moon *moon;
@@ -81,6 +83,8 @@ void PrimaryGraphicsHelper::init() {
   skyLeft = new RectangularPrism();
   skyRight = new RectangularPrism();
   skyBack = new RectangularPrism();
+  skyFront = new RectangularPrism();
+  skyTop = new RectangularPrism();
   road = new Road();
   sun = new Sun();
   moon = new Moon();
@@ -137,9 +141,19 @@ void PrimaryGraphicsHelper::display() {
   skyBack->scale(1.0, 0.5, 0.01);
   skyBack->translate(0.0, 0.5, -1.0);
   skyBack->color(skyC[0][0], skyC[0][1], skyC[0][2]);
+  skyFront->scale(1.0, 0.5, 0.01);
+  skyFront->translate(0.0, 0.5, 1.0);
+  skyFront->color(skyC[0][0], skyC[0][1], skyC[0][2]);
+  skyTop->scale(1.0, 0.01, 1.0);
+  skyTop->translate(0.0, 1.0, 0.0);
+  skyTop->color(skyC[0][0], skyC[0][1], skyC[0][2]);
   skyLeft->draw();
   skyRight->draw();
   skyBack->draw();
+  if (mode == 3) {
+    skyFront->draw();
+    skyTop->draw();
+  }
   errorCheck("PrimaryGraphicsHelper::display() sky");
 
   // Draw the red house

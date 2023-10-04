@@ -118,7 +118,7 @@ void ProjectionManager::setFirstPerson() {
                  (dimension * (clipDistFactor * 10.0)));
 
   // Call gluLookAt()
-  gluLookAt(fpXPos, fpHeight, fpZPos, fpCx, fpHeight, fpCz, 0.0, cosine(fpPhi), 0.0);
+  gluLookAt(fpXPos, fpYPos, fpZPos, fpCx, fpCy, fpCz, 0.0, cosine(fpPhi), 0.0);
 
   // Set back to model view, undo previous transforms
   glMatrixMode(GL_MODELVIEW);
@@ -130,8 +130,9 @@ void ProjectionManager::setFirstPerson() {
 void ProjectionManager::moveForward() {
   fpXPos += (movementSpeed * cosine(fpTheta));
   fpZPos += (movementSpeed * sine(fpTheta));
-  fpCx += (movementSpeed * cosine(fpTheta));
-  fpCz += (movementSpeed * sine(fpTheta));
+  fpCx += (movementSpeed * cosine(fpTheta) * cosine(fpPhi));
+  fpCz += (movementSpeed * sine(fpTheta) * cosine(fpPhi));
+  checkPosition();
 }
 
 // moveBackward
@@ -141,6 +142,7 @@ void ProjectionManager::moveBackward() {
   fpZPos -= (movementSpeed * sine(fpTheta));
   fpCx -= (movementSpeed * cosine(fpTheta));
   fpCz -= (movementSpeed * sine(fpTheta));
+  checkPosition();
 }
 
 // moveRight
@@ -150,6 +152,7 @@ void ProjectionManager::moveRight() {
   fpZPos += (movementSpeed * sine(fpTheta + 90.0));
   fpCx += (movementSpeed * cosine(fpTheta + 90.0));
   fpCz += (movementSpeed * sine(fpTheta + 90.0));
+  checkPosition();
 }
 
 // moveLeft
@@ -159,36 +162,35 @@ void ProjectionManager::moveLeft() {
   fpZPos -= (movementSpeed * sine(fpTheta + 90.0));
   fpCx -= (movementSpeed * cosine(fpTheta + 90.0));
   fpCz -= (movementSpeed * sine(fpTheta + 90.0));
+  checkPosition();
 }
 
 // turnRight
 // Rotates the first person character to the right
 void ProjectionManager::turnRight() {
   fpTheta += turnSpeed;
-  fpCx = fpXPos + (movementSpeed * cosine(fpTheta));
-  fpCz = fpZPos + (movementSpeed * sine(fpTheta));
+  fpCx = fpXPos + (turnSpeed * cosine(fpTheta));
+  fpCz = fpZPos + (turnSpeed * sine(fpTheta));
 }
 
 // turnLeft
 // Rotates the first person character to the left
 void ProjectionManager::turnLeft() {
   fpTheta -= turnSpeed;
-  fpCx = fpXPos + (movementSpeed * cosine(fpTheta));
-  fpCz = fpZPos + (movementSpeed * sine(fpTheta));
+  fpCx = fpXPos + (turnSpeed * cosine(fpTheta));
+  fpCz = fpZPos + (turnSpeed * sine(fpTheta));
 }
 
 // lookUp
 // Rotates the first person character's head upward
 void ProjectionManager::lookUp() {
-  // TODO : implement this method
-  fpPhi += turnSpeed;
+  fpCy += 0.001;
 }
 
 // lookDown
-// Rotates the first person character's head upward
+// Rotates the first person character's head downward
 void ProjectionManager::lookDown() {
-  // TODO : implement this method
-  fpPhi -= turnSpeed;
+  fpCy -= 0.001;
 }
 
 // sine() private member function
@@ -198,3 +200,19 @@ double ProjectionManager::sine(double angle) {return sin(angle * (3.14159265 / 1
 // cosine() private member function
 // Returns the cosine of the provided angle in degrees
 double ProjectionManager::cosine(double angle) {return cos(angle * (3.14159265 / 180));}
+
+// checkPosition private member function
+// Ensures that fpXPos and fpZPos are between the min and max for first person
+void ProjectionManager::checkPosition() {
+  if (fpXPos > fpXMax) {fpXPos = fpXMax;}
+  if (fpXPos < fpXMin) {fpXPos = fpXMin;}
+  if (fpZPos > fpZMax) {fpZPos = fpZMax;}
+  if (fpZPos < fpZMin) {fpZPos = fpZMin;}
+}
+
+// checkHeadAngle private member function
+// Ensures that fpPhi is never greater than fpPhiMax nor lesser than fpPhiMin
+void ProjectionManager::checkHeadAngle() {
+  if (fpPhi > fpPhiMax) {fpPhi = fpPhiMax;}
+  if (fpPhi > fpPhiMax) {fpPhi = fpPhiMax;}
+}
