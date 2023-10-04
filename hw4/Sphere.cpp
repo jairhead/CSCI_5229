@@ -23,6 +23,14 @@ Sphere::Sphere(double x, double y, double z,
 // Destructor
 Sphere::~Sphere() { }
 
+// translate() public member function
+// Sets the sphere's coordinate values
+void Sphere::translate(double x, double y, double z) {
+  xPos = x;
+  yPos = y;
+  zPos = z;
+}
+
 // color() public member function
 // Sets the sphere's colors
 void Sphere::color(double r, double g, double b) {

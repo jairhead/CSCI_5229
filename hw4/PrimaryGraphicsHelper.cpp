@@ -22,6 +22,7 @@
 #include "MountainBackdrop.h"
 #include "StreetLamp.h"
 #include "Cloud.h"
+#include "Tree.h"
 
 // Display Parameter Globals
 int mode = 1;               // Mode for modifying display values
@@ -47,6 +48,12 @@ House *redHouse;
 House *blueHouse;
 House *greenHouse;
 House *yellowHouse;
+Tree *tree1;
+Tree *tree2;
+Tree *tree3;
+Tree *tree4;
+Tree *tree5;
+Tree *tree6;
 DryGrass *dryGrass1;
 DryGrass *dryGrass2;
 DryGrass *dryGrass3;
@@ -96,6 +103,12 @@ void PrimaryGraphicsHelper::init() {
   blueHouse = new House();
   greenHouse = new House();
   yellowHouse = new House();
+  tree1 = new Tree();
+  tree2 = new Tree();
+  tree3 = new Tree();
+  tree4 = new Tree();
+  tree5 = new Tree();
+  tree6 = new Tree();
   dryGrass1 = new DryGrass();
   dryGrass2 = new DryGrass();
   dryGrass3 = new DryGrass();
@@ -197,6 +210,21 @@ void PrimaryGraphicsHelper::display() {
   yellowHouse->rotate(270.0);
   yellowHouse->draw();
   errorCheck("PrimaryGraphicsHelper::display() red house");
+
+  // Draw the trees
+  tree1->translate(0.28, 0.0, 0.0);
+  tree1->draw();
+  tree2->translate(-0.28, 0.0, 0.0);
+  tree2->draw();
+  tree3->translate(0.28, 0.0, -0.65);
+  tree3->draw();
+  tree4->translate(-0.28, 0.0, -0.65);
+  tree4->draw();
+  tree5->translate(0.28, 0.0, 0.65);
+  tree5->draw();
+  tree6->translate(-0.28, 0.0, 0.65);
+  tree6->draw();
+  errorCheck("PrimaryGraphicsHelper::display() trees");
 
   // Draw the unkempt grass
   dryGrass1->translate(0.60, 0.0, 0.45);
@@ -433,6 +461,12 @@ void PrimaryGraphicsHelper::transitionToNight() {
   spaceC[0][0] = spaceC[2][0]; spaceC[0][1] = spaceC[2][1]; spaceC[0][2] = spaceC[2][2];
   streetLamp1->color(false);
   streetLamp2->color(false);
+  tree1->color(false);
+  tree2->color(false);
+  tree3->color(false);
+  tree4->color(false);
+  tree5->color(false);
+  tree6->color(false);
   cloud1->color(false);
   cloud2->color(false);
   road->color(false);
@@ -452,6 +486,12 @@ void PrimaryGraphicsHelper::transitionToDay() {
   spaceC[0][0] = spaceC[1][0]; spaceC[0][1] = spaceC[1][1]; spaceC[0][2] = spaceC[1][2];
   streetLamp1->color(true);
   streetLamp2->color(true);
+  tree1->color(true);
+  tree2->color(true);
+  tree3->color(true);
+  tree4->color(true);
+  tree5->color(true);
+  tree6->color(true);
   cloud1->color(true);
   cloud2->color(true);
   road->color(true);

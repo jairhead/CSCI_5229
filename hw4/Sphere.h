@@ -15,6 +15,7 @@ class Sphere : public BaseObject {
     Sphere(double x, double y, double z,
            double s, double th);
     ~Sphere();
+    void translate(double x, double y, double z);
     void color(double r, double g, double b);
     void draw();
   protected:

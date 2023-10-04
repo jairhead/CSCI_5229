@@ -65,7 +65,7 @@ void StreetLamp::draw() {
 
   // Draw the cantilever
   cantilever->color(poleC[0][0], poleC[0][1], poleC[0][2]);
-  cantilever->translate(0.08, 0.4, 0.0);
+  cantilever->translate(0.07, 0.4, 0.0);
   cantilever->scale(0.08, 0.01, 0.01);
   cantilever->draw();
 
