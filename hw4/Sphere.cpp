@@ -23,7 +23,15 @@ Sphere::Sphere(double x, double y, double z,
 // Destructor
 Sphere::~Sphere() { }
 
-// display() member function
+// color() public member function
+// Sets the sphere's colors
+void Sphere::color(double r, double g, double b) {
+  red = r;
+  green = g;
+  blue = b;
+}
+
+// draw() member function
 // Contains to display the sphere
 void Sphere::draw() {
   // Save transformation and set up
@@ -33,6 +41,7 @@ void Sphere::draw() {
   glScaled(scalingFactor, scalingFactor, scalingFactor);
 
   // Draw south cap
+  glColor3d(red, green, blue);
   glBegin(GL_TRIANGLE_FAN);
   vertex(0, -90);
   for (int th = 0; th <= 360; th += d) { vertex(th, d - 90); }
@@ -61,7 +70,6 @@ void Sphere::draw() {
 // vertex() private member function
 // Draws a triangle with th and ph
 void Sphere::vertex(double th, double ph) {
-  glColor3f(cosine(th) * cosine(th), sine(ph) * sine(ph), sine(th) * sine(th));
   glVertex3d(sine(th) * cosine(ph), sine(ph), cosine(th) * cosine(ph));
 }
 

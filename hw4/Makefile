@@ -33,7 +33,8 @@ OBJS := PrimaryGraphicsHelper.o \
 				House.o \
 				DryGrass.o \
 				MountainBackdrop.o \
-				StreetLamp.o
+				StreetLamp.o \
+				Cloud.o
 
 # Default
 default: all

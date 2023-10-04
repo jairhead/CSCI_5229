@@ -21,6 +21,7 @@
 #include "DryGrass.h"
 #include "MountainBackdrop.h"
 #include "StreetLamp.h"
+#include "Cloud.h"
 
 // Display Parameter Globals
 int mode = 1;               // Mode for modifying display values
@@ -37,6 +38,8 @@ RectangularPrism *skyRight;
 RectangularPrism *skyBack;
 RectangularPrism *skyFront;
 RectangularPrism *skyTop;
+Cloud *cloud1;
+Cloud *cloud2;
 Road *road;
 Sun *sun;
 Moon *moon;
@@ -64,7 +67,6 @@ double gHouseC[3][3] = {{0.21,0.61,0.34},{0.21,0.61,0.34},{0.0,0.0,0.0}};
 double yHouseC[3][3] = {{0.61,0.59,0.21},{0.61,0.59,0.21},{0.0,0.0,0.0}};
 double dryGrsC[3][3] = {{0.26,0.29,0.14},{0.26,0.29,0.14},{0.0,0.0,0.0}};
 double spaceC[3][3] = {{0.0,0.24,0.76},{0.0,0.24,0.76},{0.64,0.64,0.64}};
-double moonZ = -1.03; double sunZ = -0.97;
 
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
@@ -85,6 +87,8 @@ void PrimaryGraphicsHelper::init() {
   skyBack = new RectangularPrism();
   skyFront = new RectangularPrism();
   skyTop = new RectangularPrism();
+  cloud1 = new Cloud();
+  cloud2 = new Cloud();
   road = new Road();
   sun = new Sun();
   moon = new Moon();
@@ -156,6 +160,14 @@ void PrimaryGraphicsHelper::display() {
   }
   errorCheck("PrimaryGraphicsHelper::display() sky");
 
+  // Draw the clouds
+  cloud1->translate(0.45, 0.7, 0.25);
+  cloud1->draw();
+  cloud2->translate(-0.45, 0.7, -0.25);
+  cloud2->rotate(180);
+  cloud2->draw();
+  errorCheck("PrimaryGraphicsHelper::display() clouds");
+
   // Draw the red house
   redHouse->color(rHouseC[0][0], rHouseC[0][1], rHouseC[0][2]);
   redHouse->translate(-0.60, 0.0, 0.55);
@@ -197,39 +209,38 @@ void PrimaryGraphicsHelper::display() {
   dryGrass4->draw();
   errorCheck("PrimaryGraphicsHelper::display() dry grass");
 
-  // Draw the sun
-  sun->translate(0.25, 0.5, sunZ);
-  sun->rotate(90.0);
-  sun->draw();
-  errorCheck("PrimaryGraphicsHelper::display() sun");
-
-  // Draw the moon
-  moon->translate(0.12, 0.58, moonZ);
-  moon->rotate(90.0);
-  moon->draw();
-  errorCheck("PrimaryGraphicsHelper::display() moon");
-
-  // Draw stars
-  star1->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
-  star1->translate(-0.7, 0.7, -0.97);
-  star1->scale(0.1, 0.1, 0.1);
-  star1->draw();
-  star2->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
-  star2->translate(-0.45, 0.45, -0.97);
-  star2->scale(0.05, 0.05, 0.05);
-  star2->draw();
-  star3->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
-  star3->translate(0.8, 0.8, -0.97);
-  star3->scale(0.07, 0.07, 0.07);
-  star3->draw();
-  errorCheck("PrimaryGraphicsHelper::display() stars");
+  // Draw the sun or moon and stars
+  if (dayTime) {
+    sun->translate(0.25, 0.5, -0.97);
+    sun->rotate(90.0);
+    sun->draw();
+    errorCheck("PrimaryGraphicsHelper::display() sun");
+  }
+  else {
+    moon->translate(0.12, 0.58, -0.97);
+    moon->rotate(90.0);
+    moon->draw();
+    star1->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
+    star1->translate(-0.7, 0.7, -0.97);
+    star1->scale(0.1, 0.1, 0.1);
+    star2->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
+    star2->translate(-0.45, 0.45, -0.97);
+    star2->scale(0.05, 0.05, 0.05);
+    star3->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
+    star3->translate(0.8, 0.8, -0.97);
+    star3->scale(0.07, 0.07, 0.07);
+    star1->draw();
+    star2->draw();
+    star3->draw();
+    errorCheck("PrimaryGraphicsHelper::display() moon and stars");
+  }
 
   // Draw mountains
   mountains->translate(0.0, 0.0, -0.96);
   mountains->draw();
   errorCheck("PrimaryGraphicsHelper::display() mountains");
 
-  // Draw street lamp
+  // Draw street lamps
   streetLamp1->translate(-0.25, 0.0, -0.4);
   streetLamp1->draw();
   streetLamp2->translate(0.25, 0.0, 0.4);
@@ -423,7 +434,6 @@ void PrimaryGraphicsHelper::transitionToNight() {
   streetLamp1->color(false);
   streetLamp2->color(false);
   road->color(false);
-  moonZ = -0.97; sunZ = -1.03;
   glutPostRedisplay();
 }
 
@@ -441,6 +451,5 @@ void PrimaryGraphicsHelper::transitionToDay() {
   streetLamp1->color(true);
   streetLamp2->color(true);
   road->color(true);
-  moonZ = -1.03; sunZ = -0.97;
   glutPostRedisplay();
 }

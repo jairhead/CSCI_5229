@@ -25,6 +25,8 @@ void StreetLamp::translate(double x, double y, double z) {
   zPos = z;
 }
 
+// color() public member function
+// Sets the street lamp's colors
 void StreetLamp::color(bool day) {
   if (day) {
     dayTime = true;
