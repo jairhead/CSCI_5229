@@ -193,6 +193,30 @@ void ProjectionManager::lookDown() {
   fpCy -= 0.001;
 }
 
+// getFirstPersonTheta
+// Returns the first person character's rotation
+double ProjectionManager::getFirstPersonTheta() {
+  return fpTheta;
+}
+
+// getFirstPersonX
+// Returns the first person x position
+double ProjectionManager::getFirstPersonX() {
+  return fpXPos;
+}
+
+// getFirstPersonY
+// Returns the first person y position
+double ProjectionManager::getFirstPersonY() {
+  return fpYPos;
+}
+
+// getFirstPersonZ
+// Returns the first person z position
+double ProjectionManager::getFirstPersonZ() {
+  return fpZPos;
+}
+
 // sine() private member function
 // Returns the sine of the provided angle in degrees
 double ProjectionManager::sine(double angle) {return sin(angle * (3.14159265 / 180));}

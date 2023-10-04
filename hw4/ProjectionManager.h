@@ -41,6 +41,10 @@ class ProjectionManager {
     void turnLeft();
     void lookUp();
     void lookDown();
+    double getFirstPersonTheta();
+    double getFirstPersonX();
+    double getFirstPersonY();
+    double getFirstPersonZ();
   private:
     // Ortho & Projection Variables
     double theta = 0.0;

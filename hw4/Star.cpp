@@ -51,6 +51,7 @@ void Star::draw() {
   glColor3d(red, green, blue);
   glTranslated(xPos, yPos, zPos);
   glRotated(90.0, 1, 0, 0);
+  glRotated(theta, 0, 1, 0);
 
   // Draw the star
   glBegin(GL_TRIANGLE_FAN);

@@ -25,12 +25,14 @@
 #include "Tree.h"
 
 // Display Parameter Globals
-int mode = 1;               // Mode for modifying display values
+int displayMode = 1;        // displayMode for modifying display values
 double w = 1.0;             // w value
 const int IDLE_TIME = 2500; // Time to pass between idle transitions
 int prevTime = 0;           // Time of previous transition
-bool dayTime = true;        // Is the scene in daytime or nighttime?
-ProjectionManager *pm;      // Object that swaps between projection modes     
+int timeMode = 1;           // Is the scene in auto or manual?
+bool dayTime = true;        // Day or night?
+bool axesMode = true;       // Draw axes, or no?
+ProjectionManager *pm;      // Object that swaps between projection displayModes     
 
 // 3D Object Globals
 RectangularPrism *grass;
@@ -61,6 +63,8 @@ DryGrass *dryGrass4;
 Star *star1;
 Star *star2;
 Star *star3;
+Star *star4;
+Star *star5;
 MountainBackdrop *mountains;
 StreetLamp *streetLamp1;
 StreetLamp *streetLamp2;
@@ -116,6 +120,8 @@ void PrimaryGraphicsHelper::init() {
   star1 = new Star();
   star2 = new Star();
   star3 = new Star();
+  star4 = new Star();
+  star5 = new Star();
   mountains = new MountainBackdrop();
   streetLamp1 = new StreetLamp();
   streetLamp2 = new StreetLamp();
@@ -131,12 +137,12 @@ void PrimaryGraphicsHelper::display() {
   glLoadIdentity();
   
   // Set view
-  if (mode == 1) {pm->setOrthogonal();}
-  else if (mode == 2) {pm->setProjection();}
-  else if (mode == 3) {pm->setFirstPerson();}
+  if (displayMode == 1) {pm->setOrthogonal();}
+  else if (displayMode == 2) {pm->setProjection();}
+  else if (displayMode == 3) {pm->setFirstPerson();}
 
   // Draw axes
-  createAxes();
+  if (axesMode) {createAxes();}
 
   // Draw grass
   grass->scale(1.0, 0.01, 1.0);
@@ -167,7 +173,7 @@ void PrimaryGraphicsHelper::display() {
   skyLeft->draw();
   skyRight->draw();
   skyBack->draw();
-  if (mode == 3) {
+  if (displayMode == 3) {
     skyFront->draw();
     skyTop->draw();
   }
@@ -257,9 +263,20 @@ void PrimaryGraphicsHelper::display() {
     star3->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
     star3->translate(0.8, 0.8, -0.97);
     star3->scale(0.07, 0.07, 0.07);
+    star3->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
     star1->draw();
     star2->draw();
     star3->draw();
+    if (displayMode == 3) {
+      star4->translate(-0.45, 0.45, 0.97);
+      star4->scale(0.07, 0.07, 0.07);
+      star4->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
+      star5->translate(0.5, 0.7, 0.97);
+      star5->scale(0.06, 0.06, 0.06);
+      star5->color(spaceC[0][0], spaceC[0][1], spaceC[0][2]);
+      star4->draw();
+      star5->draw();
+    }
     errorCheck("PrimaryGraphicsHelper::display() moon and stars");
   }
 
@@ -282,8 +299,10 @@ void PrimaryGraphicsHelper::display() {
 
   // Display parameters
   glColor3d(1.0, 1.0, 1.0);
+  #ifdef USEGLEW
   glWindowPos2i(5,5);
   displayParams();
+  #endif
   errorCheck("PrimaryGraphicsHelper::display() display parameters");
 
   // Flush and swap buffers
@@ -307,14 +326,14 @@ void PrimaryGraphicsHelper::special(int key, int x, int y) {
   // Handle key display navigation
   double th = pm->getTheta();
   double ph = pm->getPhi();
-  if (key == GLUT_KEY_RIGHT && mode != 3) {th += 1;}
-  else if (key == GLUT_KEY_LEFT && mode != 3) {th -= 1;}
-  else if (key == GLUT_KEY_UP && mode != 3) {ph += 1;}
-  else if (key == GLUT_KEY_DOWN && mode != 3) {ph -= 1;}
-  else if (key == GLUT_KEY_RIGHT && mode == 3) {pm->turnRight();}
-  else if (key == GLUT_KEY_LEFT && mode == 3) {pm->turnLeft();}
-  else if (key == GLUT_KEY_UP && mode == 3) {pm->lookUp();}
-  else if (key == GLUT_KEY_DOWN && mode == 3) {pm->lookDown();}
+  if (key == GLUT_KEY_RIGHT && displayMode != 3) {th += 1;}
+  else if (key == GLUT_KEY_LEFT && displayMode != 3) {th -= 1;}
+  else if (key == GLUT_KEY_UP && displayMode != 3) {ph += 1;}
+  else if (key == GLUT_KEY_DOWN && displayMode != 3) {ph -= 1;}
+  else if (key == GLUT_KEY_RIGHT && displayMode == 3) {pm->turnRight();}
+  else if (key == GLUT_KEY_LEFT && displayMode == 3) {pm->turnLeft();}
+  else if (key == GLUT_KEY_UP && displayMode == 3) {pm->lookUp();}
+  else if (key == GLUT_KEY_DOWN && displayMode == 3) {pm->lookDown();}
 
   // Set theta and phi
   pm->setTheta(th);
@@ -331,20 +350,47 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
   // Handle alphanumeric keys
   if (ch == 27) {exit(0);}
   else if (ch == '0') {pm->setTheta(0.0); pm->setPhi(0.0);}
-  else if (ch == '1') {mode += 1; if (mode > 3) {mode = 1;}}
-  else if (ch == '2') {dayTime = !dayTime;}
-  else if (ch == '+' && mode == 2) {
+  else if (ch == 'c') {axesMode = !axesMode;}
+  else if (ch == 'm') {
+    displayMode += 1;
+    if (displayMode > 3) {displayMode = 1;}
+    #ifndef USEGLEW
+    displayParams();
+    #endif
+  }
+  else if (ch == 't') {
+    timeMode += 1;
+    if (timeMode > 2) {timeMode = 1;}
+  }
+  else if (ch == 'T') {
+    dayTime = !dayTime;
+    #ifndef USEGLEW
+    displayParams();
+    #endif
+  }
+  else if (ch == '+' && displayMode == 2) {
     double fovy = pm->getFieldOfView() + 2.0;
     pm->setFieldOfView(fovy);
+    #ifndef USEGLEW
+    displayParams();
+    #endif
   }
-  else if (ch == '-' && mode == 2) {
+  else if (ch == '-' && displayMode == 2) {
     double fovy = pm->getFieldOfView() - 2.0;
     pm->setFieldOfView(fovy);
+    #ifndef USEGLEW
+    displayParams();
+    #endif
   }
-  else if (ch == 'w' && mode == 3) {pm->moveForward();}
-  else if (ch == 'a' && mode == 3) {pm->moveLeft();}
-  else if (ch == 's' && mode == 3) {pm->moveBackward();}
-  else if (ch == 'd' && mode == 3) {pm->moveRight();}
+  else if (ch == 'w' && displayMode == 3) {pm->moveForward();}
+  else if (ch == 'a' && displayMode == 3) {pm->moveLeft();}
+  else if (ch == 's' && displayMode == 3) {pm->moveBackward();}
+  else if (ch == 'd' && displayMode == 3) {pm->moveRight();}
+  else if (ch == 'r') {
+    #ifndef USEGLEW
+    displayParams();
+    #endif
+  }
   else {return;}
 
   // Redisplay
@@ -356,9 +402,9 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
 // Callback for glutIdleFunc()
 void PrimaryGraphicsHelper::idle() {
   int currTime = glutGet(GLUT_ELAPSED_TIME);
-  if (currTime - prevTime > IDLE_TIME) {
-    if (dayTime) { transitionToNight(); dayTime = false; }
-    else { transitionToDay(); dayTime = true; }
+  if (currTime - prevTime > IDLE_TIME && timeMode == 1) {
+    if (dayTime) { transitionToNight(); }
+    else { transitionToDay(); }
     prevTime = currTime;
     glutPostRedisplay();
   }
@@ -367,9 +413,14 @@ void PrimaryGraphicsHelper::idle() {
 // initializeGlew() public member function
 // Tries to initialize GLEW (throws a GlewException if it fails)
 void PrimaryGraphicsHelper::initializeGlew() {
+  #ifdef USEGLEW
   if (glewInit() != GLEW_OK) {throw GenericHomeworkException();}
   std::cout << "PrimaryGraphicsHelper::initializeGlew(): GLEW initialization successful!"
             << std::endl;
+  #else
+  std::cout << "PrimaryGraphicsHelper::initializeGlew(): Skipped GLEW initialization"
+            << std::endl;
+  #endif
 }
 
 // createAxes() private member function
@@ -424,17 +475,32 @@ void PrimaryGraphicsHelper::displayText(std::string text) {
 void PrimaryGraphicsHelper::displayParams() {
   // Create string
   std::string parameters;
-  parameters += "th = "; parameters += std::to_string(pm->getTheta()); parameters += ", ";
-  parameters += "ph = "; parameters += std::to_string(pm->getPhi()); parameters += ", ";
-  if (mode == 1) {parameters += "view mode: ortho, ";}
-  else if (mode == 2) {parameters += "view mode: projection, ";}
-  else if (mode == 3) {parameters += "view mode: first person, ";}
+  if (displayMode == 3) {
+    parameters += "th = "; parameters += std::to_string((int)pm->getFirstPersonTheta()); parameters += ", ";
+    parameters += "view displayMode: first person, ";
+    parameters += "xPos = "; parameters += std::to_string(pm->getFirstPersonX()); parameters += ", ";
+    parameters += "yPos = "; parameters += std::to_string(pm->getFirstPersonY()); parameters += ", ";
+    parameters += "zPos = "; parameters += std::to_string(pm->getFirstPersonZ()); parameters += ", ";
+  }
+  else {
+    parameters += "th = "; parameters += std::to_string((int)pm->getTheta()); parameters += ", ";
+    parameters += "ph = "; parameters += std::to_string((int)pm->getPhi()); parameters += ", ";
+    if (displayMode == 1) {parameters += "view displayMode: ortho, ";}
+    else if (displayMode == 2) {parameters += "view displayMode: projection, fovy = "; parameters += std::to_string(pm->getFieldOfView()); parameters += ", ";}
+  }
+  parameters += "day / night cycle: ";
+  if (timeMode == 1) { parameters += "auto, "; }
+  else { parameters += "manual, "; }
   parameters += "time: ";
   if (dayTime) { parameters += "day"; }
   else { parameters += "night"; }
 
   // Display
+  #ifdef USEGLEW
   displayText(parameters);
+  #else
+  std::cout << parameters << std::endl;
+  #endif
 }
 
 // errorCheck() private member function
@@ -470,6 +536,7 @@ void PrimaryGraphicsHelper::transitionToNight() {
   cloud1->color(false);
   cloud2->color(false);
   road->color(false);
+  dayTime = false;
   glutPostRedisplay();
 }
 
@@ -495,5 +562,6 @@ void PrimaryGraphicsHelper::transitionToDay() {
   cloud1->color(true);
   cloud2->color(true);
   road->color(true);
+  dayTime = true;
   glutPostRedisplay();
 }
