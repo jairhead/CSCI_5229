@@ -37,7 +37,7 @@ BaseObject.h & BaseObject.cpp:
   - ESC: exit the program
   - 't': toggle between auto day/night cycle and manual
   - 'T': toggle between day and night
-  - 'r': print parameters to terminal
+  - 'r': print parameters to terminal (only without GLEW)
   - 'm': cycle between three display modes (ortho, projection, first person)
   - In ortho and projection display modes:
     - arrow keys: change viewing angle

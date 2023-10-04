@@ -477,7 +477,7 @@ void PrimaryGraphicsHelper::displayParams() {
   std::string parameters;
   if (displayMode == 3) {
     parameters += "th = "; parameters += std::to_string((int)pm->getFirstPersonTheta()); parameters += ", ";
-    parameters += "view displayMode: first person, ";
+    parameters += "view: first person, ";
     parameters += "xPos = "; parameters += std::to_string(pm->getFirstPersonX()); parameters += ", ";
     parameters += "yPos = "; parameters += std::to_string(pm->getFirstPersonY()); parameters += ", ";
     parameters += "zPos = "; parameters += std::to_string(pm->getFirstPersonZ()); parameters += ", ";
@@ -485,8 +485,8 @@ void PrimaryGraphicsHelper::displayParams() {
   else {
     parameters += "th = "; parameters += std::to_string((int)pm->getTheta()); parameters += ", ";
     parameters += "ph = "; parameters += std::to_string((int)pm->getPhi()); parameters += ", ";
-    if (displayMode == 1) {parameters += "view displayMode: ortho, ";}
-    else if (displayMode == 2) {parameters += "view displayMode: projection, fovy = "; parameters += std::to_string(pm->getFieldOfView()); parameters += ", ";}
+    if (displayMode == 1) {parameters += "view: ortho, ";}
+    else if (displayMode == 2) {parameters += "view: projection, fovy = "; parameters += std::to_string(pm->getFieldOfView()); parameters += ", ";}
   }
   parameters += "day / night cycle: ";
   if (timeMode == 1) { parameters += "auto, "; }
