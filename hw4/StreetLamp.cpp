@@ -12,6 +12,7 @@ StreetLamp::StreetLamp() {
   pole = new RectangularPrism();
   cantilever = new RectangularPrism();
   lamp = new RectangularPrism();
+  bulb = new Sphere(0.16, 0.39, 0.0, 0.02, 0.0);
 }
 
 // Destructor
@@ -74,10 +75,14 @@ void StreetLamp::draw() {
   lamp->scale(0.03, 0.01, 0.03);
   lamp->draw();
 
+  // Draw the bulb
+  bulb->color(lightC[0][0], lightC[0][1], lightC[0][2]);
+  bulb->draw();
+
   // If it's night, draw the light on the ground
   if (!dayTime) {
     glColor3d(lightC[0][0], lightC[0][1], lightC[0][2]);
-    glTranslated(0.16, yPos + 0.03, 0.0);
+    glTranslated(0.16, yPos + 0.04, 0.0);
     glBegin(GL_TRIANGLE_FAN);
     glVertex3d(0, 0, 0);
     for (int th = 0; th <= 360; th += d) {

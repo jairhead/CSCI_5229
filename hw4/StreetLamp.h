@@ -9,6 +9,7 @@
 #include <iostream>
 #include "BaseObject.h"
 #include "RectangularPrism.h"
+#include "Sphere.h"
 
 class StreetLamp : public BaseObject {
   public:
@@ -24,6 +25,7 @@ class StreetLamp : public BaseObject {
     RectangularPrism *pole;
     RectangularPrism *cantilever;
     RectangularPrism *lamp;
+    Sphere *bulb;
     bool dayTime = true;
     double poleC[3][3] = {{0.43,0.43,0.43},{0.43,0.43,0.43},{0,0,0}};
     double lightC[3][3] = {{0.87,0.77,0},{0.87,0.77,0},{0.87,0.77,0}};

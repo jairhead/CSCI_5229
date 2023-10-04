@@ -433,6 +433,8 @@ void PrimaryGraphicsHelper::transitionToNight() {
   spaceC[0][0] = spaceC[2][0]; spaceC[0][1] = spaceC[2][1]; spaceC[0][2] = spaceC[2][2];
   streetLamp1->color(false);
   streetLamp2->color(false);
+  cloud1->color(false);
+  cloud2->color(false);
   road->color(false);
   glutPostRedisplay();
 }
@@ -450,6 +452,8 @@ void PrimaryGraphicsHelper::transitionToDay() {
   spaceC[0][0] = spaceC[1][0]; spaceC[0][1] = spaceC[1][1]; spaceC[0][2] = spaceC[1][2];
   streetLamp1->color(true);
   streetLamp2->color(true);
+  cloud1->color(true);
+  cloud2->color(true);
   road->color(true);
   glutPostRedisplay();
 }
