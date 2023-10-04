@@ -1,12 +1,12 @@
 Name: Jared McKneely
 Course: CSCI 5229 (Computer Graphics)
 Semester: Fall 2023
-Assignment Homework #3
+Assignment Homework #4
 
 ----- ABOUT THIS PROGRAM -----
 
 --- DESCRIPTION OF FILES ---
-hw3.cpp:
+hw4.cpp:
   - Contains main()
 
 PrimaryGraphicsHelper.h:
