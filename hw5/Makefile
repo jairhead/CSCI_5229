@@ -21,7 +21,7 @@ endif
 CLEAN=rm -f $(EXE) *.o *.a
 endif
 
-OBJS := PrimaryGraphicsHelper.o Cube.o
+OBJS := PrimaryGraphicsHelper.o RectangularPrism.o
 
 # Default
 default: all
@@ -30,7 +30,7 @@ default: all
 all: $(EXE)
 
 # Dependencies
-hw5.o: hw5.cpp
+# hw5.o: hw5.cpp
 
 # Create archive / library
 libhw5.a:$(OBJS)
