@@ -21,7 +21,7 @@ endif
 CLEAN=rm -f $(EXE) *.o *.a
 endif
 
-OBJS := 
+OBJS := PrimaryGraphicsHelper.o
 
 # Default
 default: all
