@@ -7,11 +7,14 @@
 #include <iostream>
 #include "GlutIncludes.h"
 #include "GenericHomeworkException.h"
+#include "ProjectionManager.h"
+#include "RectangularPrism.h"
 
 class PrimaryGraphicsHelper {
   public:
     PrimaryGraphicsHelper();
     ~PrimaryGraphicsHelper();
+    static void init();
     static void display();
     static void reshape(int w, int h);
     static void special(int key, int x, int y);

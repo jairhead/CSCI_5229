@@ -7,15 +7,47 @@
 
 #include "PrimaryGraphicsHelper.h"
 
+// Display Parameter Globals
+int displayMode = 1; // displayMode for modifying display values
+
+
+// 3D Object Globals
+ProjectionManager *pm;
+RectangularPrism *rectangle;
+
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
 
 // Destructor
 PrimaryGraphicsHelper::~PrimaryGraphicsHelper() { }
 
+// init() public member function
+// Initializes all objects
+void PrimaryGraphicsHelper::init() {
+  pm = new ProjectionManager();
+  rectangle = new RectangularPrism();
+}
+
 // display() public member function
 // Callback for glutDisplayFunc()
-void PrimaryGraphicsHelper::display() { }
+void PrimaryGraphicsHelper::display() {
+  // Initialize the scene
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glEnable(GL_DEPTH_TEST);
+  glLoadIdentity();
+
+  // Set view
+  if (displayMode == 1) {pm->setOrthogonal();}
+  else if (displayMode == 2) {pm->setProjection();}
+
+  // Draw rectangular prism
+  rectangle->draw();
+  errorCheck("PrimaryGraphicsHelper::display(): rectangle");
+
+  // Flush and swap buffers
+  glFlush();
+  glutSwapBuffers();
+}
 
 // reshape() public member function
 // Callback for glutReshapeFunc()

@@ -22,7 +22,6 @@ class BaseObject {
     double getY() {return yPos;}
     double getZ() {return zPos;}
     double getTheta() {return theta;}
-    virtual void color() = 0;
     virtual void draw() = 0;
     virtual ~BaseObject() {}
   protected:
