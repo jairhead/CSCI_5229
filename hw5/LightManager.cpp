@@ -26,6 +26,14 @@ void LightManager::init() {
   glEnable(GL_COLOR_MATERIAL);
 }
 
+// translateLight0() public member function
+// Move the position of GL_LIGHT0
+void LightManager::translateLight0(double x, double y, double z) {
+  light0Pos[0] = x;
+  light0Pos[1] = y;
+  light0Pos[2] = z;
+}
+
 // enableLight0() public member function
 // Enables GL_LIGHT0 in OpenGL
 void LightManager::enableLight0() {
@@ -45,3 +53,4 @@ void LightManager::enableLight0() {
   // Set position of light 0
   glLightfv(GL_LIGHT0, GL_POSITION, light0Pos);
 }
+

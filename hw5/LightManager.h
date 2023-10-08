@@ -12,6 +12,7 @@ class LightManager {
     LightManager();
     ~LightManager();
     void init();
+    void translateLight0(double x, double y, double z);
     void enableLight0();
   private:
     // Lighting parameters

@@ -10,12 +10,11 @@
 // Display Parameter Globals
 int displayMode = 1; // displayMode for modifying display values
 
-
 // 3D Object Globals
 ProjectionManager *pm;
 LightManager *lm;
 Axes *axes;
-RectangularPrism *rectangle;
+ChessBoard *chessBoard;
 
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
@@ -29,7 +28,7 @@ void PrimaryGraphicsHelper::init() {
   pm = new ProjectionManager();
   lm = new LightManager();
   axes = new Axes();
-  rectangle = new RectangularPrism();
+  chessBoard = new ChessBoard();
 }
 
 // display() public member function
@@ -46,12 +45,13 @@ void PrimaryGraphicsHelper::display() {
 
   // Enable Light 0
   lm->init();
+  lm->translateLight0(1.0, 0.25, 0.0);
   lm->enableLight0();
   errorCheck("PrimaryGraphicsHelper::display(): light 0");
 
   // Draw rectangular prism
-  rectangle->draw();
-  errorCheck("PrimaryGraphicsHelper::display(): rectangular prism");
+  chessBoard->draw();
+  errorCheck("PrimaryGraphicsHelper::display(): chess board");
 
   // Draw the axes
   axes->draw();

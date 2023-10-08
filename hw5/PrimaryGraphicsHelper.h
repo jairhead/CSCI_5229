@@ -10,8 +10,7 @@
 #include "ProjectionManager.h"
 #include "LightManager.h"
 #include "Axes.h"
-#include "RectangularPrism.h"
-#include "Icosahedron.h"
+#include "ChessBoard.h"
 
 class PrimaryGraphicsHelper {
   public:

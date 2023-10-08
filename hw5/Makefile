@@ -24,7 +24,8 @@ endif
 OBJS := ProjectionManager.o \
 				LightManager.o Axes.o \
 				RectangularPrism.o \
-				Icosahedron.o
+				Icosahedron.o \
+				ChessBoard.o
 
 # Default
 default: all
