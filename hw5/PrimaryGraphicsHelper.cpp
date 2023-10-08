@@ -13,6 +13,7 @@ int displayMode = 1; // displayMode for modifying display values
 
 // 3D Object Globals
 ProjectionManager *pm;
+LightManager *lm;
 RectangularPrism *rectangle;
 
 // Constructor

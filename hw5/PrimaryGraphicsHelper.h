@@ -8,6 +8,7 @@
 #include "GlutIncludes.h"
 #include "GenericHomeworkException.h"
 #include "ProjectionManager.h"
+#include "LightManager.h"
 #include "RectangularPrism.h"
 
 class PrimaryGraphicsHelper {
