@@ -13,7 +13,7 @@ RectangularPrism::RectangularPrism() { }
 // Destructor
 RectangularPrism::~RectangularPrism() { }
 
-// color() member function
+// color() public member function
 // Sets the object's color values
 void RectangularPrism::color(double r, double g, double b) {
   red = r;

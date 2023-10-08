@@ -11,6 +11,7 @@
 #include "LightManager.h"
 #include "Axes.h"
 #include "RectangularPrism.h"
+#include "Icosahedron.h"
 
 class PrimaryGraphicsHelper {
   public:

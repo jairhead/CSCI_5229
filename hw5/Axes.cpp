@@ -64,9 +64,6 @@ void Axes::draw() {
   displayText("y");
   glRasterPos3d(0, 0, 1.1);
   displayText("z");
-
-  // End
-  if (lightingEnabled) {glEnable(GL_LIGHTING);}
 }
 
 // displayText() private member function

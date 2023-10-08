@@ -23,7 +23,8 @@ endif
 
 OBJS := ProjectionManager.o \
 				LightManager.o Axes.o \
-				RectangularPrism.o
+				RectangularPrism.o \
+				Icosahedron.o
 
 # Default
 default: all
