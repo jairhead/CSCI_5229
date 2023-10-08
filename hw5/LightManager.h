@@ -23,5 +23,5 @@ class LightManager {
     float n = 0.01;         // Normalization factor
 
     // Light positions
-    float light0Pos[3] = {0.0, 0.0, 0.0};
+    float light0Pos[3] = {1.0, 0.0, 0.0};    
 };

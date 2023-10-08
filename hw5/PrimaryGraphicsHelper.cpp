@@ -26,6 +26,7 @@ PrimaryGraphicsHelper::~PrimaryGraphicsHelper() { }
 // Initializes all objects
 void PrimaryGraphicsHelper::init() {
   pm = new ProjectionManager();
+  lm = new LightManager();
   rectangle = new RectangularPrism();
 }
 
@@ -41,6 +42,11 @@ void PrimaryGraphicsHelper::display() {
   if (displayMode == 1) {pm->setOrthogonal();}
   else if (displayMode == 2) {pm->setProjection();}
 
+  // Enable Light 0
+  lm->init();
+  lm->enableLight0();
+  errorCheck("PrimaryGraphicsHelper::display(): light 0");
+
   // Draw rectangular prism
   rectangle->draw();
   errorCheck("PrimaryGraphicsHelper::display(): rectangle");
@@ -52,15 +58,41 @@ void PrimaryGraphicsHelper::display() {
 
 // reshape() public member function
 // Callback for glutReshapeFunc()
-void PrimaryGraphicsHelper::reshape(int w, int h) { }
+void PrimaryGraphicsHelper::reshape(int w, int h) {
+  if (h > 0) {pm->setAspectRatio((double)w / h);}
+  glViewport(0, 0, w, h);
+  pm->setOrthogonal();
+}
 
 // special() public member function
 // Callback for glutSpecialFunc()
-void PrimaryGraphicsHelper::special(int key, int x, int y) { }
+void PrimaryGraphicsHelper::special(int key, int x, int y) {
+  // Handle key display navigation
+  double th = pm->getTheta();
+  double ph = pm->getPhi();
+  if (key == GLUT_KEY_RIGHT && displayMode != 3) {th += 1;}
+  else if (key == GLUT_KEY_LEFT && displayMode != 3) {th -= 1;}
+  else if (key == GLUT_KEY_UP && displayMode != 3) {ph += 1;}
+  else if (key == GLUT_KEY_DOWN && displayMode != 3) {ph -= 1;}
+  else if (key == GLUT_KEY_RIGHT && displayMode == 3) {pm->turnRight();}
+  else if (key == GLUT_KEY_LEFT && displayMode == 3) {pm->turnLeft();}
+  else if (key == GLUT_KEY_UP && displayMode == 3) {pm->lookUp();}
+  else if (key == GLUT_KEY_DOWN && displayMode == 3) {pm->lookDown();}
+
+  // Set theta and phi
+  pm->setTheta(th);
+  pm->setPhi(ph);
+
+  // Redisplay
+  glutPostRedisplay();
+}
 
 // key() public member function
 // Callback for glutKeyboardFunc()
-void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) { }
+void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
+  if (ch == 27) {exit(0);}
+  else if (ch == '0') {pm->setTheta(0.0); pm->setPhi(0.0);}
+}
 
 // initializeGlew() public member function
 // Tries to initialize GLEW (throws a GenericHomeworkException if it fails)

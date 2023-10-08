@@ -31,9 +31,10 @@ void RectangularPrism::draw() {
   glTranslated(xPos, yPos, zPos);
   glRotated(theta, 0, 1, 0);
   glScaled(xScaling, yScaling, zScaling);
+  glBegin(GL_QUADS);
+  glColor3d(red, green, blue);
 
   // Front face
-  glColor3d(red, green, blue);
   if (lightingEnabled) {glNormal3d(0.0, 0.0, 1.0);}
   glVertex3d(-0.5 * xScaling, -0.5 * yScaling, +0.5 * zScaling);
   glVertex3d(+0.5 * xScaling, -0.5 * yScaling, +0.5 * zScaling);
