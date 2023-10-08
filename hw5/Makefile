@@ -21,7 +21,9 @@ endif
 CLEAN=rm -f $(EXE) *.o *.a
 endif
 
-OBJS := PrimaryGraphicsHelper.o ProjectionManager.o LightManager.o RectangularPrism.o
+OBJS := ProjectionManager.o \
+				LightManager.o Axes.o \
+				RectangularPrism.o
 
 # Default
 default: all
@@ -38,7 +40,7 @@ libhw5.a:$(OBJS)
 	g++ -c $(CFLG)  $<
 
 #  Link
-hw5:hw5.o libhw5.a
+hw5:hw5.o PrimaryGraphicsHelper.o libhw5.a
 	g++ $(CFLG) -o $@ $^  $(LIBS)
 
 #  Clean

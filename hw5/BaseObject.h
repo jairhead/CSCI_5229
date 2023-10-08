@@ -22,6 +22,8 @@ class BaseObject {
     double getY() {return yPos;}
     double getZ() {return zPos;}
     double getTheta() {return theta;}
+    void enableLighting() {lightingEnabled = true;}
+    void disableLighting() {lightingEnabled = false;}
     virtual void draw() = 0;
     virtual ~BaseObject() {}
   protected:

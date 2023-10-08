@@ -14,6 +14,7 @@ int displayMode = 1; // displayMode for modifying display values
 // 3D Object Globals
 ProjectionManager *pm;
 LightManager *lm;
+Axes *axes;
 RectangularPrism *rectangle;
 
 // Constructor
@@ -27,6 +28,7 @@ PrimaryGraphicsHelper::~PrimaryGraphicsHelper() { }
 void PrimaryGraphicsHelper::init() {
   pm = new ProjectionManager();
   lm = new LightManager();
+  axes = new Axes();
   rectangle = new RectangularPrism();
 }
 
@@ -49,7 +51,11 @@ void PrimaryGraphicsHelper::display() {
 
   // Draw rectangular prism
   rectangle->draw();
-  errorCheck("PrimaryGraphicsHelper::display(): rectangle");
+  errorCheck("PrimaryGraphicsHelper::display(): rectangular prism");
+
+  // Draw the axes
+  axes->draw();
+  errorCheck("PrimaryGraphicsHelper::display(): axes");
 
   // Flush and swap buffers
   glFlush();
