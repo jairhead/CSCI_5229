@@ -21,6 +21,14 @@ void RectangularPrism::color(float r, float g, float b) {
   colorArray[2] = b;
 }
 
+// scale() public member function
+// Sets the object's scaling values
+void RectangularPrism::scale(double dx, double dy, double dz) {
+  xScaling = dx;
+  yScaling = dy;
+  zScaling = dz;
+}
+
 // draw() public member function
 // Contains logic to draw the object
 void RectangularPrism::draw() {
@@ -31,57 +39,59 @@ void RectangularPrism::draw() {
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emissionArray);
   }
 
-  // Save transformation; translate -> rotate -> scale
+  // Save transformation and set up
   glPushMatrix();
+
+  // Translate -> Rotate -> Scale
   glTranslated(posArray[0], posArray[1], posArray[2]);
   glRotated(theta, 0, 1, 0);
-  glScaled(scaleArray[0], scaleArray[1], scaleArray[2]);
-
-  // Front face
+  glScaled(xScaling, yScaling, zScaling);
   glBegin(GL_QUADS);
   glColor3f(colorArray[0], colorArray[1], colorArray[2]);
+
+  // Front face
   if (lightingEnabled) {glNormal3d(0.0, 0.0, 1.0);}
-  glVertex3d(-0.5 * scaleArray[0], -0.5 * scaleArray[1], +0.5 * scaleArray[1]);
-  glVertex3d(+0.5 * scaleArray[0], -0.5 * scaleArray[1], +0.5 * scaleArray[1]);
-  glVertex3d(+0.5 * scaleArray[0], +0.5 * scaleArray[1], +0.5 * scaleArray[1]);
-  glVertex3d(-0.5 * scaleArray[0], +0.5 * scaleArray[1], +0.5 * scaleArray[1]);
+  glVertex3d(-0.5 * xScaling, -0.5 * yScaling, +0.5 * zScaling);
+  glVertex3d(+0.5 * xScaling, -0.5 * yScaling, +0.5 * zScaling);
+  glVertex3d(+0.5 * xScaling, +0.5 * yScaling, +0.5 * zScaling);
+  glVertex3d(-0.5 * xScaling, +0.5 * yScaling, +0.5 * zScaling);
 
   // Back face
   if (lightingEnabled) {glNormal3d(0.0, 0.0, -1.0);}
-  glVertex3d(+0.5 * scaleArray[0], -0.5 * scaleArray[1], -0.5 * scaleArray[1]);
-  glVertex3d(-0.5 * scaleArray[0], -0.5 * scaleArray[1], -0.5 * scaleArray[1]);
-  glVertex3d(-0.5 * scaleArray[0], +0.5 * scaleArray[1], -0.5 * scaleArray[1]);
-  glVertex3d(+0.5 * scaleArray[0], +0.5 * scaleArray[1], -0.5 * scaleArray[1]);
+  glVertex3d(+0.5 * xScaling, -0.5 * yScaling, -0.5 * zScaling);
+  glVertex3d(-0.5 * xScaling, -0.5 * yScaling, -0.5 * zScaling);
+  glVertex3d(-0.5 * xScaling, +0.5 * yScaling, -0.5 * zScaling);
+  glVertex3d(+0.5 * xScaling, +0.5 * yScaling, -0.5 * zScaling);
 
   // Right face
   if (lightingEnabled) {glNormal3d(1.0, 0.0, 0.0);}
-  glVertex3d(+0.5 * scaleArray[0], -0.5 * scaleArray[1], +0.5 * scaleArray[1]);
-  glVertex3d(+0.5 * scaleArray[0], -0.5 * scaleArray[1], -0.5 * scaleArray[1]);
-  glVertex3d(+0.5 * scaleArray[0], +0.5 * scaleArray[1], -0.5 * scaleArray[1]);
-  glVertex3d(+0.5 * scaleArray[0], +0.5 * scaleArray[1], +0.5 * scaleArray[1]);
+  glVertex3d(+0.5 * xScaling, -0.5 * yScaling, +0.5 * zScaling);
+  glVertex3d(+0.5 * xScaling, -0.5 * yScaling, -0.5 * zScaling);
+  glVertex3d(+0.5 * xScaling, +0.5 * yScaling, -0.5 * zScaling);
+  glVertex3d(+0.5 * xScaling, +0.5 * yScaling, +0.5 * zScaling);
 
   // Left face
   if (lightingEnabled) {glNormal3d(-1.0, 0.0, 0.0);}
-  glVertex3d(-0.5 * scaleArray[0], -0.5 * scaleArray[1], -0.5 * scaleArray[1]);
-  glVertex3d(-0.5 * scaleArray[0], -0.5 * scaleArray[1], +0.5 * scaleArray[1]);
-  glVertex3d(-0.5 * scaleArray[0], +0.5 * scaleArray[1], +0.5 * scaleArray[1]);
-  glVertex3d(-0.5 * scaleArray[0], +0.5 * scaleArray[1], -0.5 * scaleArray[1]);
+  glVertex3d(-0.5 * xScaling, -0.5 * yScaling, -0.5 * zScaling);
+  glVertex3d(-0.5 * xScaling, -0.5 * yScaling, +0.5 * zScaling);
+  glVertex3d(-0.5 * xScaling, +0.5 * yScaling, +0.5 * zScaling);
+  glVertex3d(-0.5 * xScaling, +0.5 * yScaling, -0.5 * zScaling);
 
   // Top face
   if (lightingEnabled) {glNormal3d(0.0, 1.0, 0.0);}
-  glVertex3d(-0.5 * scaleArray[0], +0.5 * scaleArray[1], +0.5 * scaleArray[1]);
-  glVertex3d(+0.5 * scaleArray[0], +0.5 * scaleArray[1], +0.5 * scaleArray[1]);
-  glVertex3d(+0.5 * scaleArray[0], +0.5 * scaleArray[1], -0.5 * scaleArray[1]);
-  glVertex3d(-0.5 * scaleArray[0], +0.5 * scaleArray[1], -0.5 * scaleArray[1]);
+  glVertex3d(-0.5 * xScaling, +0.5 * yScaling, +0.5 * zScaling);
+  glVertex3d(+0.5 * xScaling, +0.5 * yScaling, +0.5 * zScaling);
+  glVertex3d(+0.5 * xScaling, +0.5 * yScaling, -0.5 * zScaling);
+  glVertex3d(-0.5 * xScaling, +0.5 * yScaling, -0.5 * zScaling);
 
   // Bottom face
   if (lightingEnabled) {glNormal3d(0.0, -1.0, 0.0);}
-  glVertex3d(-0.5 * scaleArray[0], -0.5 * scaleArray[1], -0.5 * scaleArray[1]);
-  glVertex3d(+0.5 * scaleArray[0], -0.5 * scaleArray[1], -0.5 * scaleArray[1]);
-  glVertex3d(+0.5 * scaleArray[0], -0.5 * scaleArray[1], +0.5 * scaleArray[1]);
-  glVertex3d(-0.5 * scaleArray[0], -0.5 * scaleArray[1], +0.5 * scaleArray[1]);
-  glEnd();
+  glVertex3d(-0.5 * xScaling, -0.5 * yScaling, -0.5 * zScaling);
+  glVertex3d(+0.5 * xScaling, -0.5 * yScaling, -0.5 * zScaling);
+  glVertex3d(+0.5 * xScaling, -0.5 * yScaling, +0.5 * zScaling);
+  glVertex3d(-0.5 * xScaling, -0.5 * yScaling, +0.5 * zScaling);
 
-  // Undo transformations
+  // End
+  glEnd();
   glPopMatrix();
 }
