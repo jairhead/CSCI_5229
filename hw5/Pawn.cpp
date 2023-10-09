@@ -24,6 +24,7 @@ void Pawn::color(double r, double g, double b) {
   colorArray[0] = r;
   colorArray[1] = g;
   colorArray[2] = b;
+  shinyFactor = 0.5;
 }
 
 // draw() public member function
@@ -43,6 +44,7 @@ void Pawn::draw() {
   glTranslated(posArray[0], posArray[1], posArray[2]);
   glRotated(theta, 0, 1, 0);
   glScaled(scaleArray[0], scaleArray[1], scaleArray[2]);
+  glColor3f(colorArray[0], colorArray[1], colorArray[2]);
 
   // Base bottom (circle)
   glBegin(GL_TRIANGLE_FAN);
@@ -177,6 +179,7 @@ void Pawn::draw() {
   // Top sphere
   yVal1 = 2.25;
   top->translate(0.0, yVal1, 0.0);
+  top->color(colorArray[0], colorArray[1], colorArray[2]);
   top->scale(0.45, 0.45, 0.45);
   top->draw();
 

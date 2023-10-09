@@ -16,6 +16,7 @@ LightManager *lm;
 Axes *axes;
 ChessBoard *chessBoard;
 Pawn *whitePawn;
+Pawn *blackPawn;
 
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
@@ -31,6 +32,7 @@ void PrimaryGraphicsHelper::init() {
   axes = new Axes();
   chessBoard = new ChessBoard();
   whitePawn = new Pawn();
+  blackPawn = new Pawn();
 }
 
 // display() public member function
@@ -57,7 +59,11 @@ void PrimaryGraphicsHelper::display() {
 
   // Draw the chess pieces
   whitePawn->translate(-0.5, 0.0, -0.5);
+  blackPawn->translate(+0.5, 0.0, -0.5);
+  blackPawn->color(0.13, 0.13, 0.13);
   whitePawn->draw();
+  blackPawn->draw();
+
   errorCheck("PrimaryGraphicsHelper::display(): chess pieces");
 
   // Draw the axes
