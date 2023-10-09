@@ -170,7 +170,7 @@ void Pawn::draw() {
   // Collar (top)
   glBegin(GL_TRIANGLE_FAN);
   glVertex3d(0.0, yVal1, 0.0);
-  if (lightingEnabled) {glNormal3d(0.0, 0.0, 1.0);}
+  if (lightingEnabled) {glNormal3d(0.0, 1.0, 0.0);}
   for (int th = 0; th <= 360; th += d) {
     glVertex3d(xVal1 * cosine(th), yVal1, zVal1 * sine(th));
   }

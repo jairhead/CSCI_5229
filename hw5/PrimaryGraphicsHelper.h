@@ -22,9 +22,12 @@ class PrimaryGraphicsHelper {
     static void reshape(int w, int h);
     static void special(int key, int x, int y);
     static void key(unsigned char ch, int x, int y);
+    static void idle();
     static void initializeGlew();
   private:
     static void displayText(std::string text);
     static void displayParams();
     static void errorCheck(std::string where);
+    static double sine(double angle);
+    static double cosine(double angle);
 };

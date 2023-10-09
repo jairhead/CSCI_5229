@@ -18,6 +18,13 @@ ChessBoard *chessBoard;
 Pawn *whitePawn;
 Pawn *blackPawn;
 
+// Light Position Globals
+float lightAngle = 0.0;
+float lightOrbitRadius = 1.5;
+float lightHeight = 0.25;
+const int IDLE_TIME = 50;   // Time to pass between idle transitions (ms)
+int prevTime = 0;           // Time of previous transition
+
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
 
@@ -49,7 +56,9 @@ void PrimaryGraphicsHelper::display() {
 
   // Enable Light 0
   lm->init();
-  lm->translateLight0(0.25, 0.25, 0.0);
+  lm->translateLight0(lightOrbitRadius * cosine(lightAngle),
+                      lightHeight,
+                      lightOrbitRadius * sine(lightAngle));
   lm->enableLight0();
   errorCheck("PrimaryGraphicsHelper::display(): light 0");
 
@@ -57,11 +66,13 @@ void PrimaryGraphicsHelper::display() {
   chessBoard->draw();
   errorCheck("PrimaryGraphicsHelper::display(): chess board");
 
-  // Draw the chess pieces
+  // Draw the white pawn
   whitePawn->translate(-0.5, 0.0, -0.5);
+  whitePawn->draw();
+
+  // Draw the black pawn
   blackPawn->translate(+0.5, 0.0, -0.5);
   blackPawn->color(0.13, 0.13, 0.13);
-  whitePawn->draw();
   blackPawn->draw();
 
   errorCheck("PrimaryGraphicsHelper::display(): chess pieces");
@@ -113,6 +124,19 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
   else if (ch == '0') {pm->setTheta(0.0); pm->setPhi(0.0);}
 }
 
+// idle() public member function
+// Primary OpenGL idle handler function
+// Callback for glutIdleFunc()
+void PrimaryGraphicsHelper::idle() {
+  int currTime = glutGet(GLUT_ELAPSED_TIME);
+  if (currTime - prevTime > IDLE_TIME) {
+    lightAngle += 2.0;
+    if (lightAngle > 360) {lightAngle = 0.0;}
+    prevTime = currTime;
+    glutPostRedisplay();
+  }
+}
+
 // initializeGlew() public member function
 // Tries to initialize GLEW (throws a GenericHomeworkException if it fails)
 void PrimaryGraphicsHelper::initializeGlew() {
@@ -158,3 +182,11 @@ void PrimaryGraphicsHelper::errorCheck(std::string where) {
               << std::endl;
   }
 }
+
+// sine() private member function
+// Returns the sine of the provided angle in degrees
+double PrimaryGraphicsHelper::sine(double angle) {return sin(angle * (3.14159265 / 180));}
+
+// cosine() private member function
+// Returns the cosine of the provided angle in degrees
+double PrimaryGraphicsHelper::cosine(double angle) {return cos(angle * (3.14159265 / 180));}
