@@ -56,7 +56,7 @@ void PrimaryGraphicsHelper::display() {
   errorCheck("PrimaryGraphicsHelper::display(): chess board");
 
   // Draw the chess pieces
-  whitePawn->translate(0.0, 0.2, 0.0);
+  whitePawn->translate(-0.5, 0.0, -0.5);
   whitePawn->draw();
   errorCheck("PrimaryGraphicsHelper::display(): chess pieces");
 
