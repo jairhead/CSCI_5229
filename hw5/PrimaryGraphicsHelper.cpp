@@ -15,6 +15,7 @@ ProjectionManager *pm;
 LightManager *lm;
 Axes *axes;
 ChessBoard *chessBoard;
+Pawn *whitePawn;
 
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
@@ -29,6 +30,7 @@ void PrimaryGraphicsHelper::init() {
   lm = new LightManager();
   axes = new Axes();
   chessBoard = new ChessBoard();
+  whitePawn = new Pawn();
 }
 
 // display() public member function
@@ -52,6 +54,11 @@ void PrimaryGraphicsHelper::display() {
   // Draw rectangular prism
   chessBoard->draw();
   errorCheck("PrimaryGraphicsHelper::display(): chess board");
+
+  // Draw the chess pieces
+  whitePawn->translate(0.0, 0.2, 0.0);
+  whitePawn->draw();
+  errorCheck("PrimaryGraphicsHelper::display(): chess pieces");
 
   // Draw the axes
   axes->draw();

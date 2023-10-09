@@ -26,7 +26,8 @@ OBJS := ProjectionManager.o \
 				RectangularPrism.o \
 				Sphere.o \
 				Icosahedron.o \
-				ChessBoard.o
+				ChessBoard.o \
+				Pawn.o
 
 # Default
 default: all
