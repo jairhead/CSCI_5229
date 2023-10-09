@@ -12,12 +12,12 @@ class RectangularPrism : public BaseObject {
   public:
     RectangularPrism();
     ~RectangularPrism();
-    void color(double r, double g, double b);
+    void color(float r, float g, float b);
     void draw();
   protected:
-    double red = 1.0;
-    double green = 1.0;
-    double blue = 1.0;
+    float colorArray[4] = {1.0, 1.0, 1.0, 1.0};
+    float specularArray[4] = {1.0, 1.0, 1.0, 1.0};
+    float emissionArray[4] = {0.0, 0.0, 0.0, 1.0};
 };
 
 #endif

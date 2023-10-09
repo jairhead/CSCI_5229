@@ -16,9 +16,9 @@ Icosahedron::~Icosahedron() { }
 // color() public member function
 // Sets the object's color values
 void Icosahedron::color(double r, double g, double b) {
-  red = r;
-  green = g;
-  blue = b;
+  colorArray[0] = r;
+  colorArray[1] = g;
+  colorArray[2] = b;
 }
 
 // draw() public member function
@@ -28,10 +28,10 @@ void Icosahedron::draw() {
   glPushMatrix();
 
   // Translate -> Rotate -> Scale
-  glTranslated(xPos, yPos, zPos);
+  glTranslated(posArray[0], posArray[1], posArray[2]);
   glRotated(theta, 0, 1, 0);
-  glScaled(xScaling, yScaling, zScaling);
-  glColor3d(red, green, blue);
+  glScaled(scaleArray[0], scaleArray[1], scaleArray[2]);
+  glColor3d(colorArray[0], colorArray[1], colorArray[2]);
 
   // Draw the object
   /*for (int i = 0; i < numSides; i++) {

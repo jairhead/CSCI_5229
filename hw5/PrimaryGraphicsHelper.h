@@ -11,6 +11,7 @@
 #include "LightManager.h"
 #include "Axes.h"
 #include "ChessBoard.h"
+#include "Sphere.h"
 
 class PrimaryGraphicsHelper {
   public:

@@ -12,28 +12,28 @@
 
 class BaseObject {
   public:
-    void scaleX(double x) {xPos = x;}
-    void scaleY(double y) {yPos = y;}
-    void scaleZ(double z) {zPos = z;}
-    void scale(double dx, double dy, double dz) {xScaling = dx; yScaling = dy; zScaling = dz;}
-    void translate(double x, double y, double z) {xPos = x; yPos = y; zPos = z;}
+    void scaleX(double x) {posArray[0] = x;}
+    void scaleY(double y) {posArray[1] = y;}
+    void scaleZ(double z) {posArray[2] = z;}
+    void scale(double dx, double dy, double dz) {scaleArray[0] = dx; scaleArray[1] = dy; scaleArray[2] = dz;}
+    void translate(double x, double y, double z) {posArray[0] = x; posArray[1] = y; posArray[2] = z;}
     void rotate(double th) {theta = th;}
-    double getX() {return xPos;}
-    double getY() {return yPos;}
-    double getZ() {return zPos;}
+    double getX() {return posArray[0];}
+    double getY() {return posArray[1];}
+    double getZ() {return posArray[2];}
     double getTheta() {return theta;}
     void enableLighting() {lightingEnabled = true;}
     void disableLighting() {lightingEnabled = false;}
     virtual void draw() = 0;
     virtual ~BaseObject() {}
   protected:
-    double xPos = 0.0;
-    double yPos = 0.0;
-    double zPos = 0.0;
-    double xScaling = 1.0;
-    double yScaling = 1.0;
-    double zScaling = 1.0;
+    // Position attributes
+    double posArray[3] = {0.0, 0.0, 0.0};
+    double scaleArray[3] = {1.0, 1.0, 1.0};
     double theta = 0.0;
+
+    // Lighting attributes
+    float shinyFactor = 1.0;
     bool lightingEnabled = true;
 };
 

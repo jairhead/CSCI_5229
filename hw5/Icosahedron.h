@@ -15,9 +15,7 @@ class Icosahedron : public BaseObject {
     void color(double r, double g, double b);
     void draw();
   protected:
-    double red = 1.0;
-    double green = 1.0;
-    double blue = 1.0;
+    double colorArray[3] = {1.0, 1.0, 1.0};
     const int numSides = 20;
     const int index[20][3] = {
       { 2, 1, 0}, { 3, 2, 0}, { 4, 3, 0}, { 5, 4, 0}, { 1, 5, 0},
