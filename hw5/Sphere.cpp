@@ -14,11 +14,27 @@ Sphere::Sphere() { }
 Sphere::~Sphere() { }
 
 // color() public member function
-// Sets the sphere's colors
+// Sets the object's colors
 void Sphere::color(float r, float g, float b) {
   colorArray[0] = r;
   colorArray[1] = g;
   colorArray[2] = b;
+}
+
+// setSpecular() public member function
+// Sets the specular light attributes
+void Sphere::setSpecular(float r, float g, float b) {
+  specularArray[0] = r;
+  specularArray[1] = g;
+  specularArray[2] = b;
+}
+
+// setEmission() public member function
+// Sets the emission light attributes
+void Sphere::setEmission(float r, float g, float b) {
+  emissionArray[0] = r;
+  emissionArray[1] = g;
+  emissionArray[2] = b;
 }
 
 // draw() member function

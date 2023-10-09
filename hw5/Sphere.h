@@ -14,6 +14,8 @@ class Sphere : public BaseObject {
     Sphere();
     ~Sphere();
     void color(float r, float g, float b);
+    void setSpecular(float r, float g, float b);
+    void setEmission(float r, float g, float b);
     void draw();
   protected:
     double scalingFactor = 1.0;

@@ -24,7 +24,15 @@ void LightManager::init() {
   glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, localViewer);
   glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
   glEnable(GL_COLOR_MATERIAL);
+
+  // Instantiate light ball
+  light0Ball = new Sphere();
+  light0Ball->setEmission(0.7, 0.7, 0.7);
 }
+
+// setDrawLight() public member function
+// Sets drawLight
+void LightManager::setDrawLight(bool draw) {drawLight = draw;}
 
 // translateLight0() public member function
 // Move the position of GL_LIGHT0
@@ -52,5 +60,12 @@ void LightManager::enableLight0() {
 
   // Set position of light 0
   glLightfv(GL_LIGHT0, GL_POSITION, light0Pos);
+
+  // Draw the light ball
+  if (drawLight) {
+    light0Ball->translate(light0Pos[0], light0Pos[1], light0Pos[2]);
+    light0Ball->scale(0.05, 0.05, 0.05);
+    light0Ball->draw();
+  }
 }
 
