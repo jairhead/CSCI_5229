@@ -1,0 +1,76 @@
+Name: Jared McKneely
+Course: CSCI 5229 (Computer Graphics)
+Semester: Fall 2023
+Assignment Homework #5
+
+----- ABOUT THIS PROGRAM -----
+
+--- DESCRIPTION OF FILES ---
+hw5.cpp:
+  - Contains main()
+
+PrimaryGraphicsHelper.h & .cpp:
+  - Declares public and private static methods for OpenGL
+  - Defines display() - static callback for glutDisplayFunc();
+  - Defines reshape() - static callback for glutReshapeFunc();
+  - Defines special() - static callback for glutSpecialFunc();
+  - Defines key() - static callback for glutKeyboardFunc();
+  - Defines idle() - static callback for glutIdleFunc();
+  - Defines other private member functions to assist with drawing objects to the screen (comments describe functionality)
+
+ProjectionManager.h & .cpp:
+  - Manages all three view modes
+  - Manages first person navigation
+
+BaseObject.h & BaseObject.cpp:
+  - Abstract class for all other objects in the project
+  - Implements translation, scaling, and getters / setters
+
+RectangularPrism.h & .cpp:
+  - Child classes of BaseObject
+  - Draws a rectangular prism with adjustable height, width, depth, and color
+
+Sphere.h & .cpp:
+  - Child classes of BaseObject
+  - Draws a sphere with adjustable size and color
+
+ChessBoard.h & .cpp:
+  - Child classes of BaseObject
+  - Draws a chess board with black and white RectangularPrism
+
+Pawn.h & .cpp:
+  - Child classes of BaseObject
+  - Draws a pawn chess piece with adjustable size and color
+
+Rook.h & .cpp:
+  - Child classes of BaseObject
+  - Draws a rook chess piece with adjustable size and color
+
+--- DESCRIPTION OF KEYS ---
+  - arrow keys: change viewing angle
+  - '+': increase field of view (projection display mode only)
+  - '-': decrease field of view (projection display mode only)
+  - 0: reset viewing angle
+  - 1: cycle between two display modes (ortho, projection)
+  - ESC: exit the program
+  - 'a': decrease ambient light
+  - 'A': increase ambient light
+  - 'd': decrease diffuse light
+  - 'D': increase diffuse light
+  - 'l' or 'L': toggle between lighting enabled and disabled
+  - 'm' or 'M': toggle between auto light rotation mode and manual light rotation mode
+  - 's': decrease specular light
+  - 'S': increase specular light
+  - 'r': print parameters to terminal (only without GLEW)
+  - 'x' or 'X': toggle between drawing axes and not
+  - '[': increase light height
+  - ']': decrease light height
+  - F3: decrease light orbital radius
+  - F4: increase light orbital radius
+  - F8: increase light angular speed
+  - F9: decrease light angular speed
+  - '<': increase light angle (manual light rotation mode only)
+  - '>': decrease light angle (manual light rotation mode only)
+
+--- EXTERNAL RESOURCES ---
+  - Color picker: https://keiwando.com/color-picker/

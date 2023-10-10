@@ -214,6 +214,11 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
     int spec = lm->getSpecular() + 5;
     lm->setSpecular(spec);
   }
+  else if (ch == 'r') {
+    #ifndef USEGLEW
+    displayParams();
+    #endif
+  }
 
   // Redisplay
   glutPostRedisplay();
