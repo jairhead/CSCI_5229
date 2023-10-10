@@ -7,9 +7,6 @@
 
 #include "PrimaryGraphicsHelper.h"
 
-// Display Parameter Globals
-int displayMode = 1; // displayMode for modifying display values
-
 // 3D Object Globals
 ProjectionManager *pm;
 LightManager *lm;
@@ -18,12 +15,16 @@ ChessBoard *chessBoard;
 Pawn *whitePawn;
 Pawn *blackPawn;
 
-// Light Position Globals
-float lightAngle = 0.0;
-float lightOrbitRadius = 1.5;
-float lightHeight = 0.25;
-const int IDLE_TIME = 50;   // Time to pass between idle transitions (ms)
-int prevTime = 0;           // Time of previous transition
+// Control Globals
+float lightAngle = 0.0;       // Current angle at which the light is located (degrees)
+float lightOrbitRadius = 1.5; // Radius with which the light will orbit
+float lightHeight = 0.3;      // Y component of light position
+const int IDLE_TIME = 50;     // Time to pass between idle transitions (ms)
+int prevTime = 0;             // Time of previous transition
+bool lightingEnabled = true;  // Lighting is enabled or no?
+bool drawAxes = true;         // Draw the xyz axes or no?
+bool moveLight = true;        // Execute light orbit animation or no?
+int displayMode = 1;          // 1 = ortho; 2 = projection
 
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
@@ -54,13 +55,23 @@ void PrimaryGraphicsHelper::display() {
   if (displayMode == 1) {pm->setOrthogonal();}
   else if (displayMode == 2) {pm->setProjection();}
 
-  // Enable Light 0
-  lm->init();
-  lm->translateLight0(lightOrbitRadius * cosine(lightAngle),
-                      lightHeight,
-                      lightOrbitRadius * sine(lightAngle));
-  lm->enableLight0();
-  errorCheck("PrimaryGraphicsHelper::display(): light 0");
+  // Enable or disable lighting
+  if (lightingEnabled) {
+    lm->init();
+    lm->translateLight0(lightOrbitRadius * cosine(lightAngle),
+                        lightHeight,
+                        lightOrbitRadius * sine(lightAngle));
+    lm->enableLight0();
+    errorCheck("PrimaryGraphicsHelper::display(): light 0");
+    chessBoard->enableLighting();
+    whitePawn->enableLighting();
+    blackPawn->enableLighting();
+  }
+  else {
+    chessBoard->disableLighting();
+    whitePawn->disableLighting();
+    blackPawn->disableLighting();
+  }
 
   // Draw rectangular prism
   chessBoard->draw();
@@ -69,17 +80,31 @@ void PrimaryGraphicsHelper::display() {
   // Draw the white pawn
   whitePawn->translate(-0.5, 0.0, -0.5);
   whitePawn->draw();
+  errorCheck("PrimaryGraphicsHelper::display(): white pawn");
 
   // Draw the black pawn
   blackPawn->translate(+0.5, 0.0, -0.5);
   blackPawn->color(0.13, 0.13, 0.13);
   blackPawn->draw();
-
-  errorCheck("PrimaryGraphicsHelper::display(): chess pieces");
+  errorCheck("PrimaryGraphicsHelper::display(): black pawn");
+  
+  // Draw the white rook
+  errorCheck("PrimaryGraphicsHelper::display(): white rook");
+  
 
   // Draw the axes
-  axes->draw();
-  errorCheck("PrimaryGraphicsHelper::display(): axes");
+  if (drawAxes) {
+    axes->draw();
+    errorCheck("PrimaryGraphicsHelper::display(): axes");
+  }
+
+  // Display parameters
+  #ifdef USEGLEW
+  glColor3d(1.0, 1.0, 1.0);
+  glWindowPos2i(5,5);
+  displayParams();
+  errorCheck("PrimaryGraphicsHelper::display() display parameters");
+  #endif
 
   // Flush and swap buffers
   glFlush();
@@ -108,6 +133,10 @@ void PrimaryGraphicsHelper::special(int key, int x, int y) {
   else if (key == GLUT_KEY_LEFT && displayMode == 3) {pm->turnLeft();}
   else if (key == GLUT_KEY_UP && displayMode == 3) {pm->lookUp();}
   else if (key == GLUT_KEY_DOWN && displayMode == 3) {pm->lookDown();}
+  else if (key == GLUT_KEY_F3) {
+    lightOrbitRadius -= 0.05;
+    if (lightOrbitRadius < 0.0) {lightOrbitRadius = 1.5;}
+  }
 
   // Set theta and phi
   pm->setTheta(th);
@@ -122,6 +151,40 @@ void PrimaryGraphicsHelper::special(int key, int x, int y) {
 void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
   if (ch == 27) {exit(0);}
   else if (ch == '0') {pm->setTheta(0.0); pm->setPhi(0.0);}
+  else if (ch == '1') {
+    displayMode += 1;
+    if (displayMode > 2) {displayMode = 1;}
+  }
+  else if (ch == 'x' || ch == 'X') {drawAxes = !drawAxes;}
+  else if (ch == 'l' || ch == 'L') {lightingEnabled = !lightingEnabled;}
+  else if (ch == 'm' || ch == 'M') {moveLight = !moveLight;}
+  else if (ch == '<') {lightAngle += 1;}
+  else if (ch == '>') {lightAngle -= 1;}
+  else if (ch == '+' && displayMode == 2) {
+    double fovy = pm->getFieldOfView() + 2.0;
+    pm->setFieldOfView(fovy);
+    #ifndef USEGLEW
+    displayParams();
+    #endif
+  }
+  else if (ch == '-' && displayMode == 2) {
+    double fovy = pm->getFieldOfView() - 2.0;
+    pm->setFieldOfView(fovy);
+    #ifndef USEGLEW
+    displayParams();
+    #endif
+  }
+  else if (ch == '[') {
+    lightHeight += 0.1;
+    if (lightHeight > 1.5) {lightHeight = 1.5;}
+  }
+  else if (ch == ']') {
+    lightHeight -= 0.1;
+    if (lightHeight < 0.0) {lightHeight = 0.0;}
+  }
+
+  // Redisplay
+  glutPostRedisplay();
 }
 
 // idle() public member function
@@ -129,7 +192,7 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
 // Callback for glutIdleFunc()
 void PrimaryGraphicsHelper::idle() {
   int currTime = glutGet(GLUT_ELAPSED_TIME);
-  if (currTime - prevTime > IDLE_TIME) {
+  if (currTime - prevTime > IDLE_TIME && moveLight) {
     lightAngle += 2.0;
     if (lightAngle > 360) {lightAngle = 0.0;}
     prevTime = currTime;

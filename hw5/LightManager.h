@@ -19,8 +19,8 @@ class LightManager {
   private:
     // Lighting parameters
     int ambIntensity = 1;   // % intensity of ambient light
-    int diffIntensity = 90; // % intensity of diffuse light
-    int specIntensity = 10; // % intensity of specular light
+    int diffIntensity = 60; // % intensity of diffuse light
+    int specIntensity = 60; // % intensity of specular light
     int localViewer = 1;    // Model for local viewer
     float w = 1.0;          // w value for homogeneous coordinates
     float n = 0.01;         // Normalization factor
@@ -28,5 +28,5 @@ class LightManager {
     Sphere *light0Ball;     // Little ball at light's position
 
     // Light positions
-    float light0Pos[3] = {0.0, 0.0, 0.0};    
+    float posArray[3] = {0.0, 0.0, 0.0};    
 };

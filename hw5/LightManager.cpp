@@ -37,9 +37,9 @@ void LightManager::setDrawLight(bool draw) {drawLight = draw;}
 // translateLight0() public member function
 // Move the position of GL_LIGHT0
 void LightManager::translateLight0(double x, double y, double z) {
-  light0Pos[0] = x;
-  light0Pos[1] = y;
-  light0Pos[2] = z;
+  posArray[0] = x;
+  posArray[1] = y;
+  posArray[2] = z;
 }
 
 // enableLight0() public member function
@@ -49,21 +49,20 @@ void LightManager::enableLight0() {
   float amb[] = {(n * ambIntensity), (n * ambIntensity), (n * ambIntensity), w}; 
   float diff[] = {(n * diffIntensity), (n * diffIntensity), (n * diffIntensity), w}; 
   float spec[] = {(n * specIntensity), (n * specIntensity), (n * specIntensity), w};
+  float pos[] = {posArray[0], posArray[1], posArray[2], 1.0};
 
   // Enable light soure 0
   glEnable(GL_LIGHT0);
 
-  // Set ambient, diffuse, and specular light
+  // Set ambient, diffuse, specular, and position of light
   glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
   glLightfv(GL_LIGHT0, GL_DIFFUSE, diff);
   glLightfv(GL_LIGHT0, GL_SPECULAR, spec);
-
-  // Set position of light 0
-  glLightfv(GL_LIGHT0, GL_POSITION, light0Pos);
+  glLightfv(GL_LIGHT0, GL_POSITION, pos);
 
   // Draw the light ball
   if (drawLight) {
-    light0Ball->translate(light0Pos[0], light0Pos[1], light0Pos[2]);
+    light0Ball->translate(pos[0], pos[1], pos[2]);
     light0Ball->scale(0.05, 0.05, 0.05);
     light0Ball->draw();
   }

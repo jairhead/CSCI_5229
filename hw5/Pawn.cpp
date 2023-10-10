@@ -24,7 +24,7 @@ void Pawn::color(double r, double g, double b) {
   colorArray[0] = r;
   colorArray[1] = g;
   colorArray[2] = b;
-  shinyFactor = 0.5;
+  shinyFactor = 1.0;
 }
 
 // draw() public member function
@@ -35,6 +35,11 @@ void Pawn::draw() {
     glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shinyFactor);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specularArray);
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emissionArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuseArray);
+    top->enableLighting();
+  }
+  else {
+    top->disableLighting();
   }
 
   // Save transformation and set up
