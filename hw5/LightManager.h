@@ -14,6 +14,13 @@ class LightManager {
     ~LightManager();
     void init();
     void setDrawLight(bool draw);
+    void setAmbient(int intensity);
+    void setDiffuse(int intensity);
+    void setSpecular(int intensity);
+    bool getDrawLight();
+    int getAmbient();
+    int getDiffuse();
+    int getSpecular();
     void translateLight0(double x, double y, double z);
     void enableLight0();
   private:

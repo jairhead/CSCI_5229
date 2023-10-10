@@ -187,6 +187,30 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
     lightHeight -= 0.1;
     if (lightHeight < 0.0) {lightHeight = 0.0;}
   }
+  else if (ch == 'a') {
+    int amb = lm->getAmbient() - 5;
+    lm->setAmbient(amb);
+  }
+  else if (ch == 'A') {
+    int amb = lm->getAmbient() + 5;
+    lm->setAmbient(amb);
+  }
+  else if (ch == 'd') {
+    int diff = lm->getDiffuse() - 5;
+    lm->setDiffuse(diff);
+  }
+  else if (ch == 'D') {
+    int diff = lm->getDiffuse() + 5;
+    lm->setDiffuse(diff);
+  }
+  else if (ch == 's') {
+    int spec = lm->getSpecular() - 5;
+    lm->setSpecular(spec);
+  }
+  else if (ch == 'S') {
+    int spec = lm->getSpecular() + 5;
+    lm->setSpecular(spec);
+  }
 
   // Redisplay
   glutPostRedisplay();
@@ -230,7 +254,15 @@ void PrimaryGraphicsHelper::displayText(std::string text) {
 // Helper method that displays parameters to the window
 void PrimaryGraphicsHelper::displayParams() {
   // Create string
-  std::string parameters = "[NULL]";
+  std::string parameters;
+  parameters += "Angle: "; parameters += std::to_string((int)pm->getTheta()); parameters += ",";
+  parameters += std::to_string((int)pm->getPhi()); parameters += "; ";
+  parameters += "View: ";
+  if (displayMode == 1) {parameters += "Ortho; ";}
+  else {parameters += "Persp, Fovy = "; parameters += std::to_string(pm->getFieldOfView()); parameters += "; ";}
+  parameters += "Lite: ";
+  if (lightingEnabled) {parameters += "ON; ";}
+  else {parameters += "OFF; ";}
 
   // Display
   #ifdef USEGLEW

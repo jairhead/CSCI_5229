@@ -34,6 +34,46 @@ void LightManager::init() {
 // Sets drawLight
 void LightManager::setDrawLight(bool draw) {drawLight = draw;}
 
+// setAmbient() public member function
+// Sets ambIntensity
+void LightManager::setAmbient(int intensity) {
+  if (intensity > 100) {ambIntensity = 100;}
+  else if (intensity < 0) {ambIntensity = 0;}
+  else {ambIntensity = intensity;}
+}
+
+// setDiffuse() public member function
+// Sets ambIntensity
+void LightManager::setDiffuse(int intensity) {
+  if (intensity > 100) {diffIntensity = 100;}
+  else if (intensity < 0) {diffIntensity = 0;}
+  else {diffIntensity = intensity;}
+}
+
+// setSpecular() public member function
+// Sets specIntensity
+void LightManager::setSpecular(int intensity) {
+  if (intensity > 100) {specIntensity = 100;}
+  else if (intensity < 0) {specIntensity = 0;}
+  else {specIntensity = intensity;}
+}
+
+// getDrawLight() public member function
+// Gets drawLight
+bool LightManager::getDrawLight() {return drawLight;}
+
+// getAmbient() public member function
+// Gets ambIntensity
+int LightManager::getAmbient() {return ambIntensity;}
+
+// getDiffuse() public member function
+// Gets diffIntensity
+int LightManager::getDiffuse() {return diffIntensity;}
+
+// getSpecular() public member function
+// Gets specIntensity
+int LightManager::getSpecular() {return specIntensity;}
+
 // translateLight0() public member function
 // Move the position of GL_LIGHT0
 void LightManager::translateLight0(double x, double y, double z) {
@@ -45,14 +85,14 @@ void LightManager::translateLight0(double x, double y, double z) {
 // enableLight0() public member function
 // Enables GL_LIGHT0 in OpenGL
 void LightManager::enableLight0() {
-  // Set up ambient, diffuse, and specular lighting parameters
+  // Enable light soure 0
+  glEnable(GL_LIGHT0);
+
+  // Set up ambient, diffuse, specular, and position parameters
   float amb[] = {(n * ambIntensity), (n * ambIntensity), (n * ambIntensity), w}; 
   float diff[] = {(n * diffIntensity), (n * diffIntensity), (n * diffIntensity), w}; 
   float spec[] = {(n * specIntensity), (n * specIntensity), (n * specIntensity), w};
   float pos[] = {posArray[0], posArray[1], posArray[2], 1.0};
-
-  // Enable light soure 0
-  glEnable(GL_LIGHT0);
 
   // Set ambient, diffuse, specular, and position of light
   glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
