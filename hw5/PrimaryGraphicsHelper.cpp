@@ -19,6 +19,7 @@ Pawn *blackPawn;
 float lightAngle = 0.0;       // Current angle at which the light is located (degrees)
 float lightOrbitRadius = 1.5; // Radius with which the light will orbit
 float lightHeight = 0.3;      // Y component of light position
+float lightOrbitInc = 2.0;    // Orbit increment
 const int IDLE_TIME = 50;     // Time to pass between idle transitions (ms)
 int prevTime = 0;             // Time of previous transition
 bool lightingEnabled = true;  // Lighting is enabled or no?
@@ -125,22 +126,26 @@ void PrimaryGraphicsHelper::special(int key, int x, int y) {
   // Handle key display navigation
   double th = pm->getTheta();
   double ph = pm->getPhi();
-  if (key == GLUT_KEY_RIGHT && displayMode != 3) {th += 1;}
-  else if (key == GLUT_KEY_LEFT && displayMode != 3) {th -= 1;}
-  else if (key == GLUT_KEY_UP && displayMode != 3) {ph += 1;}
-  else if (key == GLUT_KEY_DOWN && displayMode != 3) {ph -= 1;}
-  else if (key == GLUT_KEY_RIGHT && displayMode == 3) {pm->turnRight();}
-  else if (key == GLUT_KEY_LEFT && displayMode == 3) {pm->turnLeft();}
-  else if (key == GLUT_KEY_UP && displayMode == 3) {pm->lookUp();}
-  else if (key == GLUT_KEY_DOWN && displayMode == 3) {pm->lookDown();}
+  if (key == GLUT_KEY_RIGHT) {th += 1; pm->setTheta(th);}
+  else if (key == GLUT_KEY_LEFT) {th -= 1; pm->setTheta(th);}
+  else if (key == GLUT_KEY_UP) {ph += 1; pm->setPhi(ph);}
+  else if (key == GLUT_KEY_DOWN) {ph -= 1; pm->setPhi(ph);}
   else if (key == GLUT_KEY_F3) {
     lightOrbitRadius -= 0.05;
-    if (lightOrbitRadius < 0.0) {lightOrbitRadius = 1.5;}
+    if (lightOrbitRadius < 0.1) {lightOrbitRadius = 0.1;}
   }
-
-  // Set theta and phi
-  pm->setTheta(th);
-  pm->setPhi(ph);
+  else if (key == GLUT_KEY_F4) {
+    lightOrbitRadius += 0.05;
+    if (lightOrbitRadius > 1.5) {lightOrbitRadius = 1.5;}
+  }
+  else if (key == GLUT_KEY_F8) {
+    lightOrbitInc += 0.5;
+    if (lightOrbitInc > 10.0) {lightOrbitInc = 10.0;}
+  }
+  else if (key == GLUT_KEY_F9) {
+    lightOrbitInc -= 0.5;
+    if (lightOrbitInc < 0.0) {lightOrbitInc = 0.0;}
+  }
 
   // Redisplay
   glutPostRedisplay();
@@ -193,7 +198,7 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
 void PrimaryGraphicsHelper::idle() {
   int currTime = glutGet(GLUT_ELAPSED_TIME);
   if (currTime - prevTime > IDLE_TIME && moveLight) {
-    lightAngle += 2.0;
+    lightAngle += lightOrbitInc;
     if (lightAngle > 360) {lightAngle = 0.0;}
     prevTime = currTime;
     glutPostRedisplay();

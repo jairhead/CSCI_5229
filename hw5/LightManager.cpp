@@ -63,7 +63,7 @@ void LightManager::enableLight0() {
   // Draw the light ball
   if (drawLight) {
     light0Ball->translate(pos[0], pos[1], pos[2]);
-    light0Ball->scale(0.05, 0.05, 0.05);
+    light0Ball->scale(0.03, 0.03, 0.03);
     light0Ball->draw();
   }
 }
