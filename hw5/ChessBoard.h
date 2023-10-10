@@ -19,12 +19,12 @@ class ChessBoard : public BaseObject {
     RectangularPrism *blackSquare2;
     RectangularPrism *whiteSquare1;
     RectangularPrism *whiteSquare2;
-    double blackSquareR = 0.13;
-    double blackSquareG = 0.13;
-    double blackSquareB = 0.13;
-    double whiteSquareR = 0.81;
-    double whiteSquareG = 0.81;
-    double whiteSquareB = 0.81;
+    float blackSquareR = 0.13;
+    float blackSquareG = 0.13;
+    float blackSquareB = 0.13;
+    float whiteSquareR = 0.81;
+    float whiteSquareG = 0.81;
+    float whiteSquareB = 0.81;
 };
 
 #endif

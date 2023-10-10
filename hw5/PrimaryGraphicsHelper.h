@@ -9,6 +9,7 @@
 #include "GenericHomeworkException.h"
 #include "ProjectionManager.h"
 #include "LightManager.h"
+
 #include "Axes.h"
 #include "ChessBoard.h"
 #include "Pawn.h"

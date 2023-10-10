@@ -25,7 +25,6 @@ OBJS := ProjectionManager.o \
 				LightManager.o Axes.o \
 				RectangularPrism.o \
 				Sphere.o \
-				Icosahedron.o \
 				ChessBoard.o \
 				Pawn.o
 
