@@ -69,8 +69,8 @@ Rook.h & .cpp:
   - F4: increase light orbital radius
   - F8: increase light angular speed
   - F9: decrease light angular speed
-  - '<': increase light angle (manual light rotation mode only)
-  - '>': decrease light angle (manual light rotation mode only)
+  - '<': move light clockwise (manual light rotation mode only)
+  - '>': move light counter-clockwise (manual light rotation mode only)
 
 --- EXTERNAL RESOURCES ---
   - Color picker: https://keiwando.com/color-picker/
