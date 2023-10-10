@@ -14,11 +14,12 @@ Axes *axes;
 ChessBoard *chessBoard;
 Pawn *whitePawn;
 Pawn *blackPawn;
+Rook *whiteRook;
 
 // Control Globals
 float lightAngle = 0.0;       // Current angle at which the light is located (degrees)
 float lightOrbitRadius = 1.5; // Radius with which the light will orbit
-float lightHeight = 0.3;      // Y component of light position
+float lightHeight = 0.8;      // Y component of light position
 float lightOrbitInc = 2.0;    // Orbit increment
 const int IDLE_TIME = 50;     // Time to pass between idle transitions (ms)
 int prevTime = 0;             // Time of previous transition
@@ -42,6 +43,7 @@ void PrimaryGraphicsHelper::init() {
   chessBoard = new ChessBoard();
   whitePawn = new Pawn();
   blackPawn = new Pawn();
+  whiteRook = new Rook();
 }
 
 // display() public member function
@@ -90,8 +92,9 @@ void PrimaryGraphicsHelper::display() {
   errorCheck("PrimaryGraphicsHelper::display(): black pawn");
   
   // Draw the white rook
+  whiteRook->translate(+0.5, 0.0, +0.5);
+  whiteRook->draw();
   errorCheck("PrimaryGraphicsHelper::display(): white rook");
-  
 
   // Draw the axes
   if (drawAxes) {

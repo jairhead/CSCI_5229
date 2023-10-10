@@ -13,6 +13,7 @@
 #include "Axes.h"
 #include "ChessBoard.h"
 #include "Pawn.h"
+#include "Rook.h"
 
 class PrimaryGraphicsHelper {
   public:
