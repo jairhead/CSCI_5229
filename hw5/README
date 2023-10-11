@@ -47,6 +47,7 @@ Rook.h & .cpp:
   - Draws a rook chess piece with adjustable size and color
 
 --- DESCRIPTION OF KEYS ---
+  - any key: print parameters to terminal (only without GLEW)
   - arrow keys: change viewing angle
   - '+': increase field of view (projection display mode only)
   - '-': decrease field of view (projection display mode only)
@@ -61,7 +62,6 @@ Rook.h & .cpp:
   - 'm' or 'M': toggle between auto light rotation mode and manual light rotation mode
   - 's': decrease specular light
   - 'S': increase specular light
-  - 'r': print parameters to terminal (only without GLEW)
   - 'x' or 'X': toggle between drawing axes and not
   - '[': increase light height
   - ']': decrease light height

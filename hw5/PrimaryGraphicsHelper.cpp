@@ -150,6 +150,11 @@ void PrimaryGraphicsHelper::special(int key, int x, int y) {
     if (lightOrbitInc < 0.0) {lightOrbitInc = 0.0;}
   }
 
+  // Display params (if compiled without GLEW)
+  #ifndef USEGLEW
+  displayParams();
+  #endif
+
   // Redisplay
   glutPostRedisplay();
 }
@@ -171,16 +176,10 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
   else if (ch == '+' && displayMode == 2) {
     double fovy = pm->getFieldOfView() + 2.0;
     pm->setFieldOfView(fovy);
-    #ifndef USEGLEW
-    displayParams();
-    #endif
   }
   else if (ch == '-' && displayMode == 2) {
     double fovy = pm->getFieldOfView() - 2.0;
     pm->setFieldOfView(fovy);
-    #ifndef USEGLEW
-    displayParams();
-    #endif
   }
   else if (ch == '[') {
     lightHeight += 0.1;
@@ -214,11 +213,11 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
     int spec = lm->getSpecular() + 5;
     lm->setSpecular(spec);
   }
-  else if (ch == 'r') {
-    #ifndef USEGLEW
-    displayParams();
-    #endif
-  }
+
+  // Display params (if compiled without GLEW)
+  #ifndef USEGLEW
+  displayParams();
+  #endif
 
   // Redisplay
   glutPostRedisplay();
