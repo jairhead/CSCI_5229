@@ -271,6 +271,9 @@ void PrimaryGraphicsHelper::displayParams() {
   parameters += "Lite: ";
   if (lightingEnabled) {parameters += "ON; ";}
   else {parameters += "OFF; ";}
+  parameters += "Ambient: "; parameters += std::to_string(lm->getAmbient()); parameters += ", ";
+  parameters += "Diffuse: "; parameters += std::to_string(lm->getDiffuse()); parameters += ", ";
+  parameters += "Specular: "; parameters += std::to_string(lm->getSpecular());
 
   // Display
   #ifdef USEGLEW

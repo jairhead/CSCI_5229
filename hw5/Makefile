@@ -21,8 +21,10 @@ endif
 CLEAN=rm -f $(EXE) *.o *.a
 endif
 
+# List of objects
 OBJS := ProjectionManager.o \
-				LightManager.o Axes.o \
+				LightManager.o \
+				Axes.o \
 				RectangularPrism.o \
 				Sphere.o \
 				ChessBoard.o \
