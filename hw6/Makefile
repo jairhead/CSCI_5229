@@ -1,4 +1,4 @@
-# Homework 5
+# Homework 6
 EXE=hw6
 
 #  Msys/MinGW
@@ -39,7 +39,7 @@ libhw6.a:$(OBJS)
 	g++ -c $(CFLG)  $<
 
 #  Link
-hw5:hw5.o libhw6.a
+hw6:hw6.o PrimaryGraphicsHelper.o libhw6.a
 	g++ $(CFLG) -o $@ $^  $(LIBS)
 
 #  Clean
