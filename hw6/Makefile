@@ -28,6 +28,7 @@ OBJ := hw6.o \
 			 PrimaryGraphicsHelper.o \
 			 ProjectionManager.o \
 			 LightManager.o \
+			 Axes.o \
 			 RectangularPrism.o \
 			 Sphere.o
 

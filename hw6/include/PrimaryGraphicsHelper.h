@@ -12,6 +12,9 @@
 #include "GlutIncludes.h"
 #include "Utilities.h"
 
+#include "Axes.h"
+#include "RectangularPrism.h"
+
 class PrimaryGraphicsHelper {
   public:
     PrimaryGraphicsHelper();

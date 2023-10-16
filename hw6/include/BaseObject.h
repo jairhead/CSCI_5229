@@ -18,12 +18,15 @@ class BaseObject {
     virtual void scale(double dx, double dy, double dz) {scaleArray[0] = dx; scaleArray[1] = dy; scaleArray[2] = dz;}
     void translate(double x, double y, double z) {posArray[0] = x; posArray[1] = y; posArray[2] = z;}
     void rotate(double th) {theta = th;}
+    void setTexture(unsigned int *tex) {texture = tex; textureEnabled = true;}
     double getX() {return posArray[0];}
     double getY() {return posArray[1];}
     double getZ() {return posArray[2];}
     double getTheta() {return theta;}
     void enableLighting() {lightingEnabled = true;}
     void disableLighting() {lightingEnabled = false;}
+    void enableTexture() {textureEnabled = true;}
+    void disableTexture() {textureEnabled = false;}
     virtual void draw() = 0;
     virtual ~BaseObject() {}
   protected:
@@ -35,6 +38,10 @@ class BaseObject {
     // Lighting attributes
     float shinyFactor = 1.0;
     bool lightingEnabled = true;
+
+    // Texture attributes
+    unsigned int *texture = nullptr;
+    bool textureEnabled = false;
 };
 
 #endif

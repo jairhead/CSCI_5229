@@ -32,11 +32,18 @@ void RectangularPrism::scale(double dx, double dy, double dz) {
 // draw() public member function
 // Contains logic to draw the object
 void RectangularPrism::draw() {
-  // Set material properties
+  // Set lighting properties
   if (lightingEnabled) {
     glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shinyFactor);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specularArray);
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emissionArray);
+  }
+
+  // Set texture properties
+  if (textureEnabled) {
+    glEnable(GL_TEXTURE_2D);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    glBindTexture(GL_TEXTURE_2D, *texture);
   }
 
   // Save transformation and set up
@@ -51,47 +58,72 @@ void RectangularPrism::draw() {
 
   // Front face
   if (lightingEnabled) {glNormal3d(0.0, 0.0, 1.0);}
+  if (textureEnabled) {glTexCoord2f(0, 0);}
   glVertex3d(-0.5 * xScaling, -0.5 * yScaling, +0.5 * zScaling);
+  if (textureEnabled) {glTexCoord2f(1, 0);}
   glVertex3d(+0.5 * xScaling, -0.5 * yScaling, +0.5 * zScaling);
+  if (textureEnabled) {glTexCoord2f(1, 1);}
   glVertex3d(+0.5 * xScaling, +0.5 * yScaling, +0.5 * zScaling);
+  if (textureEnabled) {glTexCoord2f(0, 1);}
   glVertex3d(-0.5 * xScaling, +0.5 * yScaling, +0.5 * zScaling);
 
   // Back face
   if (lightingEnabled) {glNormal3d(0.0, 0.0, -1.0);}
+  if (textureEnabled) {glTexCoord2f(0, 0);}
   glVertex3d(+0.5 * xScaling, -0.5 * yScaling, -0.5 * zScaling);
+  if (textureEnabled) {glTexCoord2f(1, 0);}
   glVertex3d(-0.5 * xScaling, -0.5 * yScaling, -0.5 * zScaling);
+  if (textureEnabled) {glTexCoord2f(1, 1);}
   glVertex3d(-0.5 * xScaling, +0.5 * yScaling, -0.5 * zScaling);
+  if (textureEnabled) {glTexCoord2f(0, 1);}
   glVertex3d(+0.5 * xScaling, +0.5 * yScaling, -0.5 * zScaling);
 
   // Right face
   if (lightingEnabled) {glNormal3d(1.0, 0.0, 0.0);}
+  if (textureEnabled) {glTexCoord2f(0, 0);}
   glVertex3d(+0.5 * xScaling, -0.5 * yScaling, +0.5 * zScaling);
+  if (textureEnabled) {glTexCoord2f(1, 0);}
   glVertex3d(+0.5 * xScaling, -0.5 * yScaling, -0.5 * zScaling);
+  if (textureEnabled) {glTexCoord2f(1, 1);}
   glVertex3d(+0.5 * xScaling, +0.5 * yScaling, -0.5 * zScaling);
+  if (textureEnabled) {glTexCoord2f(0, 1);}
   glVertex3d(+0.5 * xScaling, +0.5 * yScaling, +0.5 * zScaling);
 
   // Left face
   if (lightingEnabled) {glNormal3d(-1.0, 0.0, 0.0);}
+  if (textureEnabled) {glTexCoord2f(0, 0);}
   glVertex3d(-0.5 * xScaling, -0.5 * yScaling, -0.5 * zScaling);
+  if (textureEnabled) {glTexCoord2f(1, 0);}
   glVertex3d(-0.5 * xScaling, -0.5 * yScaling, +0.5 * zScaling);
+  if (textureEnabled) {glTexCoord2f(1, 1);}
   glVertex3d(-0.5 * xScaling, +0.5 * yScaling, +0.5 * zScaling);
+  if (textureEnabled) {glTexCoord2f(0, 1);}
   glVertex3d(-0.5 * xScaling, +0.5 * yScaling, -0.5 * zScaling);
 
   // Top face
   if (lightingEnabled) {glNormal3d(0.0, 1.0, 0.0);}
+  if (textureEnabled) {glTexCoord2f(0, 0);}
   glVertex3d(-0.5 * xScaling, +0.5 * yScaling, +0.5 * zScaling);
+  if (textureEnabled) {glTexCoord2f(1, 0);}
   glVertex3d(+0.5 * xScaling, +0.5 * yScaling, +0.5 * zScaling);
+  if (textureEnabled) {glTexCoord2f(1, 1);}
   glVertex3d(+0.5 * xScaling, +0.5 * yScaling, -0.5 * zScaling);
+  if (textureEnabled) {glTexCoord2f(0, 1);}
   glVertex3d(-0.5 * xScaling, +0.5 * yScaling, -0.5 * zScaling);
 
   // Bottom face
   if (lightingEnabled) {glNormal3d(0.0, -1.0, 0.0);}
+  if (textureEnabled) {glTexCoord2f(0, 0);}
   glVertex3d(-0.5 * xScaling, -0.5 * yScaling, -0.5 * zScaling);
+  if (textureEnabled) {glTexCoord2f(1, 0);}
   glVertex3d(+0.5 * xScaling, -0.5 * yScaling, -0.5 * zScaling);
+  if (textureEnabled) {glTexCoord2f(1, 1);}
   glVertex3d(+0.5 * xScaling, -0.5 * yScaling, +0.5 * zScaling);
+  if (textureEnabled) {glTexCoord2f(0, 1);}
   glVertex3d(-0.5 * xScaling, -0.5 * yScaling, +0.5 * zScaling);
 
   // End
   glEnd();
   glPopMatrix();
+  if (textureEnabled) {glDisable(GL_TEXTURE_2D);}
 }
