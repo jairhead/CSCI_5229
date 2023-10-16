@@ -7,8 +7,6 @@
 #ifndef _UTILS_H
 #define _UTILS_H
 
-#include <fstream>
-
 #include "GlutIncludes.h"
 #include "GenericHomeworkException.h"
 
@@ -17,7 +15,9 @@ class Utilities {
     static void initializeGlew();
     static void errorCheck(std::string where);
     static void displayText(std::string text);
-    static void loadBmp(std::string fileName);
+    static unsigned int loadBmp(const char* fileName);
+  private:
+    static void reverseBytes(void *x, const int n);
 };
 
 #endif
