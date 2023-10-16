@@ -88,14 +88,6 @@ void PrimaryGraphicsHelper::initializeGlew() {
   #endif
 }
 
-// displayText private member function
-// Helper method that displays a string to the scene
-void PrimaryGraphicsHelper::displayText(std::string text) {
-  for (size_t i = 0; i < text.size(); i++) {
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, text[i]);
-  }
-}
-
 // displayParams private member function
 // Helper method that displays parameters to the window
 void PrimaryGraphicsHelper::displayParams() {
@@ -104,20 +96,5 @@ void PrimaryGraphicsHelper::displayParams() {
   parameters += "[NULL]";
 
   // Display
-  #ifdef USEGLEW
-  displayText(parameters);
-  #else
-  std::cout << parameters << std::endl;
-  #endif
-}
-
-// errorCheck() private member function
-// Helper method that checks errors from OpenGL
-void PrimaryGraphicsHelper::errorCheck(std::string where) {
-  int error = glGetError();
-  if (error) {
-    std::cout << "PrimaryGraphicsHelper::errorCheck(): [ERROR] "
-              << gluErrorString(error) << ", " << where
-              << std::endl;
-  }
+  Utilities::displayText(parameters);
 }

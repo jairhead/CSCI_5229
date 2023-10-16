@@ -1,5 +1,3 @@
-#ifndef _BASE_OBJECT_H
-#define _BASE_OBJECT_H
 /*
  * File: BaseObject.h
  * Author: Jared McKneely
@@ -7,8 +5,10 @@
  *              class used for 3D objects.
  */
 
- #include <iostream>
- #include "GlutIncludes.h"
+#ifndef _BASE_OBJECT_H
+#define _BASE_OBJECT_H
+
+#include "GlutIncludes.h"
 
 class BaseObject {
   public:

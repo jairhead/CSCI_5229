@@ -17,10 +17,8 @@ int main(int argc, char* argv[]) {
   glutCreateWindow("Jared McKneely - CSCI 5229, Homework 6");
 
   // Init GLEW
-  #ifdef USEGLEW
   try {PrimaryGraphicsHelper::initializeGlew();}
   catch (GenericHomeworkException& e) {std::cout << e.what() << ": GLEW initialization failed!" << std::endl; exit(1);}
-  #endif
 
   // Add callbacks for GLUT and call main loop
   PrimaryGraphicsHelper::init();

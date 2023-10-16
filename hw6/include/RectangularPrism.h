@@ -1,10 +1,11 @@
-#ifndef _RECTANGULAR_PRISM_H
-#define _RECTANGULAR_PRISM_H
 /*
  * File: RectangularPrism.h
  * Author: Jared McKneely
  * Description: Header file for the RectangularPrism class
  */
+
+#ifndef _RECTANGULAR_PRISM_H
+#define _RECTANGULAR_PRISM_H
 
 #include "BaseObject.h"
 

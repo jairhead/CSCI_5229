@@ -4,8 +4,11 @@
  * Description: Header file for the PrimaryGraphicsHelper class
  */
 
-#include <iostream>
+#ifndef _PRIMARY_GRAPHICS_HELPER_H
+#define _PRIMARY_GRAPHICS_HELPER_H
+
 #include "GlutIncludes.h"
+#include "Utilities.h"
 #include "GenericHomeworkException.h"
 
 class PrimaryGraphicsHelper {
@@ -20,7 +23,7 @@ class PrimaryGraphicsHelper {
     static void idle();
     static void initializeGlew();
   private:
-    static void displayText(std::string text);
     static void displayParams();
-    static void errorCheck(std::string where);
 };
+
+#endif

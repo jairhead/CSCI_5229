@@ -4,7 +4,9 @@
  * Description: Generic exception defined for homework errors
  */
 
-#include <iostream>
+#ifndef _HOMEWORK_EXCEPTION_H
+#define _HOMEWORK_EXCEPTION_H
+
 #include <exception>
 #include <string>
 using namespace std;
@@ -15,3 +17,5 @@ class GenericHomeworkException : public std::exception {
       return "[ERROR] Homework Exception Caught"; 
     }
 };
+
+#endif
