@@ -24,7 +24,7 @@ PrimaryGraphicsHelper::~PrimaryGraphicsHelper() { }
 void PrimaryGraphicsHelper::init() {
   pm = new ProjectionManager();
   lm = new LightManager();
-  Utilities::loadBmp("test.bmp");
+  Utilities::loadBmp("images/crate.bmp");
 }
 
 // display() public member function

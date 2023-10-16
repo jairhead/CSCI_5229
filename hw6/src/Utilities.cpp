@@ -112,6 +112,7 @@ unsigned int Utilities::loadBmp(const char* fileName) {
   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
 
   // Free image memory & return texture name
+  std::cout << "Utilities::loadBmp(): " << fileName << " loaded successfully." << std::endl;
   free(image);
   return texture;
 }
@@ -120,7 +121,7 @@ unsigned int Utilities::loadBmp(const char* fileName) {
 // Contains logic to reverse n bytes
 void Utilities::reverseBytes(void* x,const int n) {
   char* ch = (char*)x;
-  for (int k=0;k<n/2;k++) {
+  for (int k = 0; k < (n/2); k++) {
     char tmp = ch[k];
     ch[k] = ch[n-1-k];
     ch[n-1-k] = tmp;
