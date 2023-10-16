@@ -24,7 +24,9 @@ endif
 # Common variables
 SRC_DIR := src
 OBJ := hw6.o \
-       PrimaryGraphicsHelper.o
+       PrimaryGraphicsHelper.o \
+			 RectangularPrism.o \
+			 Sphere.o
 
 # Default
 default: all
