@@ -26,6 +26,8 @@ SRC_DIR := src
 OBJ := hw6.o \
 			 Utilities.o \
 			 PrimaryGraphicsHelper.o \
+			 ProjectionManager.o \
+			 LightManager.o \
 			 RectangularPrism.o \
 			 Sphere.o
 

@@ -10,6 +10,8 @@
 // 3D Object Globals
 
 // Control Globals
+ProjectionManager *pm;
+LightManager *lm;
 
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
@@ -19,7 +21,11 @@ PrimaryGraphicsHelper::~PrimaryGraphicsHelper() { }
 
 // init() public member function
 // Initializes all objects
-void PrimaryGraphicsHelper::init() { }
+void PrimaryGraphicsHelper::init() {
+  pm = new ProjectionManager();
+  lm = new LightManager();
+  Utilities::loadBmp("test.bmp");
+}
 
 // display() public member function
 // Callback for glutDisplayFunc()
@@ -60,6 +66,8 @@ void PrimaryGraphicsHelper::special(int key, int x, int y) {
 // Callback for glutKeyboardFunc()
 void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
   // Handle keys
+  if (ch == 27) {exit(0);}
+  else if (ch == '0') {pm->setTheta(0.0); pm->setPhi(0.0);}
 
   // Display params (if compiled without GLEW)
   #ifndef USEGLEW
@@ -74,19 +82,6 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
 // Primary OpenGL idle handler function
 // Callback for glutIdleFunc()
 void PrimaryGraphicsHelper::idle() { }
-
-// initializeGlew() public member function
-// Tries to initialize GLEW (throws a GenericHomeworkException if it fails)
-void PrimaryGraphicsHelper::initializeGlew() {
-  #ifdef USEGLEW
-  if (glewInit() != GLEW_OK) {throw GenericHomeworkException();}
-  std::cout << "PrimaryGraphicsHelper::initializeGlew(): GLEW initialization successful!"
-            << std::endl;
-  #else
-  std::cout << "PrimaryGraphicsHelper::initializeGlew(): Skipped GLEW initialization"
-            << std::endl;
-  #endif
-}
 
 // displayParams private member function
 // Helper method that displays parameters to the window

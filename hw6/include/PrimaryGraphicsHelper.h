@@ -7,9 +7,10 @@
 #ifndef _PRIMARY_GRAPHICS_HELPER_H
 #define _PRIMARY_GRAPHICS_HELPER_H
 
+#include "ProjectionManager.h"
+#include "LightManager.h"
 #include "GlutIncludes.h"
 #include "Utilities.h"
-#include "GenericHomeworkException.h"
 
 class PrimaryGraphicsHelper {
   public:
@@ -21,7 +22,6 @@ class PrimaryGraphicsHelper {
     static void special(int key, int x, int y);
     static void key(unsigned char ch, int x, int y);
     static void idle();
-    static void initializeGlew();
   private:
     static void displayParams();
 };
