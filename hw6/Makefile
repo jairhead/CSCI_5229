@@ -3,26 +3,28 @@ EXE=hw6
 
 #  Msys/MinGW
 ifeq "$(OS)" "Windows_NT"
-CFLG=-O3 -Wall -DUSEGLEW -I.
+CXXFLAGS=-O3 -Wall -DUSEGLEW -I./include
 LIBS=-lfreeglut -lglew32 -lglu32 -lopengl32
 CLEAN=rm -f *.exe *.o *.a
 else
 #  OSX
 ifeq "$(shell uname)" "Darwin"
 RES=$(shell uname -r|sed -E 's/(.).*/\1/'|tr 12 21)
-CFLG=-O3 -Wall -Wno-deprecated-declarations -DRES=$(RES) -I.
+CXXFLAGS=-O3 -Wall -Wno-deprecated-declarations -DRES=$(RES) -I./include
 LIBS=-framework GLUT -framework OpenGL
 #  Linux/Unix/Solaris
 else
-CFLG=-O3 -Wall -I.
+CXXFLAGS=-O3 -Wall -I./include
 LIBS=-lglut -lGLU -lGL -lm
 endif
 #  OSX/Linux/Unix/Solaris
 CLEAN=rm -f $(EXE) *.o *.a
 endif
 
-# List of objects
-OBJS := 
+# Common variables
+SRC_DIR := src
+OBJ := hw6.o \
+       PrimaryGraphicsHelper.o
 
 # Default
 default: all
@@ -30,17 +32,17 @@ default: all
 # All
 all: $(EXE)
 
+# Compile rules
+%.o: $(SRC_DIR)/%.cpp
+	g++ $(CXXFLAGS) -c $< -o $@
+
 # Create archive / library
-libhw6.a:$(OBJS)
+libhw6.a: $(OBJ)
 	ar -rcs $@ $^
 
-# Compile rules
-.cpp.o:
-	g++ -c $(CFLG)  $<
-
-#  Link
-hw6:hw6.o PrimaryGraphicsHelper.o libhw6.a
-	g++ $(CFLG) -o $@ $^  $(LIBS)
+# Link
+$(EXE): $(OBJ) libhw6.a
+	g++ $(CXXFLAGS) -o $@ $^  $(LIBS)
 
 #  Clean
 clean:
