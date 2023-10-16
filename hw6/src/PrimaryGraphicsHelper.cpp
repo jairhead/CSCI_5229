@@ -59,6 +59,20 @@ void PrimaryGraphicsHelper::display() {
   if (displayMode == 1) {pm->setOrthogonal();}
   else if (displayMode == 2) {pm->setProjection();}
 
+  // Enable or disable lighting
+  if (lightingEnabled) {
+    lm->init();
+    lm->translateLight0(lightOrbitRadius * cosine(lightAngle),
+                        lightHeight,
+                        lightOrbitRadius * sine(lightAngle));
+    lm->enableLight0();
+    Utilities::errorCheck("PrimaryGraphicsHelper::display(): light 0");
+    cube->enableLighting();
+  }
+  else {
+    cube->disableLighting();
+  }
+
   // Draw a cube
   cube->setTexture(&textures[0]);
   cube->draw();
@@ -225,3 +239,11 @@ void PrimaryGraphicsHelper::displayParams() {
   // Display
   Utilities::displayText(parameters);
 }
+
+// sine() private member function
+// Returns the sine of the provided angle in degrees
+double PrimaryGraphicsHelper::sine(double angle) {return sin(angle * (3.14159265 / 180));}
+
+// cosine() private member function
+// Returns the cosine of the provided angle in degrees
+double PrimaryGraphicsHelper::cosine(double angle) {return cos(angle * (3.14159265 / 180));}

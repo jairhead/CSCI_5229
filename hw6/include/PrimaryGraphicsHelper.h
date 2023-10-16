@@ -27,6 +27,8 @@ class PrimaryGraphicsHelper {
     static void idle();
   private:
     static void displayParams();
+    static double sine(double angle);
+    static double cosine(double angle);
 };
 
 #endif
