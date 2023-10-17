@@ -31,7 +31,8 @@ OBJ := hw6.o \
 			 Axes.o \
 			 RectangularPrism.o \
 			 Sphere.o \
-			 ChessBoard.o
+			 ChessBoard.o \
+			 Pawn.o
 
 # Default
 default: all

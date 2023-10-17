@@ -12,7 +12,7 @@ ProjectionManager *pm;
 LightManager *lm;
 Axes *axes;
 ChessBoard *chessBoard;
-Sphere *testSphere;
+Pawn *whitePawn;
 
 // Control Globals
 float lightAngle = 0.0;       // Current angle at which the light is located (degrees)
@@ -22,6 +22,7 @@ float lightOrbitInc = 2.0;    // Orbit increment
 const int IDLE_TIME = 50;     // Time to pass between idle transitions (ms)
 int prevTime = 0;             // Time of previous transition
 bool lightingEnabled = true;  // Lighting is enabled or no?
+bool texturesEnabled = true;  // Textures are enabled or no?
 bool drawAxes = true;         // Draw the xyz axes or no?
 bool moveLight = true;        // Execute light orbit animation or no?
 int displayMode = 1;          // 1 = ortho; 2 = projection
@@ -43,7 +44,7 @@ void PrimaryGraphicsHelper::init() {
 
   // Initialize 3D objects
   chessBoard = new ChessBoard();
-  testSphere = new Sphere();
+  whitePawn = new Pawn();
 
   // Load textures
   textures[0] = Utilities::loadBmp("images/granite-512x512.bmp");
@@ -62,7 +63,7 @@ void PrimaryGraphicsHelper::display() {
   if (displayMode == 1) {pm->setOrthogonal();}
   else if (displayMode == 2) {pm->setProjection();}
 
-  // Enable or disable lighting
+  // Handle lighting
   if (lightingEnabled) {
     lm->init();
     lm->translateLight0(lightOrbitRadius * Utilities::cosine(lightAngle),
@@ -71,11 +72,21 @@ void PrimaryGraphicsHelper::display() {
     lm->enableLight0();
     Utilities::errorCheck("PrimaryGraphicsHelper::display(): light 0");
     chessBoard->enableLighting();
-    testSphere->enableLighting();
+    whitePawn->enableLighting();
   }
   else {
     chessBoard->disableLighting();
-    testSphere->disableLighting();
+    whitePawn->disableLighting();
+  }
+
+  // Handle textures
+  if (texturesEnabled) {
+    chessBoard->enableTexture();
+    whitePawn->enableTexture();
+  }
+  else {
+    chessBoard->disableTexture();
+    whitePawn->disableTexture();
   }
 
   // Draw the chess board
@@ -85,9 +96,9 @@ void PrimaryGraphicsHelper::display() {
   Utilities::errorCheck("PrimaryGraphicsHelper::display(): chess board");
 
   // Draw a sphere for testing
-  testSphere->setTextureFactor(1.0);
-  testSphere->setTexture(&textures[1]);
-  testSphere->draw();
+  //whitePawn->setTextureFactor(1.0);
+  whitePawn->setTexture(&textures[1]);
+  whitePawn->draw();
   Utilities::errorCheck("PrimaryGraphicsHelper::display(): sphere");
 
   // Draw the axes
@@ -208,6 +219,7 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
     int spec = lm->getSpecular() + 5;
     lm->setSpecular(spec);
   }
+  else if (ch == 't' || ch == 'T') {texturesEnabled = !texturesEnabled;}
 
   // Display params (if compiled without GLEW)
   #ifndef USEGLEW

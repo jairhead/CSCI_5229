@@ -7,15 +7,14 @@
 #ifndef _PRIMARY_GRAPHICS_HELPER_H
 #define _PRIMARY_GRAPHICS_HELPER_H
 
+#include "GlutIncludes.h"
 #include "ProjectionManager.h"
 #include "LightManager.h"
-#include "GlutIncludes.h"
 #include "Utilities.h"
 
 #include "Axes.h"
-#include "RectangularPrism.h"
-#include "Sphere.h"
 #include "ChessBoard.h"
+#include "Pawn.h"
 
 class PrimaryGraphicsHelper {
   public:
