@@ -13,6 +13,8 @@ LightManager *lm;
 Axes *axes;
 ChessBoard *chessBoard;
 Pawn *whitePawn;
+Pawn *blackPawn;
+Rook *whiteRook;
 
 // Control Globals
 float lightAngle = 0.0;       // Current angle at which the light is located (degrees)
@@ -45,10 +47,14 @@ void PrimaryGraphicsHelper::init() {
   // Initialize 3D objects
   chessBoard = new ChessBoard();
   whitePawn = new Pawn();
+  blackPawn = new Pawn();
+  whiteRook = new Rook();
 
   // Load textures
   textures[0] = Utilities::loadBmp("images/granite-512x512.bmp");
   textures[1] = Utilities::loadBmp("images/white-marble-32x32.bmp");
+  textures[2] = Utilities::loadBmp("images/black-marble-32x32.bmp");
+  textures[3] = Utilities::loadBmp("images/watermelon-32x32.bmp");
 }
 
 // display() public member function
@@ -73,20 +79,26 @@ void PrimaryGraphicsHelper::display() {
     Utilities::errorCheck("PrimaryGraphicsHelper::display(): light 0");
     chessBoard->enableLighting();
     whitePawn->enableLighting();
+    whiteRook->enableLighting();
   }
   else {
     chessBoard->disableLighting();
     whitePawn->disableLighting();
+    whiteRook->disableLighting();
   }
 
   // Handle textures
   if (texturesEnabled) {
     chessBoard->enableTexture();
     whitePawn->enableTexture();
+    blackPawn->enableTexture();
+    whiteRook->enableTexture();
   }
   else {
     chessBoard->disableTexture();
     whitePawn->disableTexture();
+    blackPawn->disableTexture();
+    whiteRook->disableTexture();
   }
 
   // Draw the chess board
@@ -95,11 +107,26 @@ void PrimaryGraphicsHelper::display() {
   chessBoard->draw();
   Utilities::errorCheck("PrimaryGraphicsHelper::display(): chess board");
 
-  // Draw a sphere for testing
-  //whitePawn->setTextureFactor(1.0);
-  whitePawn->setTexture(&textures[1]);
+  // Draw the white pawn
+  whitePawn->translate(-0.5, 0.0, -0.5);
+  whitePawn->setTextureFactor(1.0);
+  whitePawn->setTexture(&textures[3]);
   whitePawn->draw();
-  Utilities::errorCheck("PrimaryGraphicsHelper::display(): sphere");
+  Utilities::errorCheck("PrimaryGraphicsHelper::display(): white pawn");
+
+  // Draw the black pawn
+  blackPawn->translate(+0.5, 0.0, -0.5);
+  blackPawn->setTextureFactor(1.0);
+  blackPawn->setTexture(&textures[2]);
+  blackPawn->draw();
+  Utilities::errorCheck("PrimaryGraphicsHelper::display(): black pawn");
+
+  // Draw the white rook
+  whiteRook->translate(+0.5, 0.0, +0.5);
+  whiteRook->setTextureFactor(1.0);
+  whiteRook->setTexture(&textures[3]);
+  whiteRook->draw();
+  Utilities::errorCheck("PrimaryGraphicsHelper::display(): white rook");
 
   // Draw the axes
   if (drawAxes) {
