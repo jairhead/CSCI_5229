@@ -127,3 +127,11 @@ void Utilities::reverseBytes(void* x,const int n) {
     ch[n-1-k] = tmp;
   }
 }
+
+// sine() private member function
+// Returns the sine of the provided angle in degrees
+double Utilities::sine(double angle) {return sin(angle * (3.14159265 / 180));}
+
+// cosine() private member function
+// Returns the cosine of the provided angle in degrees
+double Utilities::cosine(double angle) {return cos(angle * (3.14159265 / 180));}

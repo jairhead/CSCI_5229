@@ -16,6 +16,8 @@ class Utilities {
     static void errorCheck(std::string where);
     static void displayText(std::string text);
     static unsigned int loadBmp(const char* fileName);
+    static double sine(double angle);
+    static double cosine(double angle);
   private:
     static void reverseBytes(void *x, const int n);
 };

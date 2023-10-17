@@ -13,6 +13,7 @@ class RectangularPrism : public BaseObject {
   public:
     RectangularPrism();
     ~RectangularPrism();
+    void setTextureFactor(float tf);
     void color(float r, float g, float b);
     void scale(double dx, double dy, double dz);
     void draw();
@@ -23,6 +24,7 @@ class RectangularPrism : public BaseObject {
     double xScaling = 1.0;
     double yScaling = 1.0;
     double zScaling = 1.0;
+    float texFact = 1.0;
 };
 
 #endif

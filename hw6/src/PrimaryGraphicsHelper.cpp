@@ -11,7 +11,7 @@
 ProjectionManager *pm;
 LightManager *lm;
 Axes *axes;
-RectangularPrism *cube;
+ChessBoard *chessBoard;
 
 // Control Globals
 float lightAngle = 0.0;       // Current angle at which the light is located (degrees)
@@ -24,7 +24,7 @@ bool lightingEnabled = true;  // Lighting is enabled or no?
 bool drawAxes = true;         // Draw the xyz axes or no?
 bool moveLight = true;        // Execute light orbit animation or no?
 int displayMode = 1;          // 1 = ortho; 2 = projection
-unsigned int textures[7];
+unsigned int textures[7];     // Array containing texture references
 
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
@@ -41,7 +41,7 @@ void PrimaryGraphicsHelper::init() {
   axes = new Axes();
 
   // Initialize 3D objects
-  cube = new RectangularPrism();
+  chessBoard = new ChessBoard();
 
   // Load textures
   textures[0] = Utilities::loadBmp("images/granite_512x512.bmp");
@@ -62,21 +62,22 @@ void PrimaryGraphicsHelper::display() {
   // Enable or disable lighting
   if (lightingEnabled) {
     lm->init();
-    lm->translateLight0(lightOrbitRadius * cosine(lightAngle),
+    lm->translateLight0(lightOrbitRadius * Utilities::cosine(lightAngle),
                         lightHeight,
-                        lightOrbitRadius * sine(lightAngle));
+                        lightOrbitRadius * Utilities::sine(lightAngle));
     lm->enableLight0();
     Utilities::errorCheck("PrimaryGraphicsHelper::display(): light 0");
-    cube->enableLighting();
+    chessBoard->enableLighting();
   }
   else {
-    cube->disableLighting();
+    chessBoard->disableLighting();
   }
 
-  // Draw a cube
-  cube->setTexture(&textures[0]);
-  cube->draw();
-  Utilities::errorCheck("PrimaryGraphicsHelper::display(): cube");
+  // Draw the chess board
+  chessBoard->setTextureFactor(2.0);
+  chessBoard->setTexture(&textures[0]);
+  chessBoard->draw();
+  Utilities::errorCheck("PrimaryGraphicsHelper::display(): chess board");
 
   // Draw the axes
   if (drawAxes) {
@@ -239,11 +240,3 @@ void PrimaryGraphicsHelper::displayParams() {
   // Display
   Utilities::displayText(parameters);
 }
-
-// sine() private member function
-// Returns the sine of the provided angle in degrees
-double PrimaryGraphicsHelper::sine(double angle) {return sin(angle * (3.14159265 / 180));}
-
-// cosine() private member function
-// Returns the cosine of the provided angle in degrees
-double PrimaryGraphicsHelper::cosine(double angle) {return cos(angle * (3.14159265 / 180));}

@@ -30,7 +30,8 @@ OBJ := hw6.o \
 			 LightManager.o \
 			 Axes.o \
 			 RectangularPrism.o \
-			 Sphere.o
+			 Sphere.o \
+			 ChessBoard.o
 
 # Default
 default: all
