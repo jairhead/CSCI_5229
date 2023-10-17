@@ -13,10 +13,6 @@ RectangularPrism::RectangularPrism() { }
 // Destructor
 RectangularPrism::~RectangularPrism() { }
 
-// setTextureFactor() public member function
-// Sets the texture factor (scaling) for the rectangular prism
-void RectangularPrism::setTextureFactor(float tf) {texFact = tf;}
-
 // color() public member function
 // Sets the object's color values
 void RectangularPrism::color(float r, float g, float b) {
@@ -32,6 +28,10 @@ void RectangularPrism::scale(double dx, double dy, double dz) {
   yScaling = dy;
   zScaling = dz;
 }
+
+// setTextureFactor() public member function
+// Sets the texture factor (scaling) for the rectangular prism
+void RectangularPrism::setTextureFactor(float tf) {texFact = tf;}
 
 // draw() public member function
 // Contains logic to draw the object

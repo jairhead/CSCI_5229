@@ -12,6 +12,7 @@ ProjectionManager *pm;
 LightManager *lm;
 Axes *axes;
 ChessBoard *chessBoard;
+Sphere *testSphere;
 
 // Control Globals
 float lightAngle = 0.0;       // Current angle at which the light is located (degrees)
@@ -42,9 +43,11 @@ void PrimaryGraphicsHelper::init() {
 
   // Initialize 3D objects
   chessBoard = new ChessBoard();
+  testSphere = new Sphere();
 
   // Load textures
-  textures[0] = Utilities::loadBmp("images/granite_512x512.bmp");
+  textures[0] = Utilities::loadBmp("images/granite-512x512.bmp");
+  textures[1] = Utilities::loadBmp("images/white-marble-32x32.bmp");
 }
 
 // display() public member function
@@ -68,9 +71,11 @@ void PrimaryGraphicsHelper::display() {
     lm->enableLight0();
     Utilities::errorCheck("PrimaryGraphicsHelper::display(): light 0");
     chessBoard->enableLighting();
+    testSphere->enableLighting();
   }
   else {
     chessBoard->disableLighting();
+    testSphere->disableLighting();
   }
 
   // Draw the chess board
@@ -78,6 +83,12 @@ void PrimaryGraphicsHelper::display() {
   chessBoard->setTexture(&textures[0]);
   chessBoard->draw();
   Utilities::errorCheck("PrimaryGraphicsHelper::display(): chess board");
+
+  // Draw a sphere for testing
+  testSphere->setTextureFactor(1.0);
+  testSphere->setTexture(&textures[1]);
+  testSphere->draw();
+  Utilities::errorCheck("PrimaryGraphicsHelper::display(): sphere");
 
   // Draw the axes
   if (drawAxes) {

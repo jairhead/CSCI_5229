@@ -14,6 +14,7 @@
 
 #include "Axes.h"
 #include "RectangularPrism.h"
+#include "Sphere.h"
 #include "ChessBoard.h"
 
 class PrimaryGraphicsHelper {

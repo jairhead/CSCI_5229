@@ -37,6 +37,10 @@ void Sphere::setEmission(float r, float g, float b) {
   emissionArray[2] = b;
 }
 
+// setTextureFactor() public member function
+// Sets the texture factor (scaling) for the sphere
+void Sphere::setTextureFactor(float tf) {texFact = tf;}
+
 // draw() member function
 // Contains to display the sphere
 void Sphere::draw() {
@@ -45,6 +49,13 @@ void Sphere::draw() {
     glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shinyFactor);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specularArray);
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emissionArray);
+  }
+
+  // Set texture properties
+  if (textureEnabled) {
+    glEnable(GL_TEXTURE_2D);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    glBindTexture(GL_TEXTURE_2D, *texture);
   }
 
   // Save transformation and set up; translate -> scale (no rotation)
@@ -57,14 +68,28 @@ void Sphere::draw() {
   for (int phi = -90; phi < 90; phi += increment) {
     glBegin(GL_QUAD_STRIP);
     for (int theta = 0; theta <= 360; theta += (2 * increment)) {
+      // Draw bottom left vertex
+      if (textureEnabled) {glTexCoord2f(0, 0);}
       vertex(theta, phi);
+
+      // Draw top left vertex
+      if (textureEnabled) {glTexCoord2f(0, texFact);}
       vertex(theta, phi + increment);
+
+      // Draw bottom right vertex
+      if (textureEnabled) {glTexCoord2f(texFact, 0);}
+      vertex(theta + 2 * increment, phi);
+
+      // Draw top right vertex
+      if (textureEnabled) {glTexCoord2f(texFact, texFact);}
+      vertex(theta + 2 * increment, phi + increment);
     }
     glEnd();
   }
 
-  // Pop transformation
+  // End
   glPopMatrix();
+  if (textureEnabled) {glDisable(GL_TEXTURE_2D);}
 }
 
 // vertex() private member function
