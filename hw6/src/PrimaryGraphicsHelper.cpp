@@ -17,18 +17,23 @@ Pawn *blackPawn;
 Rook *whiteRook;
 
 // Control Globals
-float lightAngle = 0.0;       // Current angle at which the light is located (degrees)
-float lightOrbitRadius = 1.5; // Radius with which the light will orbit
-float lightHeight = 0.8;      // Y component of light position
-float lightOrbitInc = 2.0;    // Orbit increment
-const int IDLE_TIME = 50;     // Time to pass between idle transitions (ms)
-int prevTime = 0;             // Time of previous transition
-bool lightingEnabled = true;  // Lighting is enabled or no?
-bool texturesEnabled = true;  // Textures are enabled or no?
-bool drawAxes = true;         // Draw the xyz axes or no?
-bool moveLight = true;        // Execute light orbit animation or no?
-int displayMode = 1;          // 1 = ortho; 2 = projection
-unsigned int textures[7];     // Array containing texture references
+float lightAngle = 0.0;          // Current angle at which the light is located (degrees)
+float lightOrbitRadius = 1.5;    // Radius with which the light will orbit
+float lightHeight = 0.8;         // Y component of light position
+float lightOrbitInc = 2.0;       // Orbit increment
+const int LIGHT_IDLE_TIME = 50;  // Time to pass between idle transitions (ms)
+const int TEXT_IDLE_TIME = 2000; // Texture mode idle time
+int prevTimeLight = 0;           // Time of previous transition (light)
+int prevTimeText = 0;            // Time of previous transition (texture)
+bool lightingEnabled = true;     // Lighting is enabled or no?
+int textureMode = 0;             // Textures are enabled or no?
+bool drawAxes = true;            // Draw the xyz axes or no?
+bool animate = true;             // Execute light orbit animation or no?
+int displayMode = 1;             // 1 = ortho; 2 = projection
+unsigned int boardTextures[2];   // Array containing texture references
+unsigned int chessTexturesW[6];  // Array containing textures for white chess pieces
+unsigned int chessTexturesB[6];  // Array containing textures for black chess pieces
+int textureIndex = 0;            // Texture index for chess pieces
 
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
@@ -51,10 +56,21 @@ void PrimaryGraphicsHelper::init() {
   whiteRook = new Rook();
 
   // Load textures
-  textures[0] = Utilities::loadBmp("images/granite-512x512.bmp");
-  textures[1] = Utilities::loadBmp("images/white-marble-32x32.bmp");
-  textures[2] = Utilities::loadBmp("images/black-marble-32x32.bmp");
-  textures[3] = Utilities::loadBmp("images/watermelon-32x32.bmp");
+  boardTextures[0] = Utilities::loadBmp("images/granite-512x512.bmp");
+
+  chessTexturesW[0] = Utilities::loadBmp("images/white-marble-32x32.bmp");
+  chessTexturesW[1] = Utilities::loadBmp("images/light-wood-grain-32x32.bmp");
+  chessTexturesW[2] = Utilities::loadBmp("images/watermelon-32x32.bmp");
+  chessTexturesW[3] = Utilities::loadBmp("images/tv-snow-1-32x32.bmp");
+  chessTexturesW[4] = Utilities::loadBmp("images/tv-snow-2-32x32.bmp");
+  chessTexturesW[5] = Utilities::loadBmp("images/tv-snow-3-32x32.bmp");
+
+  chessTexturesB[0] = Utilities::loadBmp("images/black-marble-32x32.bmp");
+  chessTexturesB[1] = Utilities::loadBmp("images/dark-wood-grain-32x32.bmp");
+  chessTexturesB[2] = Utilities::loadBmp("images/pumpkin-32x32.bmp");
+  chessTexturesB[3] = Utilities::loadBmp("images/tv-snow-1-32x32.bmp");
+  chessTexturesB[4] = Utilities::loadBmp("images/tv-snow-2-32x32.bmp");
+  chessTexturesB[5] = Utilities::loadBmp("images/tv-snow-3-32x32.bmp");
 }
 
 // display() public member function
@@ -88,43 +104,35 @@ void PrimaryGraphicsHelper::display() {
   }
 
   // Handle textures
-  if (texturesEnabled) {
-    chessBoard->enableTexture();
-    whitePawn->enableTexture();
-    blackPawn->enableTexture();
-    whiteRook->enableTexture();
-  }
-  else {
-    chessBoard->disableTexture();
-    whitePawn->disableTexture();
-    blackPawn->disableTexture();
-    whiteRook->disableTexture();
-  }
+  chessBoard->enableTexture();
+  whitePawn->enableTexture();
+  blackPawn->enableTexture();
+  whiteRook->enableTexture();
 
   // Draw the chess board
   chessBoard->setTextureFactor(2.0);
-  chessBoard->setTexture(&textures[0]);
+  chessBoard->setTexture(&boardTextures[0]);
   chessBoard->draw();
   Utilities::errorCheck("PrimaryGraphicsHelper::display(): chess board");
 
   // Draw the white pawn
   whitePawn->translate(-0.5, 0.0, -0.5);
   whitePawn->setTextureFactor(1.0);
-  whitePawn->setTexture(&textures[3]);
+  whitePawn->setTexture(&chessTexturesW[textureIndex]);
   whitePawn->draw();
   Utilities::errorCheck("PrimaryGraphicsHelper::display(): white pawn");
 
   // Draw the black pawn
   blackPawn->translate(+0.5, 0.0, -0.5);
   blackPawn->setTextureFactor(1.0);
-  blackPawn->setTexture(&textures[2]);
+  blackPawn->setTexture(&chessTexturesB[textureIndex]);
   blackPawn->draw();
   Utilities::errorCheck("PrimaryGraphicsHelper::display(): black pawn");
 
   // Draw the white rook
   whiteRook->translate(+0.5, 0.0, +0.5);
   whiteRook->setTextureFactor(1.0);
-  whiteRook->setTexture(&textures[3]);
+  whiteRook->setTexture(&chessTexturesW[textureIndex]);
   whiteRook->draw();
   Utilities::errorCheck("PrimaryGraphicsHelper::display(): white rook");
 
@@ -203,7 +211,7 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
   }
   else if (ch == 'x' || ch == 'X') {drawAxes = !drawAxes;}
   else if (ch == 'l' || ch == 'L') {lightingEnabled = !lightingEnabled;}
-  else if (ch == 'm' || ch == 'M') {moveLight = !moveLight;}
+  else if (ch == 'm' || ch == 'M') {animate = !animate;}
   else if (ch == '<') {lightAngle += 1;}
   else if (ch == '>') {lightAngle -= 1;}
   else if (ch == '+' && displayMode == 2) {
@@ -246,7 +254,12 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
     int spec = lm->getSpecular() + 5;
     lm->setSpecular(spec);
   }
-  else if (ch == 't' || ch == 'T') {texturesEnabled = !texturesEnabled;}
+  else if (ch == 't' || ch == 'T') {
+    textureMode += 1;
+    if (textureMode > 3) {textureMode = 0;}
+    textureIndex = textureMode;
+    std::cout << "Texture mode is " << textureMode << std::endl;
+  }
 
   // Display params (if compiled without GLEW)
   #ifndef USEGLEW
@@ -262,10 +275,28 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
 // Callback for glutIdleFunc()
 void PrimaryGraphicsHelper::idle() {
   int currTime = glutGet(GLUT_ELAPSED_TIME);
-  if (currTime - prevTime > IDLE_TIME && moveLight) {
+  if (currTime - prevTimeLight > LIGHT_IDLE_TIME && animate) {
+    // Adjust lightAngle
     lightAngle += lightOrbitInc;
     if (lightAngle > 360) {lightAngle = 0.0;}
-    prevTime = currTime;
+
+    // TV snow
+    if (textureMode == 3) {
+      textureIndex += 1;
+      if (textureIndex > 5) {textureIndex = 3;}
+    }
+    
+    // Redisplay
+    prevTimeLight = currTime;
+    glutPostRedisplay();
+  }
+
+  // Cycle texture mode
+  if (currTime - prevTimeText > TEXT_IDLE_TIME && animate) {
+    textureMode += 1;
+    if (textureMode > 3) {textureMode = 0;}
+    textureIndex = textureMode;
+    prevTimeText = currTime;
     glutPostRedisplay();
   }
 }
@@ -285,7 +316,12 @@ void PrimaryGraphicsHelper::displayParams() {
   else {parameters += "OFF; ";}
   parameters += "Ambient: "; parameters += std::to_string(lm->getAmbient()); parameters += ", ";
   parameters += "Diffuse: "; parameters += std::to_string(lm->getDiffuse()); parameters += ", ";
-  parameters += "Specular: "; parameters += std::to_string(lm->getSpecular());
+  parameters += "Specular: "; parameters += std::to_string(lm->getSpecular()); parameters += ", ";
+  parameters += "Texture: ";
+  if (textureMode == 0) {parameters += "Marble";}
+  else if (textureMode == 1) {parameters += "Wood";}
+  else if (textureMode == 2) {parameters += "Watermelon / Pumpkin";}
+  else if (textureMode == 3) {parameters += "TV Snow";}
 
   // Display
   Utilities::displayText(parameters);
