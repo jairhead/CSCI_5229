@@ -36,7 +36,7 @@ void Utilities::displayText(std::string text) {
   #ifdef USEGLEW
   for (size_t i = 0; i < text.size(); i++) {glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, text[i]);}
   #else
-  std::cout << parameters << std::endl;
+  std::cout << text << std::endl;
   #endif
 }
 
