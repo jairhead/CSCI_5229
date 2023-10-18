@@ -68,7 +68,7 @@ Rook.h & .cpp:
   - 'd': decrease diffuse light
   - 'D': increase diffuse light
   - 'l' or 'L': toggle between lighting enabled and disabled
-  - 'm' or 'M': toggle between auto light rotation mode and manual light rotation mode
+  - 'm' or 'M': toggle between animation and manual light / texture mode
   - 's': decrease specular light
   - 'S': increase specular light
   - 't': cycle textures on the chess pieces
