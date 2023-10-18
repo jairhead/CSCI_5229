@@ -13,6 +13,11 @@ ChessBoard::ChessBoard() {
   blackSquare2 = new RectangularPrism();
   whiteSquare1 = new RectangularPrism();
   whiteSquare2 = new RectangularPrism();
+
+  rimRight = new RectangularPrism();
+  rimLeft = new RectangularPrism();
+  rimFront = new RectangularPrism();
+  rimBack = new RectangularPrism();
 }
 
 // Destructor
@@ -28,12 +33,21 @@ void ChessBoard::setTextureFactor(float tf) {
 }
 
 // setTexture() public overloaded member function
-// Sets the texture of all cubes
+// Sets the texture of the chess board
 void ChessBoard::setTexture(unsigned int *tex) {
   blackSquare1->setTexture(tex);
   blackSquare2->setTexture(tex);
   whiteSquare1->setTexture(tex);
   whiteSquare2->setTexture(tex);
+}
+
+// setRimTexture() public overloaded member function
+// Sets the texture of the chess board rim
+void ChessBoard::setRimTexture(unsigned int *tex) {
+  rimRight->setTexture(tex);
+  rimLeft->setTexture(tex);
+  rimFront->setTexture(tex);
+  rimBack->setTexture(tex);
 }
 
 // draw() public member function
@@ -62,4 +76,26 @@ void ChessBoard::draw() {
   whiteSquare2->scale(1.0, 0.2, 1.0);
   whiteSquare2->color(whiteSquareR, whiteSquareG, whiteSquareB);
   whiteSquare2->draw();
+
+  // Draw Rim Right
+  rimRight->translate(1.0, 0.0, 0.0);
+  rimRight->scale(0.5, 0.5, 1.50);
+  rimRight->draw();
+
+  // Draw Rim Left
+  rimLeft->translate(-1.0, 0.0, 0.0);
+  rimLeft->scale(0.5, 0.5, 1.50);
+  rimLeft->draw();
+
+  // Draw Rim Front
+  rimFront->translate(0.0, 0.0, 1.0);
+  rimFront->scale(0.5, 0.5, 1.325);
+  rimFront->rotate(90.0);
+  rimFront->draw();
+
+  // Draw Rim Back
+  rimBack->translate(0.0, 0.0, -1.0);
+  rimBack->scale(0.5, 0.5, 1.325);
+  rimBack->rotate(90.0);
+  rimBack->draw();
 }

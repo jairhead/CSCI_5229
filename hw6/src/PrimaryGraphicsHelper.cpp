@@ -57,6 +57,7 @@ void PrimaryGraphicsHelper::init() {
 
   // Load textures
   boardTextures[0] = Utilities::loadBmp("images/granite-512x512.bmp");
+  boardTextures[1] = Utilities::loadBmp("images/dark-parquet-512x512.bmp");
 
   chessTexturesW[0] = Utilities::loadBmp("images/white-marble-32x32.bmp");
   chessTexturesW[1] = Utilities::loadBmp("images/light-wood-grain-32x32.bmp");
@@ -112,6 +113,7 @@ void PrimaryGraphicsHelper::display() {
   // Draw the chess board
   chessBoard->setTextureFactor(2.0);
   chessBoard->setTexture(&boardTextures[0]);
+  chessBoard->setRimTexture(&boardTextures[1]);
   chessBoard->draw();
   Utilities::errorCheck("PrimaryGraphicsHelper::display(): chess board");
 
