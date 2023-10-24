@@ -1,0 +1,123 @@
+Name: Jared McKneely
+Course: CSCI 5229 (Computer Graphics)
+Semester: Fall 2023
+Assignment Homework #6
+
+----- ABOUT THIS PROGRAM -----
+
+--- DESCRIPTION OF FILES ---
+hw6.cpp:
+  - Contains main()
+
+PrimaryGraphicsHelper.h & .cpp:
+  - Declares public and private static methods for OpenGL
+  - Defines display() - static callback for glutDisplayFunc();
+  - Defines reshape() - static callback for glutReshapeFunc();
+  - Defines special() - static callback for glutSpecialFunc();
+  - Defines key() - static callback for glutKeyboardFunc();
+  - Defines idle() - static callback for glutIdleFunc();
+  - Defines other private member functions to assist with drawing objects to the screen (comments describe functionality)
+
+ProjectionManager.h & .cpp:
+  - Manages all three view modes
+  - Manages first person navigation
+
+LightManager.h & .cpp:
+  - Manages Light Source 0
+
+BaseObject.h & BaseObject.cpp:
+  - Abstract class for all other objects in the project
+  - Implements translation, scaling, and getters / setters
+  - Has added support for texture mapping
+
+RectangularPrism.h & .cpp:
+  - Child classes of BaseObject
+  - Draws a rectangular prism with adjustable height, width, depth, and color
+  - Has added support for texture mapping
+
+Sphere.h & .cpp:
+  - Child classes of BaseObject
+  - Draws a sphere with adjustable size and color
+  - Has added support for texture mapping
+
+ChessBoard.h & .cpp:
+  - Child classes of BaseObject
+  - Draws a chess board with black and white RectangularPrism
+  - Has added support for texture mapping
+
+Pawn.h & .cpp:
+  - Child classes of BaseObject
+  - Draws a pawn chess piece with adjustable size and color
+  - Has added support for texture mapping
+
+Rook.h & .cpp:
+  - Child classes of BaseObject
+  - Draws a rook chess piece with adjustable size and color
+  - Has added support for texture mapping
+
+--- DESCRIPTION OF KEYS ---
+  - any key: print parameters to terminal (only without GLEW)
+  - arrow keys: change viewing angle
+  - '+': increase field of view (projection display mode only)
+  - '-': decrease field of view (projection display mode only)
+  - 0: reset viewing angle
+  - 1: cycle between two display modes (ortho, projection)
+  - ESC: exit the program
+  - 'a': decrease ambient light
+  - 'A': increase ambient light
+  - 'd': decrease diffuse light
+  - 'D': increase diffuse light
+  - 'l' or 'L': toggle between lighting enabled and disabled
+  - 'm' or 'M': toggle between animation and manual light / texture mode
+  - 's': decrease specular light
+  - 'S': increase specular light
+  - 't': cycle textures on the chess pieces
+  - 'T': cycle textures on the chess pieces
+  - 'x' or 'X': toggle between drawing axes and not
+  - '[': increase light height
+  - ']': decrease light height
+  - F3: decrease light orbital radius
+  - F4: increase light orbital radius
+  - F8: increase light angular speed
+  - F9: decrease light angular speed
+  - '<': move light clockwise (manual light rotation mode only)
+  - '>': move light counter-clockwise (manual light rotation mode only)
+
+--- EXTERNAL RESOURCES ---
+  - Color picker: https://keiwando.com/color-picker/
+
+--- TEXTURES USED ---
+black-marble-32x32.bmp:
+  - I made this texture manually in GIMP 2.10.34
+
+dark-parquet-512x512.bmp:
+  - Downloaded from https://www.manytextures.com/texture/13/dark-parquet/
+  - License: https://creativecommons.org/licenses/by/4.0/
+  - Changes made: converted from PNG to BMP for use in the program
+
+dark-wood-grain-32x32.bmp:
+  - I made this texture manually in GIMP 2.10.34
+
+granite-512x512.bmp:
+  - I made this texture manually in GIMP 2.10.34
+
+light-wood-grain-32x32.bmp:
+  - I made this texture manually in GIMP 2.10.34
+
+pumpkin-32x32.bmp:
+  - I made this texture manually in GIMP 2.10.34
+
+tv-snow-1-32x32.bmp:
+  - I made this texture manually in GIMP 2.10.34
+
+tv-snow-2-32x32.bmp:
+  - I made this texture manually in GIMP 2.10.34
+
+tv-snow-3-32x32.bmp:
+  - I made this texture manually in GIMP 2.10.34
+
+watermelon-32x32.bmp:
+  - I made this texture manually in GIMP 2.10.34
+
+white-marble-32x32.bmp:
+  - I made this texture manually in GIMP 2.10.34
