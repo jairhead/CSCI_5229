@@ -6,7 +6,7 @@
 
 #include <iostream>
 #include <thread>
-#include "WeatherData.h"
+#include "WeatherUpdater.h"
 #include "PrimaryGraphicsHelper.h"
 
 // Main
@@ -24,18 +24,19 @@ int main(int argc, char* argv[]) {
   try {Utilities::initializeGlew();}
   catch (GenericHomeworkException& e) {std::cout << e.what() << ": GLEW initialization failed!" << std::endl; exit(1);}
 
-  // Initialize WeatherData
-  WeatherData* data = WeatherData::getInstance();
-  data->setLiveWeather(true);
-
-  // Add callbacks for GLUT and call main loop
+  // Add WeatherUpdater and GLU callbacks 
+  WeatherUpdater* updater = new WeatherUpdater();
+  std::thread updaterThread(&WeatherUpdater::thread, updater, 10);
   PrimaryGraphicsHelper::init();
   glutDisplayFunc(PrimaryGraphicsHelper::display);
   glutReshapeFunc(PrimaryGraphicsHelper::reshape);
   glutSpecialFunc(PrimaryGraphicsHelper::special);
   glutKeyboardFunc(PrimaryGraphicsHelper::key);
   glutIdleFunc(PrimaryGraphicsHelper::idle);
+
+  // Wait for exit
   glutMainLoop();
+  updaterThread.join();
 
   // Exit program
   std::cout << "final_project::main(): exiting program" << std::endl;

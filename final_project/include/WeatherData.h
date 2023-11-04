@@ -11,15 +11,19 @@
 #include <iostream>
 
 class WeatherData {
+  public:
+    static WeatherData* getInstance();
+    void setExit(bool val);
+    bool getExit();
+    void setLiveWeather(bool val);
+    bool getLiveWeather();
   private:
     WeatherData();
     ~WeatherData();
     static WeatherData* instance;
     std::mutex dataMutex;
     bool liveWeather = false;
-  public:
-    static WeatherData* getInstance();
-    void setLiveWeather(bool val);
+    bool end = false;
 };
 
 #endif

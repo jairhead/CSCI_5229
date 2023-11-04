@@ -25,7 +25,8 @@ endif
 OBJ := final_project.o \
        PrimaryGraphicsHelper.o \
 			 Utilities.o \
-			 WeatherData.o
+			 WeatherData.o \
+			 WeatherUpdater.o
 SRC_DIR := src
 
 # Default

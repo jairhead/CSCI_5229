@@ -22,9 +22,26 @@ WeatherData* WeatherData::getInstance() {
   return WeatherData::instance;
 }
 
+// setExit() public member function
+void WeatherData::setExit(bool val) {
+  std::unique_lock dataLock(dataMutex);
+  end = val;
+}
+
+// getExit() public member function
+bool WeatherData::getExit() {
+  std::unique_lock dataLock(dataMutex);
+  return end;
+}
+
 // setLiveWeather() public member function
-// Sets the liveWeather boolean (thread safe)
 void WeatherData::setLiveWeather(bool val) {
   std::unique_lock dataLock(dataMutex);
   liveWeather = val;
+}
+
+// getLiveWeather() public member function
+bool WeatherData::getLiveWeather() {
+  std::unique_lock dataLock(dataMutex);
+  return liveWeather;
 }
