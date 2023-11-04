@@ -5,6 +5,7 @@
  */
 
 #include <iostream>
+#include "WeatherData.h"
 #include "PrimaryGraphicsHelper.h"
 
 // Main
@@ -21,6 +22,9 @@ int main(int argc, char* argv[]) {
   // Init GLEW
   try {Utilities::initializeGlew();}
   catch (GenericHomeworkException& e) {std::cout << e.what() << ": GLEW initialization failed!" << std::endl; exit(1);}
+
+  // Initialize WeatherData
+  WeatherData* data = WeatherData::getInstance();
 
   // Add callbacks for GLUT and call main loop
   PrimaryGraphicsHelper::init();

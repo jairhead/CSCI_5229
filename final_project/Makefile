@@ -24,7 +24,8 @@ endif
 # Objects to include in library
 OBJ := final_project.o \
        PrimaryGraphicsHelper.o \
-			 Utilities.o
+			 Utilities.o \
+			 WeatherData.o
 SRC_DIR := src
 
 # Default

@@ -1,5 +1,5 @@
 /*
- * File: Sphere.cpp
+ * File: Utilities.cpp
  * Author: Jared McKneely
  * Description: Implementation file for the Utilities class
  */
