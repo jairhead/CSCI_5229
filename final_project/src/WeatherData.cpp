@@ -15,13 +15,16 @@ WeatherData::WeatherData() { }
 // Private destructor
 WeatherData::~WeatherData() { }
 
-// getInstance() member function (public)
+// getInstance() public member function
 // Returns a pointer to the WeatherData instance
 WeatherData* WeatherData::getInstance() {
-  if (instance == nullptr) {
-    std::cout << "WeatherData::getInstance(): no instance yet! Creating one and returning the ptr..." << std::endl;
-    WeatherData::instance = new WeatherData();
-  }
-  std::cout << "WeatherData::getInstance(): returning the ptr!" << std::endl;
+  if (instance == nullptr) {WeatherData::instance = new WeatherData();}
   return WeatherData::instance;
+}
+
+// setLiveWeather() public member function
+// Sets the liveWeather boolean (thread safe)
+void WeatherData::setLiveWeather(bool val) {
+  std::unique_lock dataLock(dataMutex);
+  liveWeather = val;
 }

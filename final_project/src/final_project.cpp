@@ -5,6 +5,7 @@
  */
 
 #include <iostream>
+#include <thread>
 #include "WeatherData.h"
 #include "PrimaryGraphicsHelper.h"
 
@@ -25,6 +26,7 @@ int main(int argc, char* argv[]) {
 
   // Initialize WeatherData
   WeatherData* data = WeatherData::getInstance();
+  data->setLiveWeather(true);
 
   // Add callbacks for GLUT and call main loop
   PrimaryGraphicsHelper::init();
