@@ -9,6 +9,7 @@
 
 #include "GlutIncludes.h"
 #include "Utilities.h"
+#include "WeatherScene.h"
 
 class PrimaryGraphicsHelper {
   public:

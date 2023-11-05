@@ -8,7 +8,6 @@
 
 // Constructor
 WeatherUpdater::WeatherUpdater() {
-  std::cout << "Init data!" << std::endl;
   data = WeatherData::getInstance();
 }
 
@@ -19,7 +18,7 @@ WeatherUpdater::~WeatherUpdater() { }
 // Used as a looping thread for weather updates
 void WeatherUpdater::thread(int loopTime) {
   std::cout << "WeatherUpdater::thread(): beginning loop" << std::endl;
-  while(!data->getEnd()) {
+  while(!data->getExit()) {
     // TODO: implement
     std::cout << "WeatherUpdater::thread(): loop iteration" << std::endl;
 

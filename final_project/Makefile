@@ -26,7 +26,8 @@ OBJ := final_project.o \
        PrimaryGraphicsHelper.o \
 			 Utilities.o \
 			 WeatherData.o \
-			 WeatherUpdater.o
+			 WeatherUpdater.o \
+			 WeatherScene.o
 SRC_DIR := src
 
 # Default

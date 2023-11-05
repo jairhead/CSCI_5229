@@ -7,6 +7,9 @@
 
 #include "PrimaryGraphicsHelper.h"
 
+// Member Objects
+WeatherScene* scene = nullptr;
+
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
 
@@ -15,11 +18,25 @@ PrimaryGraphicsHelper::~PrimaryGraphicsHelper() { }
 
 // init() public member function
 // Initializes all objects
-void PrimaryGraphicsHelper::init() { }
+void PrimaryGraphicsHelper::init() {
+  scene = new WeatherScene();
+}
 
 // display() public member function
 // Callback for glutDisplayFunc()
-void PrimaryGraphicsHelper::display() { }
+void PrimaryGraphicsHelper::display() {
+  // Initialize the scene
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glEnable(GL_DEPTH_TEST);
+  glLoadIdentity();
+
+  // Draw the weather scene
+  scene->draw();
+
+  // Flush and swap buffers
+  glFlush();
+  glutSwapBuffers();
+}
 
 // reshape() public member function
 // Callback for glutReshapeFunc()
