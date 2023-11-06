@@ -30,6 +30,7 @@ OBJ := final_project.o \
 			 WeatherData.o \
 			 WeatherUpdater.o \
 			 WeatherScene.o \
+			 Axes.o \
 			 RectangularPrism.o \
 			 Sphere.o
 SRC_DIR := src

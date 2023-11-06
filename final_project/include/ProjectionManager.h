@@ -60,9 +60,9 @@ class ProjectionManager {
 
     // First Person Position Variables
     double movementSpeed = 0.01;
-    double fpXPos = 0.01;
+    double fpXPos = 0.0;
     double fpYPos = 0.1;
-    double fpZPos = 0.01;
+    double fpZPos = -0.75;
     double fpCx = 0.02;
     double fpCy = 0.1;
     double fpCz = 0.02;
@@ -73,7 +73,7 @@ class ProjectionManager {
 
     // First Person Angle Variables
     double turnSpeed = 1.0;
-    double fpTheta = 45.0;
+    double fpTheta = 0.0;
     double fpPhi = 0.0;
     double fpPhiMax = 90.0;
     double fpPhiMin = -90.0;

@@ -9,8 +9,10 @@
 
 #include "WeatherData.h"
 #include "LightManager.h"
-#include "RectangularPrism.h"
 #include "Utilities.h"
+#include "Axes.h"
+
+#include "RectangularPrism.h"
 
 class WeatherScene {
   public:
@@ -19,10 +21,11 @@ class WeatherScene {
     void draw();
   private:
     void drawSky();
-    void setSunPosition();
-    void setMoonPosition();
+    void drawLandscape();
     WeatherData* data = nullptr;
     LightManager *light = nullptr;
+    Axes *xyz;
+    RectangularPrism *grass;
     RectangularPrism* skyLeft;
     RectangularPrism* skyRight;
     RectangularPrism* skyFront;

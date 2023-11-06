@@ -24,21 +24,21 @@ int main(int argc, char* argv[]) {
   try {Utilities::initializeGlew();}
   catch (GenericHomeworkException& e) {std::cout << e.what() << ": GLEW initialization failed!" << std::endl; exit(1);}
 
-  // Add WeatherUpdater and GLU callbacks 
+  // Add GLU callbacks 
   PrimaryGraphicsHelper::init();
   glutDisplayFunc(PrimaryGraphicsHelper::display);
   glutReshapeFunc(PrimaryGraphicsHelper::reshape);
   glutSpecialFunc(PrimaryGraphicsHelper::special);
   glutKeyboardFunc(PrimaryGraphicsHelper::key);
   glutIdleFunc(PrimaryGraphicsHelper::idle);
+
+  // Fire up weather updater thread
   WeatherUpdater* updater = new WeatherUpdater();
   std::thread updaterThread(&WeatherUpdater::thread, updater, 10);
 
-  // Wait for exit
+  // Exit program
   glutMainLoop();
   updaterThread.join();
-
-  // Exit program
   std::cout << "final_project::main(): exiting program" << std::endl;
   return 0;
 }

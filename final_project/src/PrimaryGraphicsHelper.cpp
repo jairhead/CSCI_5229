@@ -39,6 +39,7 @@ void PrimaryGraphicsHelper::display() {
   // Set view
   if (displayMode == 1) {projection->setOrthogonal();}
   else if (displayMode == 2) {projection->setProjection();}
+  else if (displayMode == 3) {projection->setFirstPerson();}
 
   // Draw the weather scene
   scene->draw();
@@ -50,7 +51,11 @@ void PrimaryGraphicsHelper::display() {
 
 // reshape() public member function
 // Callback for glutReshapeFunc()
-void PrimaryGraphicsHelper::reshape(int w, int h) { }
+void PrimaryGraphicsHelper::reshape(int w, int h) {
+  if (h > 0) {projection->setAspectRatio((double)w / h);}
+  glViewport(0, 0, w, h);
+  projection->setOrthogonal();
+}
 
 // special() public member function
 // Callback for glutSpecialFunc()
@@ -58,10 +63,19 @@ void PrimaryGraphicsHelper::special(int key, int x, int y) {
   // Handle keys
   double th = projection->getTheta();
   double ph = projection->getPhi();
-  if (key == GLUT_KEY_RIGHT) {th += 1; projection->setTheta(th); std::cout << "Sucks!" << std::endl;}
-  else if (key == GLUT_KEY_LEFT) {th -= 1; projection->setTheta(th);}
-  else if (key == GLUT_KEY_UP) {ph += 1; projection->setPhi(ph);}
-  else if (key == GLUT_KEY_DOWN) {ph -= 1; projection->setPhi(ph);}
+  if (key == GLUT_KEY_RIGHT && displayMode != 3) {th += 1;}
+  else if (key == GLUT_KEY_LEFT && displayMode != 3) {th -= 1;}
+  else if (key == GLUT_KEY_UP && displayMode != 3) {ph += 1;}
+  else if (key == GLUT_KEY_DOWN && displayMode != 3) {ph -= 1;}
+  else if (key == GLUT_KEY_RIGHT && displayMode == 3) {projection->turnRight(); std::cout << "Looking right!" << std::endl;}
+  else if (key == GLUT_KEY_LEFT && displayMode == 3) {projection->turnLeft(); std::cout << "Looking left!" << std::endl;}
+  else if (key == GLUT_KEY_UP && displayMode == 3) {projection->lookUp(); std::cout << "Looking up!" << std::endl;}
+  else if (key == GLUT_KEY_DOWN && displayMode == 3) {projection->lookDown(); std::cout << "Looking down!" << std::endl;}
+
+  // Set theta and phi
+  projection->setTheta(th);
+  projection->setPhi(ph);
+
 
   // Display params (if compiled without GLEW)
   #ifndef USEGLEW
@@ -80,17 +94,31 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
   else if (ch == '0') {projection->setTheta(0.0); projection->setPhi(0.0);}
   else if (ch == '1') {
     displayMode += 1;
-    if (displayMode > 2) {displayMode = 1;}
+    if (displayMode > 3) {displayMode = 1;}
+    std::cout << "displayMode: " << displayMode << std::endl;
   }
   else if (ch == 'x' || ch == 'X') {drawAxes = !drawAxes;}
   else if (ch == '+' && displayMode == 2) {
     double fovy = projection->getFieldOfView() + 2.0;
     projection->setFieldOfView(fovy);
+    std::cout << "Field of view: " << fovy << std::endl;
   }
   else if (ch == '-' && displayMode == 2) {
     double fovy = projection->getFieldOfView() - 2.0;
     projection->setFieldOfView(fovy);
+    std::cout << "Field of view: " << fovy << std::endl;
   }
+  else if (ch == 'w' && displayMode == 3) {projection->moveForward();}
+  else if (ch == 'a' && displayMode == 3) {projection->moveLeft();}
+  else if (ch == 's' && displayMode == 3) {projection->moveBackward();}
+  else if (ch == 'd' && displayMode == 3) {projection->moveRight();}
+  else if (ch == 'r') {
+    #ifndef USEGLEW
+    displayParams();
+    #endif
+  }
+  else {return;}
+
 
   // Display params (if compiled without GLEW)
   #ifndef USEGLEW
