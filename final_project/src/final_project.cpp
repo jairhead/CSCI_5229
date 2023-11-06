@@ -25,14 +25,14 @@ int main(int argc, char* argv[]) {
   catch (GenericHomeworkException& e) {std::cout << e.what() << ": GLEW initialization failed!" << std::endl; exit(1);}
 
   // Add WeatherUpdater and GLU callbacks 
-  WeatherUpdater* updater = new WeatherUpdater();
-  std::thread updaterThread(&WeatherUpdater::thread, updater, 10);
   PrimaryGraphicsHelper::init();
   glutDisplayFunc(PrimaryGraphicsHelper::display);
   glutReshapeFunc(PrimaryGraphicsHelper::reshape);
   glutSpecialFunc(PrimaryGraphicsHelper::special);
   glutKeyboardFunc(PrimaryGraphicsHelper::key);
   glutIdleFunc(PrimaryGraphicsHelper::idle);
+  WeatherUpdater* updater = new WeatherUpdater();
+  std::thread updaterThread(&WeatherUpdater::thread, updater, 10);
 
   // Wait for exit
   glutMainLoop();

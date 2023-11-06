@@ -8,7 +8,9 @@
 #define _PRIMARY_GRAPHICS_HELPER_H
 
 #include "GlutIncludes.h"
+#include "ProjectionManager.h"
 #include "Utilities.h"
+
 #include "WeatherScene.h"
 
 class PrimaryGraphicsHelper {

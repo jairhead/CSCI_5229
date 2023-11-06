@@ -25,9 +25,13 @@ endif
 OBJ := final_project.o \
        PrimaryGraphicsHelper.o \
 			 Utilities.o \
+			 ProjectionManager.o \
+			 LightManager.o \
 			 WeatherData.o \
 			 WeatherUpdater.o \
-			 WeatherScene.o
+			 WeatherScene.o \
+			 RectangularPrism.o \
+			 Sphere.o
 SRC_DIR := src
 
 # Default
