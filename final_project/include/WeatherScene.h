@@ -13,6 +13,7 @@
 #include "Axes.h"
 
 #include "RectangularPrism.h"
+#include "AnalogClock.h"
 
 class WeatherScene {
   public:
@@ -22,6 +23,7 @@ class WeatherScene {
   private:
     void drawSky();
     void drawLandscape();
+    bool drawAxes = true;
     WeatherData* data = nullptr;
     LightManager *light = nullptr;
     Axes *xyz;
@@ -31,6 +33,7 @@ class WeatherScene {
     RectangularPrism* skyFront;
     RectangularPrism* skyBack;
     RectangularPrism* skyTop;
+    AnalogClock* clock;
 };
 
 #endif

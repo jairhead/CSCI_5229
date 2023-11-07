@@ -32,7 +32,8 @@ OBJ := final_project.o \
 			 WeatherScene.o \
 			 Axes.o \
 			 RectangularPrism.o \
-			 Sphere.o
+			 Sphere.o \
+			 AnalogClock.o
 SRC_DIR := src
 
 # Default

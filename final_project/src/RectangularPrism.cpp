@@ -38,6 +38,7 @@ void RectangularPrism::setTextureFactor(float tf) {texFact = tf;}
 void RectangularPrism::draw() {
   // Set lighting properties
   if (lightingEnabled) {
+    std::cout << "RectangularPrism::draw(): lighting enabled!!!" << std::endl;
     glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shinyFactor);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specularArray);
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emissionArray);

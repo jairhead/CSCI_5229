@@ -13,12 +13,14 @@ WeatherScene::WeatherScene() {
 
   // Allocate objects
   xyz = new Axes();
+  light = new LightManager();
   grass = new RectangularPrism();
   skyLeft = new RectangularPrism();
   skyRight = new RectangularPrism();
   skyBack = new RectangularPrism();
   skyFront = new RectangularPrism();
   skyTop = new RectangularPrism();
+  clock = new AnalogClock();
 }
 
 // Destructor
@@ -32,15 +34,24 @@ void WeatherScene::draw() {
   drawLandscape();
 
   // Draw the axes
-  xyz->draw();
-  Utilities::errorCheck("PrimaryGraphicsHelper::display(): axes");
+  if (drawAxes) {
+    xyz->draw();
+    Utilities::errorCheck("PrimaryGraphicsHelper::display(): axes");
+  }
 
   // Draw the clock
+  clock->draw();
 }
 
 // drawSky() private member function
 // Draws the sky box and sets its color
 void WeatherScene::drawSky() {
+  // Position the sun or moon
+  light->init();
+  light->translateLight0(0.0, 0.2, -0.6);
+  light->enableLight0();
+  Utilities::errorCheck("WeatherScene::drawSky(): sun / moon");
+
   // Draw the sky box
   skyLeft->scale(0.01, 2.0, 2.0);
   skyLeft->translate(-2.0, 0.5, 0.0);
@@ -63,11 +74,7 @@ void WeatherScene::drawSky() {
   skyTop->color(0.0,0.24,0.76);
   skyTop->draw();
   Utilities::errorCheck("WeatherScene::drawSky(): sky box");
-
-  // Position the sun or moon
-  Utilities::errorCheck("WeatherScene::drawSky(): sun / moon");
 }
-
 
 // drawLandscape() private member function
 // Draws the entire landscape
