@@ -46,22 +46,26 @@ void AnalogClock::draw() {
   glTranslated(posArray[0], posArray[1], posArray[2]);
   glRotated(theta, 0, 1, 0);
   glScaled(scaleArray[0], scaleArray[1], scaleArray[2]);
-  glColor3f(colorArray[0], colorArray[1], colorArray[2]);
-
-  // Draw the clock face
-  drawFace(1.0, 0.1, 1.0);
+  
+  // Draw the clock
+  drawClockFace(0.1);
+  drawClockRim(0.1);
+  drawClockMarkers(0.1);
+  drawHourHand(0.1);
+  drawMinuteHand(0.1);
 
   // End
   glPopMatrix();
 }
 
-// drawFace() protected member function
+// drawClockFace() protected member function
 // Contains logic to draw the clock face
-void AnalogClock::drawFace(double r, double y, double yNorm) {
+void AnalogClock::drawClockFace(double y) {
+  glColor3f(colorArray[0], colorArray[1], colorArray[2]);
   for (int th = 0; th <= 360; th += d) {
     // Draw normal vector
     glBegin(GL_TRIANGLES);
-    if (lightingEnabled) {glNormal3d(0.0, yNorm, 0.0);}
+    if (lightingEnabled) {glNormal3d(0.0, y, 0.0);}
 
     // Draw middle vertex
     if (textureEnabled) {glTexCoord2f(texFact, texFact);}
@@ -76,6 +80,89 @@ void AnalogClock::drawFace(double r, double y, double yNorm) {
     glVertex3d(r * cosine(th + d), y, r * sine(th + d));
     glEnd();
   }
+}
+
+// drawClockRim() protected member function
+// Contains logic to draw the clock rim
+void AnalogClock::drawClockRim(double y) {
+  // Outside of clock rim
+  glBegin(GL_QUAD_STRIP);
+  glColor3f(0.54, 0.54, 0.54);
+  for (int th = 0; th <= 360; th += d) {
+    // Draw normal vector
+    if (lightingEnabled) {glNormal3d(cosine(th), 0.0, sine(th));}
+
+    // Draw bottom vertex
+    if (textureEnabled) {glTexCoord2f(0, 0);}
+    glVertex3d(r * cosine(th), y - 0.1, r * sine(th));
+
+    // Draw top vertex
+    if (textureEnabled) {glTexCoord2f(0, texFact);}
+    glVertex3d(r * cosine(th), y + 0.1, r * sine(th));
+  }
+  glEnd();
+
+  // Inside of clock rim
+  glBegin(GL_QUAD_STRIP);
+  for (int th = 0; th <= 360; th += d) {
+    // Draw normal vector
+    if (lightingEnabled) {glNormal3d(cosine(th + 180.0), 0.0, sine(th + 180.0));}
+
+    // Draw bottom vertex
+    if (textureEnabled) {glTexCoord2f(0, 0);}
+    glVertex3d((r - 0.1) * cosine(th), y - 0.1, (r - 0.1) * sine(th));
+
+    // Draw top vertex
+    if (textureEnabled) {glTexCoord2f(0, texFact);}
+    glVertex3d((r - 0.1) * cosine(th), y + 0.1, (r - 0.1) * sine(th));
+  }
+  glEnd();
+
+  // Top of clock rim
+  glBegin(GL_QUAD_STRIP);
+  for (int th = 0; th <= 360; th += d) {
+    // Draw normal vector
+    if (lightingEnabled) {glNormal3d(0.0, 1.0, 0.0);}
+
+    // Draw inner vertex
+    if (textureEnabled) {glTexCoord2f(0, 0);}
+    glVertex3d((r - 0.1) * cosine(th), y + 0.1, (r - 0.1) * sine(th));
+
+    // Draw outer vertex
+    if (textureEnabled) {glTexCoord2f(0, texFact);}
+    glVertex3d(r * cosine(th), y + 0.1, r * sine(th));
+  }
+  glEnd();
+}
+
+// drawClockMarkers() protected member function
+// Contains logic to draw the hour markers on the clock face
+void AnalogClock::drawClockMarkers(double y) {
+  for (int th = 0; th <= 360; th += 30) {
+    glBegin(GL_QUADS);
+    if (lightingEnabled) {glNormal3d(0.0, 1.0, 0.0);}
+    if (textureEnabled) {glTexCoord2f(0, 0);}
+    glVertex3d((r - 0.5) * cosine(th - 1.5), y + 0.05, (r - 0.5) * sine(th - 1.5)); // bottom right point
+    if (textureEnabled) {glTexCoord2f(0, texFact);}
+    glVertex3d((r - 0.2) * cosine(th - 1.5), y + 0.05, (r - 0.2) * sine(th - 1.5)); // top right point
+    if (textureEnabled) {glTexCoord2f(texFact, 0);}
+    glVertex3d((r - 0.2) * cosine(th + 1.5), y + 0.05, (r - 0.2) * sine(th + 1.5)); // top left point
+    if (textureEnabled) {glTexCoord2f(texFact, texFact);}
+    glVertex3d((r - 0.5) * cosine(th + 1.5), y + 0.05, (r - 0.5) * sine(th + 1.5)); // bottom left point
+    glEnd();
+  }
+}
+
+// drawHourHand() protected member function
+// Contains logic to draw the clock's hour hand
+void AnalogClock::drawHourHand(double y) {
+
+}
+
+// drawMinuteHand() protected member function
+// Contains logic to draw the clock's minute hand
+void AnalogClock::drawMinuteHand(double y) {
+
 }
 
 // sine() private member function

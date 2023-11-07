@@ -8,6 +8,7 @@
 #define _ANALOG_CLOCK_H
 
 #include "BaseObject.h"
+#include "WeatherData.h"
 
 class AnalogClock : public BaseObject {
   public:
@@ -23,9 +24,11 @@ class AnalogClock : public BaseObject {
     float specularArray[4] = {0.8, 0.8, 0.8, 1.0};
     float emissionArray[4] = {0.0, 0.0, 0.0, 1.0};
     float diffuseArray[4] = {0.1, 0.1, 0.1, 1.0};
+    WeatherData* data = nullptr;
 
     // Geometry variables
     const int d = 5;
+    double r = 1.0;
 
     // Texture variables
     float texFact = 1.0;
@@ -33,7 +36,11 @@ class AnalogClock : public BaseObject {
     // Protected member functions
     double sine(double angle);
     double cosine(double angle);
-    void drawFace(double r, double y, double yNorm);
+    void drawClockFace(double y);
+    void drawClockRim(double y);
+    void drawClockMarkers(double y);
+    void drawHourHand(double y);
+    void drawMinuteHand(double y);
 };
 
 #endif
