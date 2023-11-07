@@ -13,17 +13,24 @@
 class WeatherData {
   public:
     static WeatherData* getInstance();
-    void setExit(bool val);
-    bool getExit();
     void setLiveWeather(bool val);
     bool getLiveWeather();
-  private:
+    void setExit(bool val);
+    bool getExit();
+    void setHour(int val);
+    int getHour();
+    void setMinute(int val);
+    int getMinute();
+  protected:
     WeatherData();
     ~WeatherData();
+  private:
     static WeatherData* instance;
     std::mutex dataMutex;
     bool liveWeather = false;
-    bool end = false;
+    bool exit = false;
+    int hour = 2;
+    int minute = 17;
 };
 
 #endif

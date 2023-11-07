@@ -22,18 +22,6 @@ WeatherData* WeatherData::getInstance() {
   return WeatherData::instance;
 }
 
-// setExit() public member function
-void WeatherData::setExit(bool val) {
-  std::unique_lock dataLock(dataMutex);
-  end = val;
-}
-
-// getExit() public member function
-bool WeatherData::getExit() {
-  std::unique_lock dataLock(dataMutex);
-  return end;
-}
-
 // setLiveWeather() public member function
 void WeatherData::setLiveWeather(bool val) {
   std::unique_lock dataLock(dataMutex);
@@ -43,5 +31,49 @@ void WeatherData::setLiveWeather(bool val) {
 // getLiveWeather() public member function
 bool WeatherData::getLiveWeather() {
   std::unique_lock dataLock(dataMutex);
-  return liveWeather;
+  bool returnVal = liveWeather;
+  return returnVal;
+}
+
+// setExit() public member function
+void WeatherData::setExit(bool val) {
+  std::unique_lock dataLock(dataMutex);
+  exit = val;
+}
+
+// getExit() public member function
+bool WeatherData::getExit() {
+  std::unique_lock dataLock(dataMutex);
+  bool returnVal = exit;
+  return returnVal;
+}
+
+// setHour() public member function
+void WeatherData::setHour(int val) {
+  if (val < 1) {val = 1;}
+  else if (val > 12) {val = 12;}
+  std::unique_lock dataLock(dataMutex);
+  hour = val;
+}
+
+// getHour() public member function
+int WeatherData::getHour() {
+  std::unique_lock dataLock(dataMutex);
+  int returnVal = hour;
+  return returnVal;
+}
+
+// setMinute() public member function
+void WeatherData::setMinute(int val) {
+  if (val < 0) {val = 0;}
+  else if (val > 59) {val = 59;}
+  std::unique_lock dataLock(dataMutex);
+  minute = val;
+}
+
+// getMinute() public member function
+int WeatherData::getMinute() {
+  std::unique_lock dataLock(dataMutex);
+  int returnVal = minute;
+  return returnVal;
 }
