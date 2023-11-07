@@ -8,6 +8,7 @@
 #define _SPHERE_H
 
 #include "BaseObject.h"
+#include "Utilities.h"
 
 class Sphere : public BaseObject {
   public:
@@ -33,8 +34,6 @@ class Sphere : public BaseObject {
     float texFact = 1.0;
 
     // Private member functions
-    double sine(double angle);
-    double cosine(double angle);
     void vertex(double th, double ph);
 };
 

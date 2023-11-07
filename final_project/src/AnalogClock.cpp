@@ -68,8 +68,8 @@ void AnalogClock::drawClockFace(double y) {
     glBegin(GL_TRIANGLES);
     if (lightingEnabled) {glNormal3d(0.0, y, 0.0);}
     glVertex3d(0.0, y, 0.0);
-    glVertex3d(r * cosine(th), y, r * sine(th));
-    glVertex3d(r * cosine(th + d), y, r * sine(th + d));
+    glVertex3d(r * Utilities::cosine(th), y, r * Utilities::sine(th));
+    glVertex3d(r * Utilities::cosine(th + d), y, r * Utilities::sine(th + d));
     glEnd();
   }
 }
@@ -81,18 +81,18 @@ void AnalogClock::drawClockRim(double y) {
   glBegin(GL_QUAD_STRIP);
   glColor3f(0.0, 0.0, 0.0);
   for (int th = 0; th <= 360; th += d) {
-    if (lightingEnabled) {glNormal3d(cosine(th), 0.0, sine(th));}
-    glVertex3d(r * cosine(th), y - 0.05, r * sine(th));
-    glVertex3d(r * cosine(th), y + 0.05, r * sine(th));
+    if (lightingEnabled) {glNormal3d(Utilities::cosine(th), 0.0, Utilities::sine(th));}
+    glVertex3d(r * Utilities::cosine(th), y - 0.05, r * Utilities::sine(th));
+    glVertex3d(r * Utilities::cosine(th), y + 0.05, r * Utilities::sine(th));
   }
   glEnd();
 
   // Inside of clock rim
   glBegin(GL_QUAD_STRIP);
   for (int th = 0; th <= 360; th += d) {
-    if (lightingEnabled) {glNormal3d(cosine(th + 180.0), 0.0, sine(th + 180.0));}
-    glVertex3d((r - 0.1) * cosine(th), y - 0.05, (r - 0.1) * sine(th));
-    glVertex3d((r - 0.1) * cosine(th), y + 0.05, (r - 0.1) * sine(th));
+    if (lightingEnabled) {glNormal3d(Utilities::cosine(th + 180.0), 0.0, Utilities::sine(th + 180.0));}
+    glVertex3d((r - 0.1) * Utilities::cosine(th), y - 0.05, (r - 0.1) * Utilities::sine(th));
+    glVertex3d((r - 0.1) * Utilities::cosine(th), y + 0.05, (r - 0.1) * Utilities::sine(th));
   }
   glEnd();
 
@@ -100,8 +100,8 @@ void AnalogClock::drawClockRim(double y) {
   glBegin(GL_QUAD_STRIP);
   for (int th = 0; th <= 360; th += d) {
     if (lightingEnabled) {glNormal3d(0.0, 1.0, 0.0);}
-    glVertex3d((r - 0.1) * cosine(th), y + 0.05, (r - 0.1) * sine(th));
-    glVertex3d(r * cosine(th), y + 0.05, r * sine(th));
+    glVertex3d((r - 0.1) * Utilities::cosine(th), y + 0.05, (r - 0.1) * Utilities::sine(th));
+    glVertex3d(r * Utilities::cosine(th), y + 0.05, r * Utilities::sine(th));
   }
   glEnd();
 
@@ -114,10 +114,10 @@ void AnalogClock::drawClockMarkers(double y) {
   for (int th = 0; th <= 360; th += 30) {
     glBegin(GL_QUADS);
     if (lightingEnabled) {glNormal3d(0.0, 1.0, 0.0);}
-    glVertex3d((r - 0.5) * cosine(th - 1.5), y + 0.01, (r - 0.5) * sine(th - 1.5)); // bottom right point
-    glVertex3d((r - 0.2) * cosine(th - 1.5), y + 0.01, (r - 0.2) * sine(th - 1.5)); // top right point
-    glVertex3d((r - 0.2) * cosine(th + 1.5), y + 0.01, (r - 0.2) * sine(th + 1.5)); // top left point
-    glVertex3d((r - 0.5) * cosine(th + 1.5), y + 0.01, (r - 0.5) * sine(th + 1.5)); // bottom left point
+    glVertex3d((r - 0.5) * Utilities::cosine(th - 1.5), y + 0.01, (r - 0.5) * Utilities::sine(th - 1.5)); // bottom right point
+    glVertex3d((r - 0.2) * Utilities::cosine(th - 1.5), y + 0.01, (r - 0.2) * Utilities::sine(th - 1.5)); // top right point
+    glVertex3d((r - 0.2) * Utilities::cosine(th + 1.5), y + 0.01, (r - 0.2) * Utilities::sine(th + 1.5)); // top left point
+    glVertex3d((r - 0.5) * Utilities::cosine(th + 1.5), y + 0.01, (r - 0.5) * Utilities::sine(th + 1.5)); // bottom left point
     glEnd();
   }
 }
@@ -127,16 +127,17 @@ void AnalogClock::drawClockMarkers(double y) {
 void AnalogClock::drawHourHand(double y) {
   // Get the current hour
   int hour = data->getHour();
-  double th = 0.0;
-  if (hour != 12) {th = hour * 30.0;}
+  int minute = data->getMinute();
+  double th = (minute * 0.5);
+  if (hour != 12) {th += (hour * 30.0);}
 
   // Draw an hour hand
   glColor3f(0.73, 0.71, 0.0);
   glBegin(GL_TRIANGLES);
   if (lightingEnabled) {glNormal3d(0.0, 1.0, 0.0);}
-  glVertex3d((r - 0.35) * cosine(th), y + 0.04, (r - 0.45) * sine(th)); // Outermost vertex
-  glVertex3d((0.03) * cosine(th - 90.0), y + 0.04, (0.03) * sine(th - 90.0)); // Left inner vertex
-  glVertex3d((0.03) * cosine(th + 90.0), y + 0.04, (0.03) * sine(th + 90.0)); // Right inner vertex
+  glVertex3d((r - 0.45) * Utilities::cosine(th), y + 0.04, (r - 0.45) * Utilities::sine(th)); // Outermost vertex
+  glVertex3d((0.03) * Utilities::cosine(th - 90.0), y + 0.04, (0.03) * Utilities::sine(th - 90.0)); // Left inner vertex
+  glVertex3d((0.03) * Utilities::cosine(th + 90.0), y + 0.04, (0.03) * Utilities::sine(th + 90.0)); // Right inner vertex
   glEnd();
 }
 
@@ -151,16 +152,8 @@ void AnalogClock::drawMinuteHand(double y) {
   glColor3f(0.73, 0.0, 0.0);
   glBegin(GL_TRIANGLES);
   if (lightingEnabled) {glNormal3d(0.0, 1.0, 0.0);}
-  glVertex3d((r - 0.15) * cosine(th), y + 0.05, (r - 0.25) * sine(th)); // Outermost vertex
-  glVertex3d((0.03) * cosine(th - 90.0), y + 0.05, (0.03) * sine(th - 90.0)); // Left inner vertex
-  glVertex3d((0.03) * cosine(th + 90.0), y + 0.05, (0.03) * sine(th + 90.0)); // Right inner vertex
+  glVertex3d((r - 0.15) * Utilities::cosine(th), y + 0.05, (r - 0.25) * Utilities::sine(th)); // Outermost vertex
+  glVertex3d((0.03) * Utilities::cosine(th - 90.0), y + 0.05, (0.03) * Utilities::sine(th - 90.0)); // Left inner vertex
+  glVertex3d((0.03) * Utilities::cosine(th + 90.0), y + 0.05, (0.03) * Utilities::sine(th + 90.0)); // Right inner vertex
   glEnd();
 }
-
-// sine() private member function
-// Returns the sine of the provided angle in degrees
-double AnalogClock::sine(double angle) { return sin(angle * (3.14159265 / 180)); }
-
-// cosine() private member function
-// Returns the cosine of the provided angle in degrees
-double AnalogClock::cosine(double angle) { return cos(angle * (3.14159265 / 180)); }

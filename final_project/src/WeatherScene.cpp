@@ -24,7 +24,17 @@ WeatherScene::WeatherScene() {
 }
 
 // Destructor
-WeatherScene::~WeatherScene() { }
+WeatherScene::~WeatherScene() {
+  delete xyz;
+  delete light;
+  delete grass;
+  delete skyLeft;
+  delete skyRight;
+  delete skyBack;
+  delete skyFront;
+  delete skyTop;
+  delete clock;
+}
 
 // draw() public member function
 // Contains logic to draw the entire scene
@@ -41,6 +51,9 @@ void WeatherScene::draw() {
 
   // Draw the clock
   clock->draw();
+
+  // Draw the sun
+  drawLight();
 }
 
 // drawSky() private member function
@@ -85,4 +98,18 @@ void WeatherScene::drawLandscape() {
   grass->draw();
 
   Utilities::errorCheck("WeatherScene::drawLandscape()");
+}
+
+// drawLight() private member function
+// Draws the sun / moon in position
+void WeatherScene::drawLight() {
+  // Get time data; calculate angle
+  int hour = data->getHour();
+  int minute = data->getMinute();
+  double th = ((hour * 30.0) + (minute * 0.5));
+
+  // If angle is < 180.0, it's day time (draw sun)
+  if (th < 180.0) {
+    //light->translateLight0();
+  }
 }

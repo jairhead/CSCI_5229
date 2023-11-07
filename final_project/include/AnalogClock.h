@@ -9,6 +9,7 @@
 
 #include "BaseObject.h"
 #include "WeatherData.h"
+#include "Utilities.h"
 
 class AnalogClock : public BaseObject {
   public:

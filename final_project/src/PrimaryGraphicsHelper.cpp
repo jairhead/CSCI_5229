@@ -24,8 +24,16 @@ PrimaryGraphicsHelper::~PrimaryGraphicsHelper() { }
 // init() public member function
 // Initializes all objects
 void PrimaryGraphicsHelper::init() {
+  std::cout << "PrimaryGraphicsHelper::init()" << std::endl;
   projection = new ProjectionManager();
   scene = new WeatherScene();
+}
+
+// tearDown() public member function
+void PrimaryGraphicsHelper::tearDown() {
+  std::cout << "PrimaryGraphicsHelper::tearDown()" << std::endl;
+  delete projection; projection = nullptr;
+  delete scene; scene = nullptr;
 }
 
 // display() public member function
@@ -76,7 +84,6 @@ void PrimaryGraphicsHelper::special(int key, int x, int y) {
   projection->setTheta(th);
   projection->setPhi(ph);
 
-
   // Display params (if compiled without GLEW)
   #ifndef USEGLEW
   displayParams();
@@ -90,7 +97,7 @@ void PrimaryGraphicsHelper::special(int key, int x, int y) {
 // Callback for glutKeyboardFunc()
 void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
   // Handle keys
-  if (ch == 27) {exit(0);}
+  if (ch == 27) {tearDown(); exit(0);}
   else if (ch == '0') {projection->setTheta(0.0); projection->setPhi(0.0);}
   else if (ch == '1') {
     displayMode += 1;

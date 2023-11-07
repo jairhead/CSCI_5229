@@ -13,6 +13,7 @@
 class WeatherData {
   public:
     static WeatherData* getInstance();
+    static void removeInstance();
     void setLiveWeather(bool val);
     bool getLiveWeather();
     void setExit(bool val);
@@ -30,7 +31,7 @@ class WeatherData {
     bool liveWeather = false;
     bool exit = false;
     int hour = 2;
-    int minute = 17;
+    int minute = 57;
 };
 
 #endif

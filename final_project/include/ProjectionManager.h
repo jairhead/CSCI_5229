@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "GlutIncludes.h"
+#include "Utilities.h"
 
 class ProjectionManager {
   public:
@@ -79,8 +80,6 @@ class ProjectionManager {
     double fpPhiMin = -90.0;
 
     // Private Member Functions
-    double sine(double angle);
-    double cosine(double angle);
     void checkPosition();
     void checkHeadAngle();
 };

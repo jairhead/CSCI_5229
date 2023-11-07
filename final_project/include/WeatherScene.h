@@ -23,6 +23,7 @@ class WeatherScene {
   private:
     void drawSky();
     void drawLandscape();
+    void drawLight();
     bool drawAxes = true;
     WeatherData* data = nullptr;
     LightManager *light = nullptr;

@@ -22,6 +22,15 @@ WeatherData* WeatherData::getInstance() {
   return WeatherData::instance;
 }
 
+// removeInstance() public member function
+// Deletes the instance
+void WeatherData::removeInstance() {
+  if (instance != nullptr) {
+    delete instance;
+    instance = nullptr;
+  }
+}
+
 // setLiveWeather() public member function
 void WeatherData::setLiveWeather(bool val) {
   std::unique_lock dataLock(dataMutex);

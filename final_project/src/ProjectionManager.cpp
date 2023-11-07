@@ -95,10 +95,10 @@ void ProjectionManager::setProjection() {
                  (dimension * clipDistFactor));
 
   // Call gluLookAt()
-  double Ex = (-lookAtCorrection * dimension * sine(theta) * cosine(phi));
-  double Ey = (lookAtCorrection * dimension * sine(phi));
-  double Ez = (lookAtCorrection * dimension * cosine(theta) * cosine(phi));
-  gluLookAt(Ex, Ey, Ez, 0.0, 0.0, 0.0, 0.0, cosine(phi), 0.0);
+  double Ex = (-lookAtCorrection * dimension * Utilities::sine(theta) * Utilities::cosine(phi));
+  double Ey = (lookAtCorrection * dimension * Utilities::sine(phi));
+  double Ez = (lookAtCorrection * dimension * Utilities::cosine(theta) * Utilities::cosine(phi));
+  gluLookAt(Ex, Ey, Ez, 0.0, 0.0, 0.0, 0.0, Utilities::cosine(phi), 0.0);
 
   // Set back to model view, undo previous transforms
   glMatrixMode(GL_MODELVIEW);
@@ -118,7 +118,7 @@ void ProjectionManager::setFirstPerson() {
                  (dimension * (clipDistFactor * 10.0)));
 
   // Call gluLookAt()
-  gluLookAt(fpXPos, fpYPos, fpZPos, fpCx, fpCy, fpCz, 0.0, cosine(fpPhi), 0.0);
+  gluLookAt(fpXPos, fpYPos, fpZPos, fpCx, fpCy, fpCz, 0.0, Utilities::cosine(fpPhi), 0.0);
 
   // Set back to model view, undo previous transforms
   glMatrixMode(GL_MODELVIEW);
@@ -128,40 +128,40 @@ void ProjectionManager::setFirstPerson() {
 // moveForward
 // Moves the first person character forward
 void ProjectionManager::moveForward() {
-  fpXPos += (movementSpeed * cosine(fpTheta));
-  fpZPos += (movementSpeed * sine(fpTheta));
-  fpCx += (movementSpeed * cosine(fpTheta) * cosine(fpPhi));
-  fpCz += (movementSpeed * sine(fpTheta) * cosine(fpPhi));
+  fpXPos += (movementSpeed * Utilities::cosine(fpTheta));
+  fpZPos += (movementSpeed * Utilities::sine(fpTheta));
+  fpCx += (movementSpeed * Utilities::cosine(fpTheta) * Utilities::cosine(fpPhi));
+  fpCz += (movementSpeed * Utilities::sine(fpTheta) * Utilities::cosine(fpPhi));
   checkPosition();
 }
 
 // moveBackward
 // Moves the first person character backward
 void ProjectionManager::moveBackward() {
-  fpXPos -= (movementSpeed * cosine(fpTheta));
-  fpZPos -= (movementSpeed * sine(fpTheta));
-  fpCx -= (movementSpeed * cosine(fpTheta));
-  fpCz -= (movementSpeed * sine(fpTheta));
+  fpXPos -= (movementSpeed * Utilities::cosine(fpTheta));
+  fpZPos -= (movementSpeed * Utilities::sine(fpTheta));
+  fpCx -= (movementSpeed * Utilities::cosine(fpTheta));
+  fpCz -= (movementSpeed * Utilities::sine(fpTheta));
   checkPosition();
 }
 
 // moveRight
 // Moves the first person character to the right
 void ProjectionManager::moveRight() {
-  fpXPos += (movementSpeed * cosine(fpTheta + 90.0));
-  fpZPos += (movementSpeed * sine(fpTheta + 90.0));
-  fpCx += (movementSpeed * cosine(fpTheta + 90.0));
-  fpCz += (movementSpeed * sine(fpTheta + 90.0));
+  fpXPos += (movementSpeed * Utilities::cosine(fpTheta + 90.0));
+  fpZPos += (movementSpeed * Utilities::sine(fpTheta + 90.0));
+  fpCx += (movementSpeed * Utilities::cosine(fpTheta + 90.0));
+  fpCz += (movementSpeed * Utilities::sine(fpTheta + 90.0));
   checkPosition();
 }
 
 // moveLeft
 // Moves the first person character to the left
 void ProjectionManager::moveLeft() {
-  fpXPos -= (movementSpeed * cosine(fpTheta + 90.0));
-  fpZPos -= (movementSpeed * sine(fpTheta + 90.0));
-  fpCx -= (movementSpeed * cosine(fpTheta + 90.0));
-  fpCz -= (movementSpeed * sine(fpTheta + 90.0));
+  fpXPos -= (movementSpeed * Utilities::cosine(fpTheta + 90.0));
+  fpZPos -= (movementSpeed * Utilities::sine(fpTheta + 90.0));
+  fpCx -= (movementSpeed * Utilities::cosine(fpTheta + 90.0));
+  fpCz -= (movementSpeed * Utilities::sine(fpTheta + 90.0));
   checkPosition();
 }
 
@@ -169,16 +169,16 @@ void ProjectionManager::moveLeft() {
 // Rotates the first person character to the right
 void ProjectionManager::turnRight() {
   fpTheta += turnSpeed;
-  fpCx = fpXPos + (turnSpeed * cosine(fpTheta));
-  fpCz = fpZPos + (turnSpeed * sine(fpTheta));
+  fpCx = fpXPos + (turnSpeed * Utilities::cosine(fpTheta));
+  fpCz = fpZPos + (turnSpeed * Utilities::sine(fpTheta));
 }
 
 // turnLeft
 // Rotates the first person character to the left
 void ProjectionManager::turnLeft() {
   fpTheta -= turnSpeed;
-  fpCx = fpXPos + (turnSpeed * cosine(fpTheta));
-  fpCz = fpZPos + (turnSpeed * sine(fpTheta));
+  fpCx = fpXPos + (turnSpeed * Utilities::cosine(fpTheta));
+  fpCz = fpZPos + (turnSpeed * Utilities::sine(fpTheta));
 }
 
 // lookUp
@@ -216,14 +216,6 @@ double ProjectionManager::getFirstPersonY() {
 double ProjectionManager::getFirstPersonZ() {
   return fpZPos;
 }
-
-// sine() private member function
-// Returns the sine of the provided angle in degrees
-double ProjectionManager::sine(double angle) {return sin(angle * (3.14159265 / 180));}
-
-// cosine() private member function
-// Returns the cosine of the provided angle in degrees
-double ProjectionManager::cosine(double angle) {return cos(angle * (3.14159265 / 180));}
 
 // checkPosition private member function
 // Ensures that fpXPos and fpZPos are between the min and max for first person

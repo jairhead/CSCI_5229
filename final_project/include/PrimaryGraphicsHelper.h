@@ -18,6 +18,7 @@ class PrimaryGraphicsHelper {
     PrimaryGraphicsHelper();
     ~PrimaryGraphicsHelper();
     static void init();
+    static void tearDown();
     static void display();
     static void reshape(int w, int h);
     static void special(int key, int x, int y);

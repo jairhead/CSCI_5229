@@ -95,17 +95,9 @@ void Sphere::draw() {
 // vertex() private member function
 // Draws a triangle with th and ph
 void Sphere::vertex(double th, double ph) {
-  double xVal = (sine(th) * cosine(ph)); 
-  double yVal = (cosine(th) * cosine(ph));
-  double zVal = sine(ph);
+  double xVal = (Utilities::sine(th) * Utilities::cosine(ph)); 
+  double yVal = (Utilities::cosine(th) * Utilities::cosine(ph));
+  double zVal = Utilities::sine(ph);
   if (lightingEnabled) {glNormal3d(xVal, yVal, zVal);}
   glVertex3d(xVal, yVal, zVal);
 }
-
-// sine() private member function
-// Returns the sine of the provided angle in degrees
-double Sphere::sine(double angle) {return sin(angle * (3.14159265 / 180));}
-
-// cosine() private member function
-// Returns the cosine of the provided angle in degrees
-double Sphere::cosine(double angle) {return cos(angle * (3.14159265 / 180));}
