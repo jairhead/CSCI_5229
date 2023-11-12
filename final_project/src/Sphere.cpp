@@ -63,7 +63,7 @@ void Sphere::draw() {
   glTranslated(posArray[0], posArray[1], posArray[2]);
   glScaled(scaleArray[0], scaleArray[1], scaleArray[2]);
   glColor3f(colorArray[0], colorArray[1], colorArray[2]);
-
+  
   // Draw the sphere
   for (int phi = -90; phi < 90; phi += increment) {
     glBegin(GL_QUAD_STRIP);

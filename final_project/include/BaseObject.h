@@ -19,10 +19,12 @@ class BaseObject {
     void translate(double x, double y, double z) {posArray[0] = x; posArray[1] = y; posArray[2] = z;}
     void rotate(double th) {theta = th;}
     void setTexture(unsigned int *tex) {texture = tex; textureEnabled = true;}
+    void setShiny(float shiny) {shinyFactor = shiny;}
     double getX() {return posArray[0];}
     double getY() {return posArray[1];}
     double getZ() {return posArray[2];}
     double getTheta() {return theta;}
+    float getShiny() {return shinyFactor;}
     void enableLighting() {lightingEnabled = true;}
     void disableLighting() {lightingEnabled = false;}
     void enableTexture() {textureEnabled = true;}

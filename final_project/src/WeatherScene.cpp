@@ -53,6 +53,8 @@ void WeatherScene::draw() {
   clock->draw();
 
   // Draw the sun
+  data->setHour(8);
+  data->setMinute(20);
   drawLight();
 }
 
@@ -60,9 +62,7 @@ void WeatherScene::draw() {
 // Draws the sky box and sets its color
 void WeatherScene::drawSky() {
   // Position the sun or moon
-  light->init();
-  light->translateLight0(0.0, 0.2, -0.6);
-  light->enableLight0();
+  drawLight();
   Utilities::errorCheck("WeatherScene::drawSky(): sun / moon");
 
   // Draw the sky box
@@ -93,7 +93,7 @@ void WeatherScene::drawSky() {
 // Draws the entire landscape
 void WeatherScene::drawLandscape() {
   grass->scale(2.0, 0.01, 2.0);
-  grass->translate(0.0, -1.0, 0.0);
+  grass->translate(0.0, 0.0, 0.0);
   grass->color(0.14,0.82,0.0);
   grass->draw();
 
@@ -103,13 +103,21 @@ void WeatherScene::drawLandscape() {
 // drawLight() private member function
 // Draws the sun / moon in position
 void WeatherScene::drawLight() {
-  // Get time data; calculate angle
+  // Get the current hour
   int hour = data->getHour();
   int minute = data->getMinute();
-  double th = ((hour * 30.0) + (minute * 0.5));
+  double th = (minute * 0.25);
+  if (hour != 12) {th += (hour * 15.0);}
 
-  // If angle is < 180.0, it's day time (draw sun)
-  if (th < 180.0) {
-    //light->translateLight0();
-  }
+  // Create the light source
+  double xPos = Utilities::cosine(th) * 1.8;
+  double yPos = Utilities::sine(th) * 1.8;
+  double zPos = -1.5;
+  if (th < 180.0) {light->setDrawColor(1.0, 0.97, 0.0);}
+  else {light->setDrawColor(0.70, 0.70, 0.70);}
+  light->init();
+  light->translateLight0(xPos, yPos, zPos);
+  light->enableLight0();
+
+  Utilities::errorCheck("WeatherScene::drawLight()");
 }

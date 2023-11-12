@@ -62,6 +62,15 @@ void LightManager::setSpecular(int intensity) {
 // Gets drawLight
 bool LightManager::getDrawLight() {return drawLight;}
 
+// setDrawColor() public member function
+// Sets the color of the sphere at the light source
+void LightManager::setDrawColor(float r, float g, float b) {
+  light0Ball->setShiny(0.0);
+  light0Ball->setSpecular(0.0, 0.0, 0.0);
+  light0Ball->setEmission(r, g, b);
+  light0Ball->color(r, g, b);
+}
+
 // getAmbient() public member function
 // Gets ambIntensity
 int LightManager::getAmbient() {return ambIntensity;}
@@ -107,4 +116,3 @@ void LightManager::enableLight0() {
     light0Ball->draw();
   }
 }
-

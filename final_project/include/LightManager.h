@@ -21,6 +21,7 @@ class LightManager {
     void setDiffuse(int intensity);
     void setSpecular(int intensity);
     bool getDrawLight();
+    void setDrawColor(float r, float g, float b);
     int getAmbient();
     int getDiffuse();
     int getSpecular();

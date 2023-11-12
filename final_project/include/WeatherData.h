@@ -12,8 +12,11 @@
 
 class WeatherData {
   public:
+    // Instance handlers
     static WeatherData* getInstance();
     static void removeInstance();
+
+    // Variable getters and setters
     void setLiveWeather(bool val);
     bool getLiveWeather();
     void setExit(bool val);
@@ -22,16 +25,20 @@ class WeatherData {
     int getHour();
     void setMinute(int val);
     int getMinute();
-  protected:
+  private:
+    // Constructor & destructor
     WeatherData();
     ~WeatherData();
-  private:
+
+    // Instance variables
     static WeatherData* instance;
     std::mutex dataMutex;
+
+    // Data variables
     bool liveWeather = false;
     bool exit = false;
-    int hour = 2;
-    int minute = 57;
+    int hour = 12;
+    int minute = 0;
 };
 
 #endif
