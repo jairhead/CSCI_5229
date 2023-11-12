@@ -9,7 +9,7 @@
 
 // Member Objects
 ProjectionManager *projection = nullptr;
-WeatherScene* scene = nullptr;
+Scene* scene = nullptr;
 
 // Control Globals
 int displayMode = 1;
@@ -26,7 +26,7 @@ PrimaryGraphicsHelper::~PrimaryGraphicsHelper() { }
 void PrimaryGraphicsHelper::init() {
   std::cout << "PrimaryGraphicsHelper::init()" << std::endl;
   projection = new ProjectionManager();
-  scene = new WeatherScene();
+  scene = new Scene();
 }
 
 // tearDown() public member function

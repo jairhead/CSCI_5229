@@ -1,5 +1,5 @@
 /*
- * File: WeatherScene.h
+ * File: Scene.h
  * Author: Jared McKneely
  * Description: Contains logice to animate the entire weather scene
  */
@@ -15,10 +15,10 @@
 #include "RectangularPrism.h"
 #include "AnalogClock.h"
 
-class WeatherScene {
+class Scene {
   public:
-    WeatherScene();
-    ~WeatherScene();
+    Scene();
+    ~Scene();
     void draw();
   private:
     void drawSky();

@@ -29,7 +29,7 @@ OBJ := final_project.o \
 			 LightManager.o \
 			 WeatherData.o \
 			 WeatherUpdater.o \
-			 WeatherScene.o \
+			 Scene.o \
 			 Axes.o \
 			 RectangularPrism.o \
 			 Sphere.o \

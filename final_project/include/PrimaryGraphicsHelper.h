@@ -11,7 +11,7 @@
 #include "ProjectionManager.h"
 #include "Utilities.h"
 
-#include "WeatherScene.h"
+#include "Scene.h"
 
 class PrimaryGraphicsHelper {
   public:

@@ -1,13 +1,13 @@
 /*
- * File: WeatherScene.cpp
+ * File: Scene.cpp
  * Author: Jared McKneely
  * Description: Implementation file for the Scene class
  */
 
-#include "WeatherScene.h"
+#include "Scene.h"
 
 // Constructor
-WeatherScene::WeatherScene() {
+Scene::Scene() {
   // Get pointer to data structure
   data = WeatherData::getInstance();
 
@@ -24,7 +24,7 @@ WeatherScene::WeatherScene() {
 }
 
 // Destructor
-WeatherScene::~WeatherScene() {
+Scene::~Scene() {
   delete xyz;
   delete light;
   delete grass;
@@ -38,7 +38,7 @@ WeatherScene::~WeatherScene() {
 
 // draw() public member function
 // Contains logic to draw the entire scene
-void WeatherScene::draw() {
+void Scene::draw() {
   // Draw the sky & landscape
   drawSky();
   drawLandscape();
@@ -60,10 +60,10 @@ void WeatherScene::draw() {
 
 // drawSky() private member function
 // Draws the sky box and sets its color
-void WeatherScene::drawSky() {
+void Scene::drawSky() {
   // Position the sun or moon
   drawLight();
-  Utilities::errorCheck("WeatherScene::drawSky(): sun / moon");
+  Utilities::errorCheck("Scene::drawSky(): sun / moon");
 
   // Draw the sky box
   skyLeft->scale(0.01, 2.0, 2.0);
@@ -86,23 +86,23 @@ void WeatherScene::drawSky() {
   skyTop->translate(0.0, 2.0, 0.0);
   skyTop->color(0.0,0.24,0.76);
   skyTop->draw();
-  Utilities::errorCheck("WeatherScene::drawSky(): sky box");
+  Utilities::errorCheck("Scene::drawSky(): sky box");
 }
 
 // drawLandscape() private member function
 // Draws the entire landscape
-void WeatherScene::drawLandscape() {
+void Scene::drawLandscape() {
   grass->scale(2.0, 0.01, 2.0);
   grass->translate(0.0, 0.0, 0.0);
   grass->color(0.14,0.82,0.0);
   grass->draw();
 
-  Utilities::errorCheck("WeatherScene::drawLandscape()");
+  Utilities::errorCheck("Scene::drawLandscape()");
 }
 
 // drawLight() private member function
 // Draws the sun / moon in position
-void WeatherScene::drawLight() {
+void Scene::drawLight() {
   // Get the current hour
   int hour = data->getHour();
   int minute = data->getMinute();
@@ -119,5 +119,5 @@ void WeatherScene::drawLight() {
   light->translateLight0(xPos, yPos, zPos);
   light->enableLight0();
 
-  Utilities::errorCheck("WeatherScene::drawLight()");
+  Utilities::errorCheck("Scene::drawLight()");
 }
