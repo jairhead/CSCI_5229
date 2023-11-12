@@ -1,0 +1,16 @@
+ex27: Shaders - Vulkan style
+
+Willem A. (Vlakkies) Schreuder
+CSCI4229/5229 Fall 2023
+
+
+Adapted from vulkan-tutorial.com
+
+
+Key bindings
+  p/P        Toggle between orthogonal & perspective projection
+  m/M        Stop/start light movement
+  -/+        Move light up/down
+  [/]        Move light in orbit
+  arrows     Change view angle
+  ESC        Exit
