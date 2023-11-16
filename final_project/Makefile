@@ -33,7 +33,8 @@ OBJ := final_project.o \
 			 Axes.o \
 			 RectangularPrism.o \
 			 Sphere.o \
-			 AnalogClock.o
+			 AnalogClock.o \
+			 SkyBox.o
 SRC_DIR := src
 
 # Default

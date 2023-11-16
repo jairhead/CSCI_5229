@@ -12,7 +12,7 @@
 #include "Utilities.h"
 #include "Axes.h"
 
-#include "RectangularPrism.h"
+#include "SkyBox.h"
 #include "AnalogClock.h"
 
 class Scene {
@@ -28,12 +28,7 @@ class Scene {
     WeatherData* data = nullptr;
     LightManager *light = nullptr;
     Axes *xyz;
-    RectangularPrism *grass;
-    RectangularPrism* skyLeft;
-    RectangularPrism* skyRight;
-    RectangularPrism* skyFront;
-    RectangularPrism* skyBack;
-    RectangularPrism* skyTop;
+    SkyBox* sky;
     AnalogClock* clock;
 };
 

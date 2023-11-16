@@ -14,25 +14,20 @@ Scene::Scene() {
   // Allocate objects
   xyz = new Axes();
   light = new LightManager();
-  grass = new RectangularPrism();
-  skyLeft = new RectangularPrism();
-  skyRight = new RectangularPrism();
-  skyBack = new RectangularPrism();
-  skyFront = new RectangularPrism();
-  skyTop = new RectangularPrism();
+  sky = new SkyBox();
   clock = new AnalogClock();
+
+  // Enabled lighting
+  xyz->enableLighting();
+  sky->enableLighting();
+  clock->enableLighting();
 }
 
 // Destructor
 Scene::~Scene() {
   delete xyz;
   delete light;
-  delete grass;
-  delete skyLeft;
-  delete skyRight;
-  delete skyBack;
-  delete skyFront;
-  delete skyTop;
+  delete sky;
   delete clock;
 }
 
@@ -66,36 +61,19 @@ void Scene::drawSky() {
   Utilities::errorCheck("Scene::drawSky(): sun / moon");
 
   // Draw the sky box
-  skyLeft->scale(0.01, 2.0, 2.0);
-  skyLeft->translate(-2.0, 0.5, 0.0);
-  skyLeft->color(0.0,0.24,0.76);
-  skyLeft->draw();
-  skyRight->scale(0.01, 2.0, 2.0);
-  skyRight->translate(2.0, 0.5, 0.0);
-  skyRight->color(0.0,0.24,0.76);
-  skyRight->draw();
-  skyBack->scale(2.0, 2.0, 0.01);
-  skyBack->translate(0.0, 0.5, -2.0);
-  skyBack->color(0.0,0.24,0.76);
-  skyBack->draw();
-  /*skyFront->scale(2.0, 2.0, 0.01);
-  skyFront->translate(0.0, 0.5, 2.0);
-  skyFront->color(0.0,0.24,0.76);
-  skyFront->draw();*/
-  skyTop->scale(2.0, 0.01, 2.0);
-  skyTop->translate(0.0, 2.0, 0.0);
-  skyTop->color(0.0,0.24,0.76);
-  skyTop->draw();
+  sky->color(0.0,0.24,0.76);
+  sky->scale(3.0, 3.0, 3.0);
+  sky->draw();
   Utilities::errorCheck("Scene::drawSky(): sky box");
 }
 
 // drawLandscape() private member function
 // Draws the entire landscape
 void Scene::drawLandscape() {
-  grass->scale(2.0, 0.01, 2.0);
+  /*grass->scale(2.0, 0.01, 2.0);
   grass->translate(0.0, 0.0, 0.0);
   grass->color(0.14,0.82,0.0);
-  grass->draw();
+  grass->draw();*/
 
   Utilities::errorCheck("Scene::drawLandscape()");
 }

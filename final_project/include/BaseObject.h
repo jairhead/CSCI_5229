@@ -15,7 +15,7 @@ class BaseObject {
     void scaleX(double x) {posArray[0] = x;}
     void scaleY(double y) {posArray[1] = y;}
     void scaleZ(double z) {posArray[2] = z;}
-    virtual void scale(double dx, double dy, double dz) {scaleArray[0] = dx; scaleArray[1] = dy; scaleArray[2] = dz;}
+    void scale(double dx, double dy, double dz) {scaleArray[0] = dx; scaleArray[1] = dy; scaleArray[2] = dz;}
     void translate(double x, double y, double z) {posArray[0] = x; posArray[1] = y; posArray[2] = z;}
     void rotate(double th) {theta = th;}
     void setTexture(unsigned int *tex) {texture = tex; textureEnabled = true;}
