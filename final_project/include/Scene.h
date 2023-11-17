@@ -12,8 +12,9 @@
 #include "Utilities.h"
 #include "Axes.h"
 
-#include "SkyBox.h"
 #include "AnalogClock.h"
+
+#include "LightRain.h"
 
 class Scene {
   public:
@@ -21,15 +22,22 @@ class Scene {
     ~Scene();
     void draw();
   private:
-    void drawSky();
+    // Private member functions
+    void drawWeather();
     void drawLandscape();
     void drawLight();
+
+    // Basic objects
     bool drawAxes = true;
     WeatherData* data = nullptr;
     LightManager *light = nullptr;
     Axes *xyz;
-    SkyBox* sky;
+
+    // Scene objects
     AnalogClock* clock;
+
+    // Weather Conditions
+    LightRain* lightRain;
 };
 
 #endif
