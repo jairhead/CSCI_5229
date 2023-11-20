@@ -27,12 +27,13 @@ void LightRain::draw() {
   glRotated(theta, 0, 1, 0);
   glScaled(scaleArray[0], scaleArray[1], scaleArray[2]);
 
-  // Draw sky
+  // Draw sky box
   sky->color(0.0,0.24,0.76);
   sky->scale(3.0, 3.0, 3.0);
   sky->draw();
 
+  // Draw landscape
+
   // End
-  glEnd();
   glPopMatrix();
 }
