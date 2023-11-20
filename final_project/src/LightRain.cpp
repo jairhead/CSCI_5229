@@ -33,6 +33,7 @@ void LightRain::draw() {
   sky->draw();
 
   // Draw landscape
+  double** elevationData = Utilities::loadElevationData("data/test_data.txt");
 
   // End
   glPopMatrix();

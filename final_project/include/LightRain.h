@@ -8,6 +8,7 @@
 #define _LIGHT_RAIN_H
 
 #include "BaseWeatherCondition.h"
+#include "Utilities.h"
 #include "SkyBox.h"
 
 class LightRain : public BaseWeatherCondition {

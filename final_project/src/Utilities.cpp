@@ -117,7 +117,7 @@ unsigned int Utilities::loadBmp(const char* fileName) {
   return texture;
 }
 
-// reverseBytes() private member function
+// reverseBytes() public member function
 // Contains logic to reverse n bytes
 void Utilities::reverseBytes(void* x,const int n) {
   char* ch = (char*)x;
@@ -128,10 +128,94 @@ void Utilities::reverseBytes(void* x,const int n) {
   }
 }
 
-// sine() private member function
+// sine() public member function
 // Returns the sine of the provided angle in degrees
 double Utilities::sine(double angle) {return sin(angle * (3.14159265 / 180));}
 
-// cosine() private member function
+// cosine() public member function
 // Returns the cosine of the provided angle in degrees
 double Utilities::cosine(double angle) {return cos(angle * (3.14159265 / 180));}
+
+// loadElevationData() public member function
+// Loads a plaintext elevation data file and returns a 2D double array
+double** Utilities::loadElevationData(std::string fileName) {
+  // File strings
+  std::ifstream file(fileName);
+  std::string line;
+  std::string token;
+
+  // Min and max values
+  int numPoints = 0;
+  double xMin = 180.0;
+  double xMax = -180.0;
+  double yMin = 180.0;
+  double yMax = -180.0;
+
+  // Initial read: get x and y bounds
+  if (file.is_open()){
+    while (std::getline(file, line)) {
+      // Make stringstream, toss out first token
+      std::stringstream ss(line);
+      std::getline(ss, token, '\t');
+      std::cout.precision(20);
+
+      // Skip over title
+      if (token == "type") {continue;}
+
+      // Get latitude
+      std::getline(ss, token, '\t');
+      double lat = std::stod(token);
+      if (lat < xMin) {xMin = lat;}
+      if (lat > xMax) {xMax = lat;}
+
+      // Get longitude
+      std::getline(ss, token, '\t');
+      double lon = std::stod(token);
+      if (lon < yMin) {yMin = lon;}
+      if (lon > yMax) {yMax = lon;}
+      numPoints++;
+    }
+  }
+
+  // Get square root of numPoints
+  int dim = std::sqrt(numPoints);
+  double xFact = (dim) / (xMax - xMin);
+  double yFact = (dim) / (yMax - yMin);
+  double** dataPtr = new double*[dim];
+  for (int i = 0; i < dim; i++) {dataPtr[i] = new double[dim];}
+
+  // Second read: populate data
+  file.clear();
+  file.seekg(0);
+  if (file.is_open()) {
+    while (std::getline(file, line)) {
+      // Make stringstream, toss out first token
+      std::stringstream ss(line);
+      std::getline(ss, token, '\t');
+      std::cout.precision(20);
+
+      // Skip over title
+      if (token == "type") {continue;}
+
+      // Get latitude
+      std::getline(ss, token, '\t');
+      double lat = std::stod(token);
+      int x = (xFact) * (lat - xMin);
+      if (x > (dim - 1)) {x = (dim - 1);}
+      if (x < 0) {x = 0;}
+
+      // Get longitude
+      std::getline(ss, token, '\t');
+      double lon = std::stod(token);
+      int y = (yFact) * (lon - yMin);
+      if (y > (dim - 1)) {y = (dim - 1);}
+      if (y < 0) {y = 0;}
+
+      // Get elevation
+      std::getline(ss, token, '\t');
+      double elev = std::stod(token);
+      dataPtr[x][y] = (elev) / (10000.0);
+    }
+  }
+  return dataPtr;
+}
