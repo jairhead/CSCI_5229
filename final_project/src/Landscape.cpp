@@ -9,7 +9,9 @@
 
 // Default Constructor
 Landscape::Landscape() {
-  grassValley = Utilities::loadOBJ("data/grassvalley.obj");
+  grassValley = Utilities::loadOBJ("data/hillyGrassValley.obj");
+  mountainRim = Utilities::loadOBJ("data/mountainRim.obj");
+  mountainSnow = Utilities::loadOBJ("data/mountainSnow.obj");
 }
 
 // Destructor
@@ -45,12 +47,20 @@ void Landscape::draw() {
   glTranslated(posArray[0], posArray[1], posArray[2]);
   glRotated(theta, 0, 1, 0);
   glScaled(scaleArray[0], scaleArray[1], scaleArray[2]);
-  glColor3f(colorArray[0], colorArray[1], colorArray[2]);
 
   // Draw the grass landscape using elevation data
+  glColor3f(0.04, 0.33, 0);
   glCallList(grassValley);
 
   // Draw the mountains
+  glTranslated(0.0, -0.1, 0.0);
+  glColor3f(0.21, 0.21, 0.21);
+  glCallList(mountainRim);
+
+  // Draw the mountain snow
+  glTranslated(0.0, -0.1, 0.0);
+  glColor3f(1.0, 1.0, 1.0);
+  glCallList(mountainSnow);
 
   // End
   glPopMatrix();

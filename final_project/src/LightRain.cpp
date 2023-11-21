@@ -33,7 +33,6 @@ void LightRain::draw() {
   sky->draw();
 
   // Draw landscape
-  land->color(0.04, 0.33, 0);
   land->translate(-0.5, 0.0, -0.5);
   land->scale(0.25, 0.25, 0.25);
   land->draw();

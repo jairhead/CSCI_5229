@@ -26,8 +26,10 @@ class Landscape : public BaseObject {
     // Texture variables
     float texFact = 1.0;
 
-    // Grass valley data
+    // Object ints
     int grassValley;
+    int mountainRim;
+    int mountainSnow;
 };
 
 #endif
