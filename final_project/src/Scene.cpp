@@ -39,17 +39,17 @@ void Scene::draw() {
   data->setMinute(20);
   drawLightOrbit();
 
-  // Draw the axes
-  if (drawAxes) {
-    xyz->draw();
-    Utilities::errorCheck("PrimaryGraphicsHelper::display(): axes");
-  }
-
   // Draw the clock
   //clock->draw();
 
   // Draw the weather scene
   drawWeather();
+
+  // Draw the axes
+  if (drawAxes) {
+    xyz->draw();
+    Utilities::errorCheck("PrimaryGraphicsHelper::display(): axes");
+  }
 }
 
 // drawWeather() private member function
