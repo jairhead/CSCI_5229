@@ -34,8 +34,10 @@ Scene::~Scene() {
 // draw() public member function
 // Contains logic to draw the entire scene
 void Scene::draw() {
-  // Draw the weather scene
-  drawWeather();
+  // Draw the sun
+  data->setHour(8);
+  data->setMinute(20);
+  drawLightOrbit();
 
   // Draw the axes
   if (drawAxes) {
@@ -44,12 +46,10 @@ void Scene::draw() {
   }
 
   // Draw the clock
-  clock->draw();
+  //clock->draw();
 
-  // Draw the sun
-  data->setHour(8);
-  data->setMinute(20);
-  drawLight();
+  // Draw the weather scene
+  drawWeather();
 }
 
 // drawWeather() private member function
@@ -82,6 +82,20 @@ void Scene::drawLight() {
   else {light->setDrawColor(0.70, 0.70, 0.70);}
   light->init();
   light->translateLight0(xPos, yPos, zPos);
+  light->enableLight0();
+  Utilities::errorCheck("Scene::drawLight()");
+}
+
+// drawLightOrbit() private member function
+// Orbits the light around the y-axis (for testing)
+void Scene::drawLightOrbit() {
+  // Adjust lightAngle
+  lightAngle += lightOrbitInc;
+  if (lightAngle > 360) {lightAngle = 0.0;}
+  light->init();
+  light->translateLight0(lightOrbitRadius * Utilities::cosine(lightAngle),
+                         lightHeight,
+                         lightOrbitRadius * Utilities::sine(lightAngle));
   light->enableLight0();
   Utilities::errorCheck("Scene::drawLight()");
 }

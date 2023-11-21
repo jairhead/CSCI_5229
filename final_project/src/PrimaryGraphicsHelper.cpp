@@ -14,6 +14,9 @@ Scene* scene = nullptr;
 // Control Globals
 int displayMode = 1;
 bool drawAxes = true;
+const int LIGHT_IDLE_TIME = 50;  // Time to pass between idle transitions (ms)
+const int TEXT_IDLE_TIME = 2000; // Texture mode idle time
+int prevTime = 0;                // Time of previous transition (light)
 
 // Constructor
 PrimaryGraphicsHelper::PrimaryGraphicsHelper() { }
@@ -139,7 +142,14 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
 // idle() public member function
 // Primary OpenGL idle handler function
 // Callback for glutIdleFunc()
-void PrimaryGraphicsHelper::idle() { }
+void PrimaryGraphicsHelper::idle() {
+  int currTime = glutGet(GLUT_ELAPSED_TIME);
+  if (currTime - prevTime > LIGHT_IDLE_TIME) {
+    // Redisplay
+    prevTime = currTime;
+    glutPostRedisplay();
+  }
+}
 
 // displayParams private member function
 // Helper method that displays parameters to the window

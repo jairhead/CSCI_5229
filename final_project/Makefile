@@ -35,6 +35,7 @@ OBJ := final_project.o \
 			 Sphere.o \
 			 AnalogClock.o \
 			 SkyBox.o \
+			 Landscape.o \
 			 LightRain.o
 SRC_DIR := src
 

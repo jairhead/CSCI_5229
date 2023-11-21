@@ -10,6 +10,7 @@
 #include "BaseWeatherCondition.h"
 #include "Utilities.h"
 #include "SkyBox.h"
+#include "Landscape.h"
 
 class LightRain : public BaseWeatherCondition {
   public:
@@ -18,6 +19,7 @@ class LightRain : public BaseWeatherCondition {
     void draw();
   protected:
     SkyBox* sky;
+    Landscape* land;
 };
 
 #endif

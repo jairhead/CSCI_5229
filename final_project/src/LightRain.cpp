@@ -10,6 +10,9 @@
 // Default Constructor
 LightRain::LightRain() {
   sky = new SkyBox();
+  land = new Landscape();
+
+  land->enableLighting();
 }
 
 // Destructor
@@ -18,9 +21,6 @@ LightRain::~LightRain() { }
 // draw() public member function
 // Contains logic to draw the weather condition
 void LightRain::draw() {
-  // Set lighting properties
-  if (lightingEnabled) { }
-
   // Save transformation and set up; Translate -> Rotate -> Scale
   glPushMatrix();
   glTranslated(posArray[0], posArray[1], posArray[2]);
@@ -33,7 +33,10 @@ void LightRain::draw() {
   sky->draw();
 
   // Draw landscape
-  double** elevationData = Utilities::loadElevationData("data/test_data.txt");
+  land->color(0.04, 0.33, 0);
+  land->translate(-0.5, 0.0, -0.5);
+  land->scale(0.25, 0.25, 0.25);
+  land->draw();
 
   // End
   glPopMatrix();

@@ -24,8 +24,18 @@ class Utilities {
     static double sine(double angle);
     static double cosine(double angle);
     static double** loadElevationData(std::string fileName);
+    static void crossProduct(double v_A[], double v_B[], double c_P[]);
+    static int loadOBJ(const char* fileName);
   private:
     static void reverseBytes(void *x, const int n);
+    static void loadMaterial(const char* fileName);
+    static void setMaterial(const char* name);
+    static void readCoord(char* line, int n, float* x[], int* N, int* M);
+    static void readFloat(char* line, int n, float x[]);
+    static char* readLine(FILE* f);
+    static char* readStr(char* line, const char* skip);
+    static char* getWord(char** line);
+    static int CRLF(char ch);
 };
 
 #endif
