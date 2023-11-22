@@ -25,6 +25,16 @@ class WeatherData {
     int getHour();
     void setMinute(int val);
     int getMinute();
+    void setSunriseHour(int val);
+    int getSunriseHour();
+    void setSunriseMinute(int val);
+    int getSunriseMinute();
+    void setSunsetHour(int val);
+    int getSunsetHour();
+    void setSunsetMinute(int val);
+    int getSunsetMinute();
+    void setSeason(int seasonNum);
+    int getSeason();
   private:
     // Constructor & destructor
     WeatherData();
@@ -39,6 +49,11 @@ class WeatherData {
     bool exit = false;
     int hour = 12;
     int minute = 0;
+    int sunriseHour = 6;
+    int sunriseMinute = 30;
+    int sunsetHour = 18;
+    int sunsetMinute = 30;
+    int season = 3;
 };
 
 #endif

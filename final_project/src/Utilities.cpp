@@ -357,6 +357,15 @@ int Utilities::loadOBJ(const char* fileName) {
    return list;
 }
 
+// timeDifference() public member function
+// Returns the difference between two times in minutes
+int Utilities::timeDifference(int time1Hr, int time1Min, int time2Hr, int time2Min) {
+  int minDifference = 0;
+  minDifference += (60) * (time2Hr - time1Hr);
+  minDifference += (time2Min - time1Min);
+  return minDifference;
+}
+
 // loadMaterial() private member function
 // Loads materials from file
 void Utilities::loadMaterial(const char* fileName) {

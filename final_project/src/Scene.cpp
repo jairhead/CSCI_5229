@@ -15,7 +15,7 @@ Scene::Scene() {
   xyz = new Axes();
   light = new LightManager();
   clock = new AnalogClock();
-  lightRain = new LightRain();
+  lightRain = new LightRain(light);
 
   // Enabled lighting
   xyz->enableLighting();
@@ -34,10 +34,9 @@ Scene::~Scene() {
 // draw() public member function
 // Contains logic to draw the entire scene
 void Scene::draw() {
-  // Draw the sun
-  data->setHour(8);
-  data->setMinute(20);
-  drawLightOrbit();
+  // Set the time (only for testing)
+  data->setHour(12);
+  data->setMinute(00);
 
   // Draw the clock
   //clock->draw();

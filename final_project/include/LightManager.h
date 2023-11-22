@@ -39,7 +39,7 @@ class LightManager {
     Sphere *light0Ball;     // Little ball at light's position
 
     // Light positions
-    float posArray[3] = {0.0, 0.0, 0.0};    
+    float posArray[3] = {0.0, 0.0, 0.0};
 };
 
 #endif

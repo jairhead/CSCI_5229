@@ -9,6 +9,7 @@
 
 #include "BaseObject.h"
 #include "Utilities.h"
+#include "WeatherData.h"
 
 class Landscape : public BaseObject {
   public:
