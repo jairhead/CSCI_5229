@@ -48,7 +48,7 @@ void PrimaryGraphicsHelper::display() {
   glLoadIdentity();
 
   // Set view
-  if (displayMode == 1) {projection->setOrthogonal();}
+  if (displayMode == 1) {projection->setProjection();}
   else if (displayMode == 2) {projection->setProjection();}
   else if (displayMode == 3) {projection->setFirstPerson();}
 

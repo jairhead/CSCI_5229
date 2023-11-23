@@ -55,8 +55,8 @@ class ProjectionManager {
     double aspectRatio = 5.0;
     double orthoCorrection = 0.25;
     double fieldOfViewY = 90.0;
-    double clipDistFactor = 10.0;
-    double clipCorrection = 10.0;
+    double clipDistFactor = 15.0;
+    double clipCorrection = 15.0;
     double lookAtCorrection = 2.5;
 
     // First Person Position Variables

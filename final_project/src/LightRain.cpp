@@ -24,6 +24,17 @@ LightRain::LightRain(LightManager* l) {
   rStep = (day[0] - night[0]) / 120.0;
   gStep = (day[1] - night[1]) / 120.0;
   bStep = (day[2] - night[2]) / 120.0;
+
+  // Initialize rain
+  rainDrop = Utilities::loadOBJ("data/rainDrop.obj");
+  for (int i = 0; i < numRainDrops; i++) {
+    float xVal = (rainXMin) + static_cast<float>(rand())/(RAND_MAX) * (rainXMax - rainXMin);
+    float yVal = (rainYMin) + static_cast<float>(rand())/(RAND_MAX) * (rainYMax - rainYMin);
+    float zVal = (rainZMin) + static_cast<float>(rand())/(RAND_MAX) * (rainZMax - rainZMin);
+    rainPos[i][0] = xVal;
+    rainPos[i][1] = yVal;
+    rainPos[i][2] = zVal;
+  }
 }
 
 // Destructor
@@ -42,6 +53,7 @@ void LightRain::draw() {
   landscape();
   sky();
   fog();
+  rain();
 
   // End
   glPopMatrix();
@@ -59,7 +71,7 @@ void LightRain::landscape() {
 // Draws the sky
 void LightRain::sky() {
   // Scale sky
-  skyBox->scale(3.0, 3.0, 3.0);
+  skyBox->scale(5.0, 5.0, 5.0);
 
   // Get times
   int currHr = data->getHour();
@@ -144,7 +156,16 @@ void LightRain::moon() {
 // rain() private member function
 // Animates rainfall
 void LightRain::rain() {
-
+  for (int i = 0; i < numRainDrops; i++) {
+    glPushMatrix();
+    glColor3f(0.58, 0.67, 0.67);
+    glTranslatef(rainPos[i][0], rainPos[i][1], rainPos[i][2]);
+    glScaled(0.01, 0.01, 0.01);
+    glCallList(rainDrop);
+    glPopMatrix();
+  }
+  updateRain();
+  Utilities::errorCheck("LightRain::rain()");
 }
 
 // fog() private member function
@@ -157,4 +178,20 @@ void LightRain::fog() {
   glFogf(GL_FOG_START, 0);
   glFogf(GL_FOG_END, 1);
   Utilities::errorCheck("LightRain::fog()");
+}
+
+// updateRain() private member function
+// Updates the position of the rain drops
+void LightRain::updateRain() {
+  for (int i = 0; i < numRainDrops; i++) {
+    rainPos[i][1] -= rainFallSpeed;
+    if (rainPos[i][1] < rainYMin) {
+      float xVal = (rainXMin) + static_cast<float>(rand())/(RAND_MAX) * (rainXMax - rainXMin);
+      float yVal = (rainYMin) + static_cast<float>(rand())/(RAND_MAX) * (rainYMax - rainYMin);
+      float zVal = (rainZMin) + static_cast<float>(rand())/(RAND_MAX) * (rainZMax - rainZMin);
+      rainPos[i][0] = xVal;
+      rainPos[i][1] = yVal;
+      rainPos[i][2] = zVal;
+    }
+  }
 }

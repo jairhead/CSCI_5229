@@ -28,6 +28,7 @@ class LightRain : public BaseWeatherCondition {
     void moon();
     void rain();
     void fog();
+    void updateRain();
 
     // Private scene variables
     SkyBox* skyBox;
@@ -43,7 +44,18 @@ class LightRain : public BaseWeatherCondition {
     float gStep = 0.0;
     float bStep = 0.0;
     int lightFactor = 70;
-    
+
+    // Rain variables
+    int rainDrop;
+    int numRainDrops = 20;
+    float rainPos[20][3];
+    float rainFallSpeed = 0.15;
+    float rainXMax = 2.0;
+    float rainXMin = -2.0;
+    float rainYMax = 3.0;
+    float rainYMin = 0.0;
+    float rainZMax = 2.0;
+    float rainZMin = -2.0;
 };
 
 #endif
