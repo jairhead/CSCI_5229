@@ -1,7 +1,7 @@
 /*
- * File: LightRain.h
+ * File: Precipitation.h
  * Author: Jared McKneely
- * Description: Header file for the LightRain class
+ * Description: Header file for the Precipitation class
  */
 
 #ifndef _LIGHT_RAIN_H
@@ -15,10 +15,10 @@
 #include "LightManager.h"
 #include "AnalogClock.h"
 
-class LightRain : public BaseWeatherCondition {
+class Precipitation : public BaseWeatherCondition {
   public:
-    LightRain(LightManager* l);
-    ~LightRain();
+    Precipitation(LightManager* l);
+    ~Precipitation();
     void draw();
   private:
     // Private methods
@@ -27,8 +27,10 @@ class LightRain : public BaseWeatherCondition {
     void sun();
     void moon();
     void rain();
+    void snow();
+    void mix();
     void fog();
-    void updateRain();
+    void updatePrecip();
 
     // Private scene variables
     SkyBox* skyBox;
@@ -45,17 +47,20 @@ class LightRain : public BaseWeatherCondition {
     float bStep = 0.0;
     int lightFactor = 70;
 
-    // Rain variables
+    // Rain & snow variables
     int rainDrop;
-    int numRainDrops = 20;
-    float rainPos[20][3];
+    int snowFlake;
+    int numPrecip = 20;
+    float precipPos[1000][3];
     float rainFallSpeed = 0.15;
-    float rainXMax = 2.0;
-    float rainXMin = -2.0;
-    float rainYMax = 3.0;
-    float rainYMin = 0.0;
-    float rainZMax = 2.0;
-    float rainZMin = -2.0;
+    float snowFallSpeed = 0.05;
+    float precipXMax = 2.0;
+    float precipXMin = -2.0;
+    float precipYMax = 3.0;
+    float precipYMin = 0.0;
+    float precipZMax = 2.0;
+    float precipZMin = -2.0;
+    char weatherCondition;
 };
 
 #endif

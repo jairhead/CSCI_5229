@@ -35,6 +35,12 @@ class WeatherData {
     int getSunsetMinute();
     void setSeason(int seasonNum);
     int getSeason();
+    void setCurrentWeatherCondition(char val);
+    char getCurrentWeatherCondition();
+    void setFog(int val);
+    int getFog();
+    void setPrecipDensity(int val);
+    int getPrecipDensity();
   private:
     // Constructor & destructor
     WeatherData();
@@ -54,6 +60,9 @@ class WeatherData {
     int sunsetHour = 18;
     int sunsetMinute = 30;
     int season = 3;
+    char currentWeatherCondition = 'n';
+    int fogDensity = 0;
+    int precipDensity = 0;
 };
 
 #endif

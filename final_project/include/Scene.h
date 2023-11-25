@@ -14,7 +14,7 @@
 
 #include "AnalogClock.h"
 
-#include "LightRain.h"
+#include "Precipitation.h"
 
 class Scene {
   public:
@@ -38,7 +38,7 @@ class Scene {
     AnalogClock* clock;
 
     // Weather Conditions
-    LightRain* lightRain;
+    Precipitation* precip;
 
     float lightAngle = 0.0;          // Current angle at which the light is located (degrees)
     float lightOrbitRadius = 1.5;    // Radius with which the light will orbit

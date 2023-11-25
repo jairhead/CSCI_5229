@@ -152,16 +152,64 @@ int WeatherData::getSunsetMinute() {
 // 2 = spring
 // 3 = summer
 // 4 = fall
-void WeatherData::setSeason(int seas) {
-  if (seas < 1) {seas = 1;}
-  if (seas > 4) {seas = 4;}
+void WeatherData::setSeason(int val) {
+  if (val < 1) {val = 1;}
+  if (val > 4) {val = 4;}
   std::unique_lock dataLock(dataMutex);
-  season = seas;
+  season = val;
 }
 
 // getSeason() public member function
 int WeatherData::getSeason() {
   std::unique_lock dataLock(dataMutex);
   int returnVal = season;
+  return returnVal;
+}
+
+// setCurrentWeatherCondition() public member function
+// 'n': none
+// 'r': light rain
+// 's': light snow
+// 'R': heavy rain
+// 'S': heavy snow
+void WeatherData::setCurrentWeatherCondition(char val) {
+  std::unique_lock dataLock(dataMutex);
+  currentWeatherCondition = val;
+}
+
+// getCurrentWeatherCondition() public member function
+char WeatherData::getCurrentWeatherCondition() {
+  std::unique_lock dataLock(dataMutex);
+  char returnVal = currentWeatherCondition;
+  return returnVal;
+}
+
+// setFog() public member function
+void WeatherData::setFog(int val) {
+  if (val < 0) {val = 0;}
+  else if (val > 100) {val = 100;}
+  std::unique_lock dataLock(dataMutex);
+  fogDensity = val;
+}
+
+// getFog() public member function
+int WeatherData::getFog() {
+  std::unique_lock dataLock(dataMutex);
+  char returnVal = fogDensity;
+  return returnVal;
+}
+
+// setPrecipDensity() public member function
+void WeatherData::setPrecipDensity(int val) {
+  if (val < 20) {val = 20;}
+  if (val > 1000) {val = 1000;}
+  std::unique_lock dataLock(dataMutex);
+  precipDensity = val;
+}
+
+// getPrecipDensity() public member function
+int WeatherData::getPrecipDensity() {
+  std::unique_lock dataLock(dataMutex);
+  int returnVal = precipDensity;
   return returnVal;
 }
