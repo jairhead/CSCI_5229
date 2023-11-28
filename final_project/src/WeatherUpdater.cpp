@@ -38,7 +38,7 @@ void WeatherUpdater::demoThread() {
     char weatherCondition = data->getCurrentWeatherCondition();
 
     // Update time and weather condition
-    minute += 10;
+    minute += 5;
     if (minute >= 60) {
       // Reset the minute
       minute = minute % 60;
@@ -49,7 +49,6 @@ void WeatherUpdater::demoThread() {
       if (hour > 23) {
         data->setHour(0);
         demoIncrementWeatherCondition(weatherCondition);
-        std::cout << "Current hour is " << data->getHour() << std::endl;
       }
       else {
         data->setHour(hour);
@@ -61,7 +60,7 @@ void WeatherUpdater::demoThread() {
     }
 
     // Sleep
-    usleep(100000);
+    usleep(50000);
   }
 }
 
@@ -72,15 +71,26 @@ void WeatherUpdater::demoIncrementWeatherCondition(char &wc) {
     data->setCurrentWeatherCondition('r');
     int density = rand() % 1000;
     data->setPrecipDensity(density);
+    data->setFahrenheit(68);
   }
   else if (wc == 'r') {
-    data->setCurrentWeatherCondition('s');
+    data->setCurrentWeatherCondition('t');
+    data->setPrecipDensity(1000);
+    data->setFahrenheit(65);
+  }
+  else if (wc == 't') {
+    data->setCurrentWeatherCondition('m');
     int density = rand() % 1000;
     data->setPrecipDensity(density);
+    data->setFahrenheit(31);
+  }
+  else if (wc == 'm') {
+    data->setCurrentWeatherCondition('s');
+    data->setPrecipDensity(1000);
+    data->setFahrenheit(23);
   }
   else if (wc == 's') {
     data->setCurrentWeatherCondition('n');
-    data->setFog(0);
+    data->setFahrenheit(78);
   }
-  std::cout << "WeatherUpdater::demoIncrementWeatherCondition(): weather is " << data->getCurrentWeatherCondition() << std::endl;
 }

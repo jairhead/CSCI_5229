@@ -26,6 +26,7 @@ class ClearSkies : public BaseWeatherCondition {
     void sky();
     void sun();
     void moon();
+    void fog(float density);
 
     // Private scene variables
     SkyBox* skyBox;

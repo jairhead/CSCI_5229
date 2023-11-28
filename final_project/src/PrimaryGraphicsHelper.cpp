@@ -10,12 +10,13 @@
 // Member Objects
 ProjectionManager *projection = nullptr;
 Scene* scene = nullptr;
+WeatherData* dataPtr = nullptr;
 
 // Control Globals
 int displayMode = 1;
 bool drawAxes = true;
 const int LIGHT_IDLE_TIME = 50;  // Time to pass between idle transitions (ms)
-const int TEXT_IDLE_TIME = 2000; // Texture mode idle time
+const int TEXT_IDLE_TIME = 1000; // Texture mode idle time
 int prevTime = 0;                // Time of previous transition (light)
 
 // Constructor
@@ -27,6 +28,9 @@ PrimaryGraphicsHelper::~PrimaryGraphicsHelper() { }
 // init() public member function
 // Initializes all objects
 void PrimaryGraphicsHelper::init() {
+  // Get pointer to data structure
+  dataPtr = WeatherData::getInstance();
+
   // Initialize projection manager and scene
   std::cout << "PrimaryGraphicsHelper::init()" << std::endl;
   projection = new ProjectionManager();
@@ -60,6 +64,14 @@ void PrimaryGraphicsHelper::display() {
 
   // Draw the weather scene
   scene->draw();
+
+  // Display parameters
+  #ifdef USEGLEW
+  glColor3d(1.0, 1.0, 1.0);
+  glWindowPos2i(5,5);
+  displayParams();
+  Utilities::errorCheck("PrimaryGraphicsHelper::display() display parameters");
+  #endif
 
   // Flush and swap buffers
   glFlush();
@@ -113,6 +125,35 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
     if (displayMode > 2) {displayMode = 1;}
     std::cout << "displayMode: " << displayMode << std::endl;
   }
+  else if (ch == 'm' || ch == 'M') {
+    char wc = dataPtr->getCurrentWeatherCondition();
+    if (wc == 'n') {
+      dataPtr->setCurrentWeatherCondition('r');
+      int density = rand() % 1000;
+      dataPtr->setPrecipDensity(density);
+      dataPtr->setFahrenheit(68);
+    }
+    else if (wc == 'r') {
+      dataPtr->setCurrentWeatherCondition('t');
+      dataPtr->setPrecipDensity(1000);
+      dataPtr->setFahrenheit(65);
+    }
+    else if (wc == 't') {
+      dataPtr->setCurrentWeatherCondition('m');
+      int density = rand() % 1000;
+      dataPtr->setPrecipDensity(density);
+      dataPtr->setFahrenheit(31);
+    }
+    else if (wc == 'm') {
+      dataPtr->setCurrentWeatherCondition('s');
+      dataPtr->setPrecipDensity(1000);
+      dataPtr->setFahrenheit(23);
+    }
+    else if (wc == 's') {
+      dataPtr->setCurrentWeatherCondition('n');
+      dataPtr->setFahrenheit(78);
+    }
+  }
   else if (ch == 'x' || ch == 'X') {drawAxes = !drawAxes;}
   else if (ch == '+' && displayMode == 2) {
     double fovy = projection->getFieldOfView() + 2.0;
@@ -155,4 +196,26 @@ void PrimaryGraphicsHelper::idle() {
 
 // displayParams private member function
 // Helper method that displays parameters to the window
-void PrimaryGraphicsHelper::displayParams() { }
+void PrimaryGraphicsHelper::displayParams() {
+  // Create string
+  char wc = dataPtr->getCurrentWeatherCondition();
+  std::string parameters;
+  parameters += "Time:";
+  parameters += std::to_string(dataPtr->getHour());
+  parameters += ":";
+  parameters += std::to_string(dataPtr->getMinute());
+  parameters += ", ";
+  parameters += "Location: DEMO, ";
+  parameters += "Temperature: ";
+  parameters += std::to_string(dataPtr->getFahrenheit());
+  parameters += "°F, ";
+  parameters += "Current Weather: ";
+  if (wc == 'n') {parameters += "Clear";}
+  else if (wc == 'r') {parameters += "Rain";}
+  else if (wc == 't') {parameters += "T-Storm";}
+  else if (wc == 'm') {parameters += "Mixed Precip";}
+  else if (wc == 's') {parameters += "Snow";}
+
+  // Display
+  Utilities::displayText(parameters);
+}

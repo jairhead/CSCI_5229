@@ -71,8 +71,9 @@ void Landscape::draw() {
   glCallList(mountainRim);
 
   // Draw the mountain snow
+  if (weatherCondition == 'n' || weatherCondition == 'r' || weatherCondition == 't') {glColor3f(0.21, 0.21, 0.21);}
+  else {glColor3f(1.0, 1.0, 1.0);}
   glTranslated(0.0, -0.1, 0.0);
-  glColor3f(1.0, 1.0, 1.0);
   glCallList(mountainSnow);
 
   // Draw the clock pole

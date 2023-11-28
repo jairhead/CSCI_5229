@@ -29,7 +29,7 @@ class Precipitation : public BaseWeatherCondition {
     void rain();
     void snow();
     void mix();
-    void fog();
+    void fog(float density);
     void updatePrecip();
 
     // Private scene variables
@@ -38,14 +38,32 @@ class Precipitation : public BaseWeatherCondition {
     WeatherData* data = nullptr;
     LightManager* light = nullptr;
 
-    // Sky colors
-    float skyColor[4] = {0.55, 0.55, 0.55, 1.00};
-    const float day[4] = {0.55, 0.55, 0.55, 1.00};
-    const float night[4] = {0.00, 0.00, 0.00, 1.00};
-    float rStep = 0.0;
-    float gStep = 0.0;
-    float bStep = 0.0;
-    int lightFactor = 70;
+    // Common sky attributes
+    float skyColor[4] = {0.00, 0.15, 0.89, 1.00};
+    int lightFactor = 80;
+
+    // Sky colors (rain)
+    const float rDay[4] = {0.55, 0.55, 0.55, 1.00};
+    const float rNight[4] = {0.00, 0.00, 0.00, 1.00};
+    float rRStep = 0.0;
+    float rGStep = 0.0;
+    float rBStep = 0.0;
+
+    // Sky colors (t-storm)
+    const float tDay[4] = {0.27, 0.27, 0.27, 1.00};
+    const float tNight[4] = {0.00, 0.00, 0.00, 1.00};
+    float tRStep = 0.0;
+    float tGStep = 0.0;
+    float tBStep = 0.0;
+    int lMod = 30;
+    int lVal = 10;
+
+    // Sky colors (snow)
+    const float sDay[4] = {0.88, 0.88, 0.88, 1.00};
+    const float sNight[4] = {0.00, 0.00, 0.00, 1.00};
+    float sRStep = 0.0;
+    float sGStep = 0.0;
+    float sBStep = 0.0;
 
     // Rain & snow variables
     int rainDrop;

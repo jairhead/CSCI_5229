@@ -21,9 +21,15 @@ Precipitation::Precipitation(LightManager* l) {
   land->enableLighting();
 
   // Compute steps
-  rStep = (day[0] - night[0]) / 120.0;
-  gStep = (day[1] - night[1]) / 120.0;
-  bStep = (day[2] - night[2]) / 120.0;
+  rRStep = (rDay[0] - rNight[0]) / 120.0;
+  rGStep = (rDay[1] - rNight[1]) / 120.0;
+  rBStep = (rDay[2] - rNight[2]) / 120.0;
+  tRStep = (rDay[0] - rNight[0]) / 120.0;
+  tGStep = (rDay[1] - rNight[1]) / 120.0;
+  tBStep = (rDay[2] - rNight[2]) / 120.0;
+  sRStep = (sDay[0] - sNight[0]) / 120.0;
+  sGStep = (sDay[1] - sNight[1]) / 120.0;
+  sBStep = (sDay[2] - sNight[2]) / 120.0;
 
   // Initialize precipitation
   rainDrop = Utilities::loadOBJ("data/rainDrop.obj");
@@ -56,14 +62,14 @@ void Precipitation::draw() {
   // Draw landscape, sky, and fog
   landscape();
   sky();
-  fog();
 
   // Draw rain or snow
   numPrecip = data->getPrecipDensity();
   weatherCondition = data->getCurrentWeatherCondition();
-  if (weatherCondition == 'r') {rain();}
-  else if (weatherCondition == 's') {snow();}
-  else if (weatherCondition == 'm') {mix();}
+  if (weatherCondition == 'r') {rain(); fog(0.5);}
+  else if (weatherCondition == 't') {rain(); fog(0.7);}
+  else if (weatherCondition == 's') {snow(); fog(0.8);}
+  else if (weatherCondition == 'm') {mix(); fog(0.65);}
 
   // End
   glPopMatrix();
@@ -97,31 +103,107 @@ void Precipitation::sky() {
 
   // Handle time of day
   if (abs(sunriseDiff) <= 60) {
-    skyColor[0] = night[0] + ((-sunriseDiff + 60) * rStep);
-    skyColor[1] = night[1] + ((-sunriseDiff + 60) * gStep);
-    skyColor[2] = night[2] + ((-sunriseDiff + 60) * bStep);
+    if (weatherCondition == 'r' || weatherCondition == 'm') {
+      skyColor[0] = rNight[0] + ((-sunriseDiff + 60) * rRStep);
+      skyColor[1] = rNight[1] + ((-sunriseDiff + 60) * rGStep);
+      skyColor[2] = rNight[2] + ((-sunriseDiff + 60) * rBStep);
+    }
+    else if (weatherCondition == 't') {
+      int lightning = rand() % lMod;
+      if (lightning == lVal) {
+        skyColor[0] = 0.8;
+        skyColor[1] = 0.8;
+        skyColor[2] = 0.8;
+      }
+      else {
+        skyColor[0] = tNight[0] + ((-sunriseDiff + 60) * tRStep);
+        skyColor[1] = tNight[1] + ((-sunriseDiff + 60) * tGStep);
+        skyColor[2] = tNight[2] + ((-sunriseDiff + 60) * tBStep);
+      }
+    }
+    else if (weatherCondition == 's') {
+      skyColor[0] = sNight[0] + ((-sunriseDiff + 60) * sRStep);
+      skyColor[1] = sNight[1] + ((-sunriseDiff + 60) * sGStep);
+      skyColor[2] = sNight[2] + ((-sunriseDiff + 60) * sBStep);
+    }
     lightFactor = skyColor[0] * 100;
     sun();
   }
   else if ((sunriseDiff < 0) && (sunsetDiff > 0) && (abs(sunriseDiff) > 60) && (abs(sunsetDiff > 60))) {
-    // Set sky color
-    skyColor[0] = day[0];
-    skyColor[1] = day[1];
-    skyColor[2] = day[2];
-    lightFactor = 55;
+    if (weatherCondition == 'r' || weatherCondition == 'm') {
+      skyColor[0] = rDay[0];
+      skyColor[1] = rDay[1];
+      skyColor[2] = rDay[2];
+      lightFactor = 55;
+    }
+    else if (weatherCondition == 't') {
+      int lightning = rand() % lMod;
+      if (lightning == lVal) {
+        skyColor[0] = 0.8;
+        skyColor[1] = 0.8;
+        skyColor[2] = 0.8;
+      }
+      else {
+        skyColor[0] = tDay[0];
+        skyColor[1] = tDay[1];
+        skyColor[2] = tDay[2];
+     }
+      lightFactor = 27;
+    }
+    else if (weatherCondition == 's') {
+      skyColor[0] = sDay[0];
+      skyColor[1] = sDay[1];
+      skyColor[2] = sDay[2];
+      lightFactor = 88;
+    }
     sun();
   }
   else if (abs(sunsetDiff) <= 60) {
-    skyColor[0] = day[0] - ((-sunsetDiff + 60) * rStep);
-    skyColor[1] = day[1] - ((-sunsetDiff + 60) * gStep);
-    skyColor[2] = day[2] - ((-sunsetDiff + 60) * bStep);
+    if (weatherCondition == 'r' || weatherCondition == 'm') {
+      skyColor[0] = rDay[0] - ((-sunsetDiff + 60) * rRStep);
+      skyColor[1] = rDay[1] - ((-sunsetDiff + 60) * rGStep);
+      skyColor[2] = rDay[2] - ((-sunsetDiff + 60) * rBStep);
+    }
+    else if (weatherCondition == 't') {
+      int lightning = rand() % lMod;
+      if (lightning == lVal) {
+        skyColor[0] = 0.8;
+        skyColor[1] = 0.8;
+        skyColor[2] = 0.8;
+      }
+      else {
+        skyColor[0] = rDay[0] - ((-sunsetDiff + 60) * tRStep);
+        skyColor[1] = rDay[1] - ((-sunsetDiff + 60) * tGStep);
+        skyColor[2] = rDay[2] - ((-sunsetDiff + 60) * tBStep);
+      }
+    }
+    else if (weatherCondition == 's') {
+      skyColor[0] = sDay[0] - ((-sunsetDiff + 60) * sRStep);
+      skyColor[1] = sDay[1] - ((-sunsetDiff + 60) * sGStep);
+      skyColor[2] = sDay[2] - ((-sunsetDiff + 60) * sBStep);
+    }
     lightFactor = skyColor[0] * 100;
     sun();
   }
   else {
-    skyColor[0] = night[0];
-    skyColor[1] = night[1];
-    skyColor[2] = night[2];
+    if (weatherCondition == 't') {
+      int lightning = rand() % lMod;
+      if (lightning == lVal) {
+        skyColor[0] = 0.6;
+        skyColor[1] = 0.6;
+        skyColor[2] = 0.6;
+      }
+      else {
+        skyColor[0] = rNight[0];
+        skyColor[1] = rNight[1];
+        skyColor[2] = rNight[2];
+      }
+    }
+    else {
+      skyColor[0] = rNight[0];
+      skyColor[1] = rNight[1];
+      skyColor[2] = rNight[2];
+    }
     moon();
   }
 
@@ -170,7 +252,7 @@ void Precipitation::rain() {
     glPushMatrix();
     glColor3f(0.58, 0.67, 0.67);
     glTranslatef(precipPos[i][0], precipPos[i][1], precipPos[i][2]);
-    glScaled(0.01, 0.01, 0.01);
+    glScaled(0.005, 0.005, 0.005);
     glCallList(rainDrop);
     glPopMatrix();
   }
@@ -185,7 +267,7 @@ void Precipitation::snow() {
     glPushMatrix();
     glColor3f(1.0, 1.0, 1.0);
     glTranslatef(precipPos[i][0], precipPos[i][1], precipPos[i][2]);
-    glScaled(0.01, 0.01, 0.01);
+    glScaled(0.005, 0.005, 0.005);
     glCallList(snowFlake);
     glPopMatrix();
   }
@@ -220,10 +302,10 @@ void Precipitation::mix() {
 
 // fog() private member function
 // Draws fog
-void Precipitation::fog() {
+void Precipitation::fog(float density) {
   glEnable(GL_FOG);
   glFogf(GL_FOG_MODE, GL_EXP);
-  glFogf(GL_FOG_DENSITY, 0.50);
+  glFogf(GL_FOG_DENSITY, density);
   glFogfv(GL_FOG_COLOR, skyColor);
   glFogf(GL_FOG_START, 0);
   glFogf(GL_FOG_END, 1);
@@ -235,10 +317,22 @@ void Precipitation::fog() {
 void Precipitation::updatePrecip() {
   for (int i = 0; i < numPrecip; i++) {
     // Determine which fall speed to use (rain or snow)
-    if (weatherCondition == 'r') {precipPos[i][1] -= rainFallSpeed;}
-    else if (weatherCondition == 's') {precipPos[i][1] -= snowFallSpeed;}
+    if (weatherCondition == 'r' || weatherCondition == 't') {precipPos[i][1] -= rainFallSpeed;}
+    else if (weatherCondition == 's') {
+      float xVar = (-0.03) + static_cast<float>(rand())/(RAND_MAX) * (0.02);
+      float zVar = (-0.03) + static_cast<float>(rand())/(RAND_MAX) * (0.02);
+      precipPos[i][0] += xVar;
+      precipPos[i][1] -= snowFallSpeed;
+      precipPos[i][2] += zVar;
+    }
     else if ((weatherCondition == 'm') && (i % 2 == 0)) {precipPos[i][1] -= rainFallSpeed;}
-    else if ((weatherCondition == 'm') && (i % 2 != 0)) {precipPos[i][1] -= snowFallSpeed;}
+    else if ((weatherCondition == 'm') && (i % 2 != 0)) {
+      float xVar = (-0.03) + static_cast<float>(rand())/(RAND_MAX) * (0.02);
+      float zVar = (-0.03) + static_cast<float>(rand())/(RAND_MAX) * (0.02);
+      precipPos[i][0] += xVar;
+      precipPos[i][1] -= snowFallSpeed;
+      precipPos[i][2] += zVar;
+    }
 
     // Replace rain drops and snow flakes that hacve reached the bottom
     if (precipPos[i][1] < precipYMin) {

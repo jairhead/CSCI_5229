@@ -169,6 +169,8 @@ int WeatherData::getSeason() {
 // setCurrentWeatherCondition() public member function
 // 'n': none
 // 'r': rain
+// 't': thunder storms
+// 'm': mixed precipitation
 // 's': snow
 void WeatherData::setCurrentWeatherCondition(char val) {
   std::unique_lock dataLock(dataMutex);
@@ -209,5 +211,20 @@ void WeatherData::setPrecipDensity(int val) {
 int WeatherData::getPrecipDensity() {
   std::unique_lock dataLock(dataMutex);
   int returnVal = precipDensity;
+  return returnVal;
+}
+
+// setFahrenheit() public member function
+void WeatherData::setFahrenheit(int val) {
+  if (val < -459) {val = -459;}
+  if (val > 1000) {val = 1000;}
+  std::unique_lock dataLock(dataMutex);
+  tempF = val;
+}
+
+// getPrecipDensity() public member function
+int WeatherData::getFahrenheit() {
+  std::unique_lock dataLock(dataMutex);
+  int returnVal = tempF;
   return returnVal;
 }

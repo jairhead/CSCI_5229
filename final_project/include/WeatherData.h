@@ -41,6 +41,9 @@ class WeatherData {
     int getFog();
     void setPrecipDensity(int val);
     int getPrecipDensity();
+    void setFahrenheit(int val);
+    int getFahrenheit();
+    
   private:
     // Constructor & destructor
     WeatherData();
@@ -63,6 +66,7 @@ class WeatherData {
     char currentWeatherCondition = 'n';
     int fogDensity = 0;
     int precipDensity = 0;
+    int tempF = 72;
 };
 
 #endif

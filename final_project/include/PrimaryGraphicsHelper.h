@@ -10,6 +10,7 @@
 #include "GlutIncludes.h"
 #include "ProjectionManager.h"
 #include "Utilities.h"
+#include "WeatherData.h"
 
 #include "Scene.h"
 

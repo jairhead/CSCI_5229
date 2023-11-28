@@ -44,6 +44,7 @@ void ClearSkies::draw() {
   // Draw landscape and sky
   landscape();
   sky();
+  fog(0.0);
 
   // End
   glPopMatrix();
@@ -84,11 +85,10 @@ void ClearSkies::sky() {
     sun();
   }
   else if ((sunriseDiff < 0) && (sunsetDiff > 0) && (abs(sunriseDiff) > 60) && (abs(sunsetDiff > 60))) {
-    // Set sky color
     skyColor[0] = day[0];
     skyColor[1] = day[1];
     skyColor[2] = day[2];
-    lightFactor = 55;
+    lightFactor = 70;
     sun();
   }
   else if (abs(sunsetDiff) <= 60) {
@@ -115,14 +115,25 @@ void ClearSkies::sky() {
 // Draws the sun
 void ClearSkies::sun() {
   // Initialize the light source
-  light->setDrawLight(false);
+  light->setDrawLight(true);
   light->setSpecular(0);
   light->setDiffuse(lightFactor);
   light->setAmbient(lightFactor);
   light->init();
 
+  // Get the current hour
+  int hour = data->getHour();
+  int minute = data->getMinute();
+  double th = (minute * 0.25);
+  if (hour != 12) {th += (hour * 15.0);}
+
+  // Calculate the position of light source
+  double xPos = Utilities::cosine(th) * 1.8;
+  double yPos = Utilities::sine(th) * 1.8;
+  double zPos = -1.5;
+
   // Set position and enable light source
-  light->translateLight0(0.0, 1.8, 0.0);
+  light->translateLight0(xPos, yPos, zPos);
   light->enableLight0();
   Utilities::errorCheck("ClearSkies::sun()");
 }
@@ -131,14 +142,32 @@ void ClearSkies::sun() {
 // Draws the moon
 void ClearSkies::moon() {
   // Initialize the light source
-  light->setDrawLight(false);
+  light->setDrawLight(true);
   light->setSpecular(0);
-  light->setDiffuse(0);
-  light->setAmbient(0);
+  light->setDiffuse(0.3);
+  light->setAmbient(0.1);
   light->init();
 
+  // Get the current hour
+  int hour = data->getHour();
+  int minute = data->getMinute();
+  double th = (minute * 0.25);
+  if (hour != 12) {th += (hour * 15.0);}
+
+  // Clculate position of light source
+  double xPos = Utilities::cosine(th) * 1.8;
+  double yPos = Utilities::sine(th) * 1.8;
+  double zPos = -1.5;
+
   // Set position and enable light source
-  light->translateLight0(0.0, 1.8, 0.0);
+  light->translateLight0(xPos, yPos, zPos);
   light->enableLight0();
   Utilities::errorCheck("ClearSkies::moon()");
+}
+
+// fog() private member function
+// Disables fog
+void ClearSkies::fog(float density) {
+  glDisable(GL_FOG);
+  Utilities::errorCheck("Precipitation::fog()");
 }

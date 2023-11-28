@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
 
   // Init GLUT w/ user args, z-buffer, double buffer
   glutInit(&argc, argv);
-  glutInitWindowSize(600, 600);
+  glutInitWindowSize(1000, 650);
   glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
   glutCreateWindow("Jared McKneely - CSCI 5229, Final Project (Real-Time Weather Clock)");
 
