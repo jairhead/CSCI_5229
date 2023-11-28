@@ -68,7 +68,7 @@ void Precipitation::draw() {
   weatherCondition = data->getCurrentWeatherCondition();
   if (weatherCondition == 'r') {rain(); fog(0.5);}
   else if (weatherCondition == 't') {rain(); fog(0.7);}
-  else if (weatherCondition == 's') {snow(); fog(0.8);}
+  else if (weatherCondition == 's') {snow(); fog(0.15);}
   else if (weatherCondition == 'm') {mix(); fog(0.65);}
 
   // End
@@ -248,6 +248,16 @@ void Precipitation::moon() {
 // rain() private member function
 // Animates rainfall
 void Precipitation::rain() {
+  // Set lighting properties
+  if (lightingEnabled) {
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shinyFactor);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, colorArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, colorArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specularArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emissionArray);
+  }
+  glEnable(GL_LIGHTING);
+  
   for (int i = 0; i < numPrecip; i++) {
     glPushMatrix();
     glColor3f(0.58, 0.67, 0.67);
@@ -256,6 +266,7 @@ void Precipitation::rain() {
     glCallList(rainDrop);
     glPopMatrix();
   }
+  glDisable(GL_LIGHTING);
   updatePrecip();
   Utilities::errorCheck("Precipitation::rain()");
 }
@@ -263,6 +274,16 @@ void Precipitation::rain() {
 // snow() private member function
 // Animates snowfall
 void Precipitation::snow() {
+  // Set lighting properties
+  if (lightingEnabled) {
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shinyFactor);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, colorArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, colorArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specularArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emissionArray);
+  }
+  glEnable(GL_LIGHTING);
+
   for (int i = 0; i < numPrecip; i++) {
     glPushMatrix();
     glColor3f(1.0, 1.0, 1.0);
@@ -272,12 +293,23 @@ void Precipitation::snow() {
     glPopMatrix();
   }
   updatePrecip();
+  glDisable(GL_LIGHTING);
   Utilities::errorCheck("Precipitation::snow()");
 }
 
 // mix() private member function
 // Animates mixed precipitation
 void Precipitation::mix() {
+  // Set lighting properties
+  if (lightingEnabled) {
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shinyFactor);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, colorArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, colorArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specularArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emissionArray);
+  }
+  glEnable(GL_LIGHTING);
+
   for (int i = 0; i < numPrecip; i++) {
     if (i % 2 == 0) {
       glPushMatrix();
@@ -296,6 +328,7 @@ void Precipitation::mix() {
       glPopMatrix();
     }
   }
+  glDisable(GL_LIGHTING);
   updatePrecip();
   Utilities::errorCheck("Precipitation::mix()");
 }

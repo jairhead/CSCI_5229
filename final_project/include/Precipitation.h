@@ -79,6 +79,12 @@ class Precipitation : public BaseWeatherCondition {
     float precipZMax = 2.0;
     float precipZMin = -2.0;
     char weatherCondition;
+
+    // Color & lighting variables
+    float shinyFactor = 1.0;
+    float colorArray[4] = {1.0, 1.0, 1.0, 1.0};
+    float specularArray[4] = {0.25, 0.25, 0.25, 1.0};
+    float emissionArray[4] = {0.0, 0.0, 0.0, 1.0};
 };
 
 #endif
