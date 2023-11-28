@@ -59,7 +59,7 @@ bool WeatherData::getExit() {
 
 // setHour() public member function
 void WeatherData::setHour(int val) {
-  if (val < 1) {val = 1;}
+  if (val < 0) {val = 0;}
   else if (val > 23) {val = 23;}
   std::unique_lock dataLock(dataMutex);
   hour = val;
@@ -89,7 +89,7 @@ int WeatherData::getMinute() {
 
 // setSunriseHour() public member function
 void WeatherData::setSunriseHour(int val) {
-  if (val < 1) {val = 1;}
+  if (val < 0) {val = 0;}
   else if (val > 23) {val = 23;}
   std::unique_lock dataLock(dataMutex);
   sunriseHour = val;
@@ -119,7 +119,7 @@ int WeatherData::getSunriseMinute() {
 
 // setSunsetHour() public member function
 void WeatherData::setSunsetHour(int val) {
-  if (val < 1) {val = 1;}
+  if (val < 0) {val = 0;}
   else if (val > 23) {val = 23;}
   std::unique_lock dataLock(dataMutex);
   sunsetHour = val;

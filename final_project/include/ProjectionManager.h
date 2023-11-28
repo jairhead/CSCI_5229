@@ -82,6 +82,8 @@ class ProjectionManager {
     double turnSpeed = 2.0;
     double fpTheta = 0.0;
     double fpPhi = 0.0;
+    double fpThetaMax = 305.0;
+    double fpThetaMin = 245.0;
     double fpPhiMax = 90.0;
     double fpPhiMin = -90.0;
 

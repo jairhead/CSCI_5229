@@ -22,9 +22,9 @@ AnalogClock::~AnalogClock() { }
 // color() public member function
 // Sets the object's color values
 void AnalogClock::color(double r, double g, double b) {
-  colorArray[0] = r;
-  colorArray[1] = g;
-  colorArray[2] = b;
+  cColorArray[0] = r;
+  cColorArray[1] = g;
+  cColorArray[2] = b;
   shinyFactor = 1.0;
 }
 
@@ -39,12 +39,12 @@ void AnalogClock::setTexture(unsigned int *tex) {texture = tex;}
 // draw() public member function
 // Contains logic to draw the object
 void AnalogClock::draw() {
-  // Set lighting properties
+  // Set lighting properties for tower
   if (lightingEnabled) {
     glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shinyFactor);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specularArray);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emissionArray);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuseArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, tSpecularArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, tEmissionArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, tDiffuseArray);
   }
 
   // Save transformation; Translate -> Rotate -> Scale
@@ -54,9 +54,17 @@ void AnalogClock::draw() {
 
   // Draw the clock tower
   glPushMatrix();
-  glColor3f(0.01, 0.01, 0.01);
+  glColor3f(tColorArray[0], tColorArray[1], tColorArray[2]);
   glCallList(clockPole);
   glPopMatrix();
+
+  // Set lighting properties for clock face
+  if (lightingEnabled) {
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shinyFactor);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, cSpecularArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, tEmissionArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, cDiffuseArray);
+  }
 
   // Draw the clock face; Translate -> Rotate -> Scale
   glPushMatrix();
@@ -78,7 +86,15 @@ void AnalogClock::draw() {
 // drawClockFace() protected member function
 // Contains logic to draw the clock face
 void AnalogClock::drawClockFace(double y) {
-  glColor3f(colorArray[0], colorArray[1], colorArray[2]);
+  // Enable emissive lighting
+  if (lightingEnabled) {
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shinyFactor);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, cSpecularArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, fEmissionArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, cDiffuseArray);
+  }
+
+  glColor3f(cColorArray[0], cColorArray[1], cColorArray[2]);
   for (int th = 0; th <= 360; th += d) {
     glBegin(GL_TRIANGLES);
     if (lightingEnabled) {glNormal3d(0.0, y, 0.0);}
@@ -92,6 +108,14 @@ void AnalogClock::drawClockFace(double y) {
 // drawClockRim() protected member function
 // Contains logic to draw the clock rim
 void AnalogClock::drawClockRim(double y) {
+  // Enable non-emissive lighting
+  if (lightingEnabled) {
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shinyFactor);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, cSpecularArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, cEmissionArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, cDiffuseArray);
+  }
+
   // Outside of clock rim
   glBegin(GL_QUAD_STRIP);
   glColor3f(0.0, 0.0, 0.0);
@@ -125,6 +149,15 @@ void AnalogClock::drawClockRim(double y) {
 // drawClockMarkers() protected member function
 // Contains logic to draw the hour markers on the clock face
 void AnalogClock::drawClockMarkers(double y) {
+  // Enable non-emissive lighting
+  if (lightingEnabled) {
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shinyFactor);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, cSpecularArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, cEmissionArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, cDiffuseArray);
+  }
+
+  // Draw clock markers
   glColor3f(0.0, 0.0, 0.0);
   for (int th = 0; th <= 360; th += 30) {
     glBegin(GL_QUADS);
@@ -140,6 +173,14 @@ void AnalogClock::drawClockMarkers(double y) {
 // drawHourHand() protected member function
 // Contains logic to draw the clock's hour hand
 void AnalogClock::drawHourHand(double y) {
+  // Enable non-emissive lighting
+  if (lightingEnabled) {
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shinyFactor);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, cSpecularArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, cEmissionArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, cDiffuseArray);
+  }
+
   // Get the current hour
   int hour = data->getHour();
   int minute = data->getMinute();
@@ -159,6 +200,14 @@ void AnalogClock::drawHourHand(double y) {
 // drawMinuteHand() protected member function
 // Contains logic to draw the clock's minute hand
 void AnalogClock::drawMinuteHand(double y) {
+  // Enable non-emissive lighting
+  if (lightingEnabled) {
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shinyFactor);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, cSpecularArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, cEmissionArray);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, cDiffuseArray);
+  }
+  
   // Get the current minute
   int minute = data->getMinute();
   double th = minute * 6.0;

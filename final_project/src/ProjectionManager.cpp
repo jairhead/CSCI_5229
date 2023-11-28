@@ -168,8 +168,8 @@ void ProjectionManager::moveLeft() {
 // Rotates the first person character to the right
 void ProjectionManager::turnRight() {
   fpTheta += turnSpeed;
-  if (fpTheta < 245.0) {fpTheta = 245.0;}
-  else if (fpTheta > 305.0) {fpTheta = 305.0;}
+  if (fpTheta < fpThetaMin) {fpTheta = fpThetaMin;}
+  else if (fpTheta > fpThetaMax) {fpTheta = fpThetaMax;}
   fpCx = fpXPos + (turnSpeed * Utilities::cosine(fpTheta));
   fpCz = fpZPos + (turnSpeed * Utilities::sine(fpTheta));
 }
@@ -178,8 +178,8 @@ void ProjectionManager::turnRight() {
 // Rotates the first person character to the left
 void ProjectionManager::turnLeft() {
   fpTheta -= turnSpeed;
-  if (fpTheta < 245.0) {fpTheta = 245.0;}
-  else if (fpTheta > 305.0) {fpTheta = 305.0;}
+  if (fpTheta < fpThetaMin) {fpTheta = fpThetaMin;}
+  else if (fpTheta > fpThetaMax) {fpTheta = fpThetaMax;}
   fpCx = fpXPos + (turnSpeed * Utilities::cosine(fpTheta));
   fpCz = fpZPos + (turnSpeed * Utilities::sine(fpTheta));
 }

@@ -49,6 +49,7 @@ void WeatherUpdater::demoThread() {
       if (hour > 23) {
         data->setHour(0);
         demoIncrementWeatherCondition(weatherCondition);
+        std::cout << "Current hour is " << data->getHour() << std::endl;
       }
       else {
         data->setHour(hour);
@@ -81,4 +82,5 @@ void WeatherUpdater::demoIncrementWeatherCondition(char &wc) {
     data->setCurrentWeatherCondition('n');
     data->setFog(0);
   }
+  std::cout << "WeatherUpdater::demoIncrementWeatherCondition(): weather is " << data->getCurrentWeatherCondition() << std::endl;
 }
