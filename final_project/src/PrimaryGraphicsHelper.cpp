@@ -30,6 +30,10 @@ void PrimaryGraphicsHelper::init() {
   std::cout << "PrimaryGraphicsHelper::init()" << std::endl;
   projection = new ProjectionManager();
   scene = new Scene();
+
+  /*projection->setFirstPersonX(1.0);
+  projection->setFirstPersonY(1.0);
+  projection->setFirstPersonZ(1.0);*/
 }
 
 // tearDown() public member function

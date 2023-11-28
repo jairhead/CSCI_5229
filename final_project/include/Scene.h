@@ -14,6 +14,7 @@
 
 #include "AnalogClock.h"
 
+#include "ClearSkies.h"
 #include "Precipitation.h"
 
 class Scene {
@@ -38,6 +39,7 @@ class Scene {
     AnalogClock* clock;
 
     // Weather Conditions
+    ClearSkies* clear;
     Precipitation* precip;
 
     float lightAngle = 0.0;          // Current angle at which the light is located (degrees)

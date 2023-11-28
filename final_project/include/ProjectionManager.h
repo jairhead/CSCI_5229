@@ -4,8 +4,10 @@
  * Description: Header file for the ProjectionManager class
  */
 
-#include <iostream>
+#ifndef _PROJECTION_MANAGER_H
+#define _PROJECTION_MANAGER_H
 
+#include <iostream>
 #include "GlutIncludes.h"
 #include "Utilities.h"
 
@@ -44,6 +46,9 @@ class ProjectionManager {
     void lookUp();
     void lookDown();
     double getFirstPersonTheta();
+    void setFirstPersonX(double val);
+    void setFirstPersonY(double val);
+    void setFirstPersonZ(double val);
     double getFirstPersonX();
     double getFirstPersonY();
     double getFirstPersonZ();
@@ -62,8 +67,8 @@ class ProjectionManager {
     // First Person Position Variables
     double movementSpeed = 0.01;
     double fpXPos = 0.0;
-    double fpYPos = 0.1;
-    double fpZPos = -0.75;
+    double fpYPos = 0.0;
+    double fpZPos = 0.0;
     double fpCx = 0.02;
     double fpCy = 0.1;
     double fpCz = 0.02;
@@ -83,3 +88,5 @@ class ProjectionManager {
     void checkPosition();
     void checkHeadAngle();
 };
+
+#endif

@@ -12,10 +12,15 @@ Landscape::Landscape() {
   grassValley = Utilities::loadOBJ("data/hillyGrassValley.obj");
   mountainRim = Utilities::loadOBJ("data/mountainRim.obj");
   mountainSnow = Utilities::loadOBJ("data/mountainSnow.obj");
+  clockPole = Utilities::loadOBJ("data/clock.obj");
+  clock = new AnalogClock();
+  clock->enableLighting();
 }
 
 // Destructor
-Landscape::~Landscape() { }
+Landscape::~Landscape() {
+  delete clock;
+}
 
 // color() public member function
 // Sets the object's color values
@@ -61,6 +66,11 @@ void Landscape::draw() {
   glTranslated(0.0, -0.1, 0.0);
   glColor3f(1.0, 1.0, 1.0);
   glCallList(mountainSnow);
+
+  // Draw the clock pole
+  clock->translate(6.0, 1.4, 6.5);
+  clock->scale(0.25, 0.25, 0.25);
+  clock->draw();
 
   // End
   glPopMatrix();

@@ -14,12 +14,11 @@ Scene::Scene() {
   // Allocate objects
   xyz = new Axes();
   light = new LightManager();
-  clock = new AnalogClock();
+  clear = new ClearSkies(light);
   precip = new Precipitation(light);
 
   // Enabled lighting
   xyz->enableLighting();
-  clock->enableLighting();
   precip->enableLighting();
 }
 
@@ -27,7 +26,7 @@ Scene::Scene() {
 Scene::~Scene() {
   delete xyz;
   delete light;
-  delete clock;
+  delete clear;
   delete precip;
 }
 
@@ -35,13 +34,10 @@ Scene::~Scene() {
 // Contains logic to draw the entire scene
 void Scene::draw() {
   // Set the time (only for testing)
-  data->setHour(12);
-  data->setMinute(00);
-  data->setCurrentWeatherCondition('s');
+  data->setHour(13);
+  data->setMinute(15);
+  data->setCurrentWeatherCondition('n');
   data->setPrecipDensity(1000);
-
-  // Draw the clock
-  //clock->draw();
 
   // Draw the weather scene
   drawWeather();
@@ -60,7 +56,7 @@ void Scene::drawWeather() {
   char wc = data->getCurrentWeatherCondition();
 
   // Draw weather based on current weather
-  if (wc == 'n') {/*clear->draw();*/}
+  if (wc == 'n') {clear->draw();}
   if (wc == 'r' || wc == 's' || wc == 'm') {precip->draw();}
 
   // Check for errors

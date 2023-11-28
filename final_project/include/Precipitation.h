@@ -4,8 +4,8 @@
  * Description: Header file for the Precipitation class
  */
 
-#ifndef _LIGHT_RAIN_H
-#define _LIGHT_RAIN_H
+#ifndef _PRECIPITATION_H
+#define _PRECIPITATION_H
 
 #include <cstdlib>
 #include "BaseWeatherCondition.h"
@@ -39,9 +39,9 @@ class Precipitation : public BaseWeatherCondition {
     LightManager* light = nullptr;
 
     // Sky colors
-    float skyColor[4] = {0.55, 0.55, 0.55, 1.0};
-    const float day[4] = {0.55, 0.55, 0.55, 1.0};
-    const float night[4] = {0.0, 0.0, 0.0, 1.0};
+    float skyColor[4] = {0.55, 0.55, 0.55, 1.00};
+    const float day[4] = {0.55, 0.55, 0.55, 1.00};
+    const float night[4] = {0.00, 0.00, 0.00, 1.00};
     float rStep = 0.0;
     float gStep = 0.0;
     float bStep = 0.0;

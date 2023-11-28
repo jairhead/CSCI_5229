@@ -39,7 +39,10 @@ Precipitation::Precipitation(LightManager* l) {
 }
 
 // Destructor
-Precipitation::~Precipitation() { }
+Precipitation::~Precipitation() {
+  delete skyBox;
+  delete land;
+}
 
 // draw() public member function
 // Contains logic to draw the weather condition
@@ -155,7 +158,7 @@ void Precipitation::moon() {
   light->init();
 
   // Set position and enable light source
-  light->translateLight0(1.8, 1.8, -1.5);
+  light->translateLight0(0.0, 1.8, 0.0);
   light->enableLight0();
   Utilities::errorCheck("Precipitation::moon()");
 }

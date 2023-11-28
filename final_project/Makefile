@@ -36,7 +36,8 @@ OBJ := final_project.o \
 			 AnalogClock.o \
 			 SkyBox.o \
 			 Landscape.o \
-			 Precipitation.o
+			 Precipitation.o \
+			 ClearSkies.o
 SRC_DIR := src
 
 # Default

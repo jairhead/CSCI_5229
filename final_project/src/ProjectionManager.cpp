@@ -13,7 +13,6 @@ ProjectionManager::ProjectionManager() { }
 // Destructor
 ProjectionManager::~ProjectionManager() { }
 
-
 // Theta Setter
 void ProjectionManager::setTheta(double th) {
   if (th < 0) {th = 359;}
@@ -194,9 +193,27 @@ void ProjectionManager::lookDown() {
 }
 
 // getFirstPersonTheta
-// Returns the first person character's rotation
+// Sets the first person character's rotation
 double ProjectionManager::getFirstPersonTheta() {
   return fpTheta;
+}
+
+// setFirstPersonX
+// Sets the first person x position
+void ProjectionManager::setFirstPersonX(double val) {
+  fpXPos = val;
+}
+
+// setFirstPersonY
+// Returns the first person y position
+void ProjectionManager::setFirstPersonY(double val) {
+  fpYPos = val;
+}
+
+// setFirstPersonZ
+// Sets the first person z position
+void ProjectionManager::setFirstPersonZ(double val) {
+  fpZPos = val;
 }
 
 // getFirstPersonX

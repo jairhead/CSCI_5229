@@ -10,6 +10,10 @@
 // Constructor
 AnalogClock::AnalogClock() {
   data = WeatherData::getInstance();
+  clockPole = Utilities::loadOBJ("data/clock.obj");
+  clockPolePos[0] = posArray[0];
+  clockPolePos[1] = posArray[1];
+  clockPolePos[2] = posArray[2];
 }
 
 // Destructor
@@ -43,18 +47,29 @@ void AnalogClock::draw() {
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuseArray);
   }
 
-  // Save transformation, Translate -> Rotate -> Scale
+  // Save transformation; Translate -> Rotate -> Scale
   glPushMatrix();
   glTranslated(posArray[0], posArray[1], posArray[2]);
-  glRotated(theta, 0, 1, 0);
   glScaled(scaleArray[0], scaleArray[1], scaleArray[2]);
-  
-  // Draw the clock
+
+  // Draw the clock tower
+  glPushMatrix();
+  glColor3f(0.01, 0.01, 0.01);
+  glCallList(clockPole);
+  glPopMatrix();
+
+  // Draw the clock face; Translate -> Rotate -> Scale
+  glPushMatrix();
+  glTranslated(0.0, 2.2, 0.05);
+  glRotated(phi, 1, 0, 0);
+  glRotated(theta + 90, 0, 1, 0);
+  glScaled(0.24, 0.24, 0.24);
   drawClockFace(0.1);
   drawClockRim(0.1);
   drawClockMarkers(0.1);
   drawHourHand(0.1);
   drawMinuteHand(0.1);
+  glPopMatrix();
 
   // End
   glPopMatrix();
@@ -132,7 +147,7 @@ void AnalogClock::drawHourHand(double y) {
   if (hour != 12) {th += (hour * 30.0);}
 
   // Draw an hour hand
-  glColor3f(0.73, 0.71, 0.0);
+  glColor3f(0.0, 0.0, 0.0);
   glBegin(GL_TRIANGLES);
   if (lightingEnabled) {glNormal3d(0.0, 1.0, 0.0);}
   glVertex3d((r - 0.45) * Utilities::cosine(th), y + 0.04, (r - 0.45) * Utilities::sine(th)); // Outermost vertex
@@ -149,7 +164,7 @@ void AnalogClock::drawMinuteHand(double y) {
   double th = minute * 6.0;
   
   // Draw a minute hand
-  glColor3f(0.73, 0.0, 0.0);
+  glColor3f(0.0, 0.0, 0.0);
   glBegin(GL_TRIANGLES);
   if (lightingEnabled) {glNormal3d(0.0, 1.0, 0.0);}
   glVertex3d((r - 0.15) * Utilities::cosine(th), y + 0.05, (r - 0.25) * Utilities::sine(th)); // Outermost vertex

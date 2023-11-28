@@ -10,6 +10,7 @@
 #include "BaseObject.h"
 #include "Utilities.h"
 #include "WeatherData.h"
+#include "AnalogClock.h"
 
 class Landscape : public BaseObject {
   public:
@@ -31,6 +32,10 @@ class Landscape : public BaseObject {
     int grassValley;
     int mountainRim;
     int mountainSnow;
+    int clockPole;
+
+    // Objects
+    AnalogClock* clock;
 };
 
 #endif

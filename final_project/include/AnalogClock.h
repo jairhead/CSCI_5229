@@ -30,6 +30,7 @@ class AnalogClock : public BaseObject {
     // Geometry variables
     const int d = 5;
     double r = 1.0;
+    double phi = 90.0;
 
     // Texture variables
     float texFact = 1.0;
@@ -42,6 +43,10 @@ class AnalogClock : public BaseObject {
     void drawClockMarkers(double y);
     void drawHourHand(double y);
     void drawMinuteHand(double y);
+
+    // Object ints
+    float clockPolePos[3] = {1.0, 1.0, 1.0};
+    int clockPole;
 };
 
 #endif
