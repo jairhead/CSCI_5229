@@ -67,8 +67,8 @@ void Precipitation::draw() {
   numPrecip = data->getPrecipDensity();
   weatherCondition = data->getCurrentWeatherCondition();
   if (weatherCondition == 'r') {rain(); fog(0.5);}
-  else if (weatherCondition == 't') {rain(); fog(0.7);}
-  else if (weatherCondition == 's') {snow(); fog(0.15);}
+  else if (weatherCondition == 't') {rain(); fog(0.65);}
+  else if (weatherCondition == 's') {snow(); fog(0.65);}
   else if (weatherCondition == 'm') {mix(); fog(0.65);}
 
   // End

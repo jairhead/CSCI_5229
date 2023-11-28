@@ -39,6 +39,11 @@ void AnalogClock::setTexture(unsigned int *tex) {texture = tex;}
 // draw() public member function
 // Contains logic to draw the object
 void AnalogClock::draw() {
+  // Save transformation; Translate -> Rotate -> Scale
+  glPushMatrix();
+  glTranslated(posArray[0], posArray[1], posArray[2]);
+  glScaled(scaleArray[0], scaleArray[1], scaleArray[2]);
+
   // Set lighting properties for tower
   if (lightingEnabled) {
     glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shinyFactor);
@@ -46,11 +51,6 @@ void AnalogClock::draw() {
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, tEmissionArray);
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, tDiffuseArray);
   }
-
-  // Save transformation; Translate -> Rotate -> Scale
-  glPushMatrix();
-  glTranslated(posArray[0], posArray[1], posArray[2]);
-  glScaled(scaleArray[0], scaleArray[1], scaleArray[2]);
 
   // Draw the clock tower
   glPushMatrix();
