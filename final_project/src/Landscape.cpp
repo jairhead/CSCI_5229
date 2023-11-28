@@ -9,10 +9,16 @@
 
 // Default Constructor
 Landscape::Landscape() {
+  // Get pointer to data structure
+  data = WeatherData::getInstance();
+
+  // Load .obj files
   grassValley = Utilities::loadOBJ("data/hillyGrassValley.obj");
   mountainRim = Utilities::loadOBJ("data/mountainRim.obj");
   mountainSnow = Utilities::loadOBJ("data/mountainSnow.obj");
   clockPole = Utilities::loadOBJ("data/clock.obj");
+
+  // Instantiate clock face
   clock = new AnalogClock();
   clock->enableLighting();
 }
@@ -54,12 +60,15 @@ void Landscape::draw() {
   glScaled(scaleArray[0], scaleArray[1], scaleArray[2]);
 
   // Draw the grass landscape using elevation data
-  glColor3f(0.04, 0.33, 0);
+  char weatherCondition = data->getCurrentWeatherCondition();
+  if (weatherCondition == 's') {glColor3f(0.95, 0.95, 0.95);}
+  else {glColor3f(0.04, 0.33, 0);}
   glCallList(grassValley);
 
   // Draw the mountains
   glTranslated(0.0, -0.1, 0.0);
-  glColor3f(0.21, 0.21, 0.21);
+  if (weatherCondition == 's') {glColor3f(0.95, 0.95, 0.95);}
+  else {glColor3f(0.21, 0.21, 0.21);}
   glCallList(mountainRim);
 
   // Draw the mountain snow

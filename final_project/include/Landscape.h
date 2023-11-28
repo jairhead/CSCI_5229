@@ -35,6 +35,7 @@ class Landscape : public BaseObject {
     int clockPole;
 
     // Objects
+    WeatherData* data = nullptr;
     AnalogClock* clock;
 };
 
