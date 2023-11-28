@@ -16,8 +16,10 @@ class WeatherUpdater {
   public:
     WeatherUpdater();
     ~WeatherUpdater();
-    void thread(int loopTime);
+    void updateThread(int loopTime);
+    void demoThread();
   private:
+    void demoIncrementWeatherCondition(char &wc);
     bool sendRequest();
     WeatherData* data = nullptr;
 };

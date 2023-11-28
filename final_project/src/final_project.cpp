@@ -32,9 +32,9 @@ int main(int argc, char* argv[]) {
   glutKeyboardFunc(PrimaryGraphicsHelper::key);
   glutIdleFunc(PrimaryGraphicsHelper::idle);
 
-  // Fire up weather updater thread
+  // Fire up weather updater thread for demo purposes
   WeatherUpdater* updater = new WeatherUpdater();
-  std::thread updaterThread(&WeatherUpdater::thread, updater, 10);
+  std::thread updaterThread(&WeatherUpdater::demoThread, updater);
 
   // Exit program
   glutMainLoop();

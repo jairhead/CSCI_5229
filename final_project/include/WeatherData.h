@@ -54,7 +54,7 @@ class WeatherData {
     bool liveWeather = false;
     bool exit = false;
     int hour = 12;
-    int minute = 0;
+    int minute = 00;
     int sunriseHour = 6;
     int sunriseMinute = 30;
     int sunsetHour = 18;

@@ -33,12 +33,6 @@ Scene::~Scene() {
 // draw() public member function
 // Contains logic to draw the entire scene
 void Scene::draw() {
-  // Set the time (only for testing)
-  data->setHour(13);
-  data->setMinute(15);
-  data->setCurrentWeatherCondition('n');
-  data->setPrecipDensity(1000);
-
   // Draw the weather scene
   drawWeather();
 

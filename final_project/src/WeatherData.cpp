@@ -168,10 +168,8 @@ int WeatherData::getSeason() {
 
 // setCurrentWeatherCondition() public member function
 // 'n': none
-// 'r': light rain
-// 's': light snow
-// 'R': heavy rain
-// 'S': heavy snow
+// 'r': rain
+// 's': snow
 void WeatherData::setCurrentWeatherCondition(char val) {
   std::unique_lock dataLock(dataMutex);
   currentWeatherCondition = val;
