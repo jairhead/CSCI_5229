@@ -16,7 +16,6 @@ Landscape::Landscape() {
   grassValley = Utilities::loadOBJ("data/hillyGrassValley.obj");
   mountainRim = Utilities::loadOBJ("data/mountainRim.obj");
   mountainSnow = Utilities::loadOBJ("data/mountainSnow.obj");
-  clockPole = Utilities::loadOBJ("data/clock.obj");
 
   // Instantiate clock face
   clock = new AnalogClock();
@@ -77,7 +76,7 @@ void Landscape::draw() {
   glCallList(mountainSnow);
 
   // Draw the clock pole
-  clock->translate(6.0, 1.4, 6.5);
+  clock->translate(2.3, 1.1, 7.7);
   clock->scale(0.25, 0.25, 0.25);
   clock->draw();
 

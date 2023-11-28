@@ -168,6 +168,8 @@ void ProjectionManager::moveLeft() {
 // Rotates the first person character to the right
 void ProjectionManager::turnRight() {
   fpTheta += turnSpeed;
+  if (fpTheta < 245.0) {fpTheta = 245.0;}
+  else if (fpTheta > 305.0) {fpTheta = 305.0;}
   fpCx = fpXPos + (turnSpeed * Utilities::cosine(fpTheta));
   fpCz = fpZPos + (turnSpeed * Utilities::sine(fpTheta));
 }
@@ -176,6 +178,8 @@ void ProjectionManager::turnRight() {
 // Rotates the first person character to the left
 void ProjectionManager::turnLeft() {
   fpTheta -= turnSpeed;
+  if (fpTheta < 245.0) {fpTheta = 245.0;}
+  else if (fpTheta > 305.0) {fpTheta = 305.0;}
   fpCx = fpXPos + (turnSpeed * Utilities::cosine(fpTheta));
   fpCz = fpZPos + (turnSpeed * Utilities::sine(fpTheta));
 }
@@ -198,22 +202,35 @@ double ProjectionManager::getFirstPersonTheta() {
   return fpTheta;
 }
 
+void ProjectionManager::setFirstPersonTheta(double val) {
+  if (val >= 360.0) {val = 360.0;}
+  if (val < 0.0) {val = 0.0;}
+  fpTheta = val;
+}
+
 // setFirstPersonX
 // Sets the first person x position
 void ProjectionManager::setFirstPersonX(double val) {
+  if (val > fpXMax) {val = fpXMax;}
+  else if (val < fpXMin) {val = fpXMin;}
   fpXPos = val;
+  fpCx = val;
 }
 
 // setFirstPersonY
 // Returns the first person y position
 void ProjectionManager::setFirstPersonY(double val) {
   fpYPos = val;
+  fpCy = val;
 }
 
 // setFirstPersonZ
 // Sets the first person z position
 void ProjectionManager::setFirstPersonZ(double val) {
+  if (val > fpZMax) {val = fpZMax;}
+  else if (val < fpZMin) {val = fpZMin;}
   fpZPos = val;
+  fpCz = val - 0.02;
 }
 
 // getFirstPersonX

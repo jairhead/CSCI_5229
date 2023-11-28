@@ -46,6 +46,7 @@ class ProjectionManager {
     void lookUp();
     void lookDown();
     double getFirstPersonTheta();
+    void setFirstPersonTheta(double val);
     void setFirstPersonX(double val);
     void setFirstPersonY(double val);
     void setFirstPersonZ(double val);
@@ -69,16 +70,16 @@ class ProjectionManager {
     double fpXPos = 0.0;
     double fpYPos = 0.0;
     double fpZPos = 0.0;
-    double fpCx = 0.02;
-    double fpCy = 0.1;
-    double fpCz = 0.02;
-    double fpXMax = 0.8;
-    double fpXMin = -0.8;
-    double fpZMax = 0.8;
-    double fpZMin = -0.8;
+    double fpCx = 0.0;
+    double fpCy = 0.0;
+    double fpCz = -0.02;
+    double fpXMax = 3.0;
+    double fpXMin = -3.0;
+    double fpZMax = 3.0;
+    double fpZMin = -3.0;
 
     // First Person Angle Variables
-    double turnSpeed = 1.0;
+    double turnSpeed = 2.0;
     double fpTheta = 0.0;
     double fpPhi = 0.0;
     double fpPhiMax = 90.0;

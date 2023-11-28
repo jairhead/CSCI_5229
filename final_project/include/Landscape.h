@@ -32,7 +32,6 @@ class Landscape : public BaseObject {
     int grassValley;
     int mountainRim;
     int mountainSnow;
-    int clockPole;
 
     // Objects
     WeatherData* data = nullptr;

@@ -27,13 +27,16 @@ PrimaryGraphicsHelper::~PrimaryGraphicsHelper() { }
 // init() public member function
 // Initializes all objects
 void PrimaryGraphicsHelper::init() {
+  // Initialize projection manager and scene
   std::cout << "PrimaryGraphicsHelper::init()" << std::endl;
   projection = new ProjectionManager();
   scene = new Scene();
 
-  /*projection->setFirstPersonX(1.0);
-  projection->setFirstPersonY(1.0);
-  projection->setFirstPersonZ(1.0);*/
+  // Initialize first person position
+  projection->setFirstPersonX(0.0);
+  projection->setFirstPersonY(0.3);
+  projection->setFirstPersonZ(1.55);
+  projection->setFirstPersonTheta(270.0);
 }
 
 // tearDown() public member function
@@ -52,9 +55,8 @@ void PrimaryGraphicsHelper::display() {
   glLoadIdentity();
 
   // Set view
-  if (displayMode == 1) {projection->setProjection();}
+  if (displayMode == 1) {projection->setFirstPerson();}
   else if (displayMode == 2) {projection->setProjection();}
-  else if (displayMode == 3) {projection->setFirstPerson();}
 
   // Draw the weather scene
   scene->draw();
@@ -78,14 +80,14 @@ void PrimaryGraphicsHelper::special(int key, int x, int y) {
   // Handle keys
   double th = projection->getTheta();
   double ph = projection->getPhi();
-  if (key == GLUT_KEY_RIGHT && displayMode != 3) {th += 1;}
-  else if (key == GLUT_KEY_LEFT && displayMode != 3) {th -= 1;}
-  else if (key == GLUT_KEY_UP && displayMode != 3) {ph += 1;}
-  else if (key == GLUT_KEY_DOWN && displayMode != 3) {ph -= 1;}
-  else if (key == GLUT_KEY_RIGHT && displayMode == 3) {projection->turnRight(); std::cout << "Looking right!" << std::endl;}
-  else if (key == GLUT_KEY_LEFT && displayMode == 3) {projection->turnLeft(); std::cout << "Looking left!" << std::endl;}
-  else if (key == GLUT_KEY_UP && displayMode == 3) {projection->lookUp(); std::cout << "Looking up!" << std::endl;}
-  else if (key == GLUT_KEY_DOWN && displayMode == 3) {projection->lookDown(); std::cout << "Looking down!" << std::endl;}
+  if (key == GLUT_KEY_RIGHT && displayMode != 1) {th += 1;}
+  else if (key == GLUT_KEY_LEFT && displayMode != 1) {th -= 1;}
+  else if (key == GLUT_KEY_UP && displayMode != 1) {ph += 1;}
+  else if (key == GLUT_KEY_DOWN && displayMode != 1) {ph -= 1;}
+  else if (key == GLUT_KEY_RIGHT && displayMode == 1) {projection->turnRight(); std::cout << "Looking right!" << std::endl;}
+  else if (key == GLUT_KEY_LEFT && displayMode == 1) {projection->turnLeft(); std::cout << "Looking left!" << std::endl;}
+  else if (key == GLUT_KEY_UP && displayMode == 1) {projection->lookUp(); std::cout << "Looking up!" << std::endl;}
+  else if (key == GLUT_KEY_DOWN && displayMode == 1) {projection->lookDown(); std::cout << "Looking down!" << std::endl;}
 
   // Set theta and phi
   projection->setTheta(th);
@@ -108,7 +110,7 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
   else if (ch == '0') {projection->setTheta(0.0); projection->setPhi(0.0);}
   else if (ch == '1') {
     displayMode += 1;
-    if (displayMode > 3) {displayMode = 1;}
+    if (displayMode > 2) {displayMode = 1;}
     std::cout << "displayMode: " << displayMode << std::endl;
   }
   else if (ch == 'x' || ch == 'X') {drawAxes = !drawAxes;}
@@ -122,10 +124,6 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
     projection->setFieldOfView(fovy);
     std::cout << "Field of view: " << fovy << std::endl;
   }
-  else if (ch == 'w' && displayMode == 3) {projection->moveForward();}
-  else if (ch == 'a' && displayMode == 3) {projection->moveLeft();}
-  else if (ch == 's' && displayMode == 3) {projection->moveBackward();}
-  else if (ch == 'd' && displayMode == 3) {projection->moveRight();}
   else if (ch == 'r') {
     #ifndef USEGLEW
     displayParams();
