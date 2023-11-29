@@ -154,7 +154,10 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
       dataPtr->setFahrenheit(78);
     }
   }
-  else if (ch == 'x' || ch == 'X') {drawAxes = !drawAxes;}
+  else if (ch == 'x' || ch == 'X') {
+    bool axes = !(scene->getDrawAxes());
+    scene->setDrawAxes(axes);
+  }
   else if (ch == '+' && displayMode == 2) {
     double fovy = projection->getFieldOfView() + 2.0;
     projection->setFieldOfView(fovy);
@@ -165,13 +168,12 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
     projection->setFieldOfView(fovy);
     std::cout << "Field of view: " << fovy << std::endl;
   }
-  else if (ch == 'r') {
+  else if (ch == 'r' || ch == 'R') {
     #ifndef USEGLEW
     displayParams();
     #endif
   }
   else {return;}
-
 
   // Display params (if compiled without GLEW)
   #ifndef USEGLEW

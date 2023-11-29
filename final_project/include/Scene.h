@@ -22,6 +22,8 @@ class Scene {
     Scene();
     ~Scene();
     void draw();
+    bool getDrawAxes();
+    void setDrawAxes(bool val);
   private:
     // Private member functions
     void drawWeather();
@@ -30,7 +32,7 @@ class Scene {
     void drawLightOrbit();
 
     // Basic objects
-    bool drawAxes = true;
+    bool drawAxes = false;
     WeatherData* data = nullptr;
     LightManager *light = nullptr;
     Axes *xyz;

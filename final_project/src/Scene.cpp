@@ -43,6 +43,18 @@ void Scene::draw() {
   }
 }
 
+// getDrawAxes() public member function
+// Gets mode to draw axes or not
+bool Scene::getDrawAxes() {
+  return drawAxes;
+}
+
+// getDrawAxes() public member function
+// Sets mode to draw axes or not
+void Scene::setDrawAxes(bool val) {
+  drawAxes = val;
+}
+
 // drawWeather() private member function
 // Draws the scene with the current weather conditions
 void Scene::drawWeather() {
