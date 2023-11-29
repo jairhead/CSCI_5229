@@ -3,7 +3,7 @@ EXE=final_project
 
 # Msys/MinGW
 ifeq "$(OS)" "Windows_NT"
-CXXFLAGS=-O3 -Wall -DUSEGLEW -I./include
+CXXFLAGS=-O3 -Wall -I./include
 LIBS=-lfreeglut -lglew32 -lglu32 -lopengl32
 CLEAN=rm -f *.exe *.o *.a
 else

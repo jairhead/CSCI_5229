@@ -48,10 +48,14 @@ void WeatherUpdater::demoThread() {
       hour += 1;
       if (hour > 23) {
         data->setHour(0);
-        demoIncrementWeatherCondition(weatherCondition);
       }
       else {
         data->setHour(hour);
+      }
+
+      // Handle weather condition update
+      if (hour == 5 && minute == 0) {
+        demoIncrementWeatherCondition(weatherCondition);
       }
     }
     else {

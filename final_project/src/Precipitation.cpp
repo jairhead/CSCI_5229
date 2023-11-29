@@ -284,6 +284,7 @@ void Precipitation::snow() {
   }
   glEnable(GL_LIGHTING);
 
+  // Draw the snow flakes
   for (int i = 0; i < numPrecip; i++) {
     glPushMatrix();
     glColor3f(1.0, 1.0, 1.0);
@@ -292,6 +293,8 @@ void Precipitation::snow() {
     glCallList(snowFlake);
     glPopMatrix();
   }
+
+  // Update the position of the snow flakes
   updatePrecip();
   glDisable(GL_LIGHTING);
   Utilities::errorCheck("Precipitation::snow()");
