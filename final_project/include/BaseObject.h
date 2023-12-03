@@ -8,7 +8,7 @@
 #ifndef _BASE_OBJECT_H
 #define _BASE_OBJECT_H
 
-#include "GlutIncludes.h"
+#include "TopIncludes.h"
 
 class BaseObject {
   public:

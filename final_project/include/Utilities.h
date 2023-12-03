@@ -12,7 +12,7 @@
 #include <sstream>
 #include <cmath>
 
-#include "GlutIncludes.h"
+#include "TopIncludes.h"
 #include "GenericHomeworkException.h"
 
 class Utilities {

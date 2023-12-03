@@ -8,7 +8,7 @@
 #ifndef _BASE_WEATHER_CONDITION_H
 #define _BASE_WEATHER_CONDITION_H
 
-#include "GlutIncludes.h"
+#include "TopIncludes.h"
 
 class BaseWeatherCondition {
   public:

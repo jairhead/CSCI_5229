@@ -49,7 +49,9 @@ Final Project
     - Add a partly cloudy weather condition with skybox textures
     - Created a pine tree object and create a forest with it
     - Tall grass object for grassy area
-    - Log cabin with a porch for the first person view to stand on
+    - Log cabin with a porch for the first person view to stand on with an outdoor lamp, window, and door
+    - I ran into difficulties placing textures onto the landscape due to the following error (unable to load the material):
+      Utilities::loadMaterial(): cannot open file.
   - Might add:
     - Road with cars driving by
     - Snow-covered effect for all objects

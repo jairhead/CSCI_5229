@@ -8,7 +8,7 @@
 #define _LIGHT_MANAGER_H
 
 #include <iostream>
-#include "GlutIncludes.h"
+#include "TopIncludes.h"
 #include "Sphere.h"
 
 class LightManager {

@@ -1,5 +1,5 @@
 # Final project
-EXE=final_project
+EXE=final
 
 # Msys/MinGW
 ifeq "$(OS)" "Windows_NT"
@@ -22,7 +22,7 @@ CLEAN=rm -f $(EXE) *.o *.a
 endif
 
 # Objects to include in library
-OBJ := final_project.o \
+OBJ := final.o \
        PrimaryGraphicsHelper.o \
 			 Utilities.o \
 			 ProjectionManager.o \

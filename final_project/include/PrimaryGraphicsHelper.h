@@ -7,7 +7,7 @@
 #ifndef _PRIMARY_GRAPHICS_HELPER_H
 #define _PRIMARY_GRAPHICS_HELPER_H
 
-#include "GlutIncludes.h"
+#include "TopIncludes.h"
 #include "ProjectionManager.h"
 #include "Utilities.h"
 #include "WeatherData.h"
