@@ -24,9 +24,9 @@ class Utilities {
     static double sine(double angle);
     static double cosine(double angle);
     static double** loadElevationData(std::string fileName);
-    static void crossProduct(double v_A[], double v_B[], double c_P[]);
     static int loadOBJ(const char* fileName);
     static int timeDifference(int currHr, int currMin, int hr, int min);
+    static void computeNormal(double v_A[], double v_B[], double c_P[]);
   private:
     static void reverseBytes(void *x, const int n);
     static void loadMaterial(const char* fileName);

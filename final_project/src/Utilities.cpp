@@ -232,14 +232,6 @@ double** Utilities::loadElevationData(std::string fileName) {
   return dataPtr;
 }
 
-// crossProduct() public member function
-// Computes the cross product of two vectors
-void Utilities::crossProduct(double v_A[], double v_B[], double c_P[]) {
-  c_P[0] = (v_A[1] * v_B[2]) - (v_A[2] * v_B[1]);
-  c_P[1] = -((v_A[0] * v_B[2]) - (v_A[2] * v_B[0]));
-  c_P[2] = (v_A[0] * v_B[1]) - (v_A[1] * v_B[0]);
-}
-
 // loadOBJ() public member function
 // Loads an object from a .obj file type
 int Utilities::loadOBJ(const char* fileName) {
@@ -366,6 +358,14 @@ int Utilities::timeDifference(int time1Hr, int time1Min, int time2Hr, int time2M
   return minDifference;
 }
 
+// computeNormal() public member function
+// Computes the normal of two vectors (i.e. the cross product)
+void Utilities::computeNormal(double vec1[3], double vec2[3], double normal[3]) {
+  normal[0] = (vec1[1] * vec2[2]) - (vec1[2] * vec2[1]);
+  normal[1] = -((vec1[0] * vec2[2]) - (vec1[2] * vec2[0]));
+  normal[2] = (vec1[0] * vec2[1]) - (vec1[1] * vec2[0]);
+}
+
 // loadMaterial() private member function
 // Loads materials from file
 void Utilities::loadMaterial(const char* fileName) {
@@ -457,8 +457,7 @@ void Utilities::setMaterial(const char* name) {
 
 // readCoord() private member function
 // Reads coordinates that are provided
-void Utilities::readCoord(char* line,int n,float* x[],int* N,int* M)
-{
+void Utilities::readCoord(char* line,int n,float* x[],int* N,int* M) {
   //  Allocate memory if necessary
   if (*N+n > *M) {
     *M += 8192;
