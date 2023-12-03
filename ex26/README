@@ -1,0 +1,21 @@
+ex26: Shaders - OpenGL 4 style
+
+Willem A. (Vlakkies) Schreuder
+CSCI4229/5229 Fall 2023
+
+
+Demonstrate shaders:
+Pixel lighting using OpenGL 4 style
+Draw axes in OpenGL 4 style
+Draw text in OpenGL 4 style using geometry shader
+
+
+Key bindings
+  p/P        Toggle between orthogonal & perspective projections
+  s/S        Start/stop light movement
+  -/+        Decrease/increase light elevation
+  a          Toggle axes
+  arrows     Change view angle
+  PgDn/PgUp  Zoom in and out
+  0          Reset view angle
+  ESC        Exit

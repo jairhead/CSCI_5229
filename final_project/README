@@ -1,0 +1,57 @@
+Name: Jared McKneely
+Course: CSCI 5229 (Computer Graphics)
+Semester: Fall 2023
+Final Project
+
+----- ABOUT THIS PROGRAM -----
+
+--- DESCRIPTION OF KEYS ---
+  - 0: reset viewing angle
+  - 1: cycle between two display modes (projection and first person)
+  - In projection display mode:
+    - '+': increase field of view
+    - '-': decrease field of view
+  - In first person display mode:
+    - arrow keys: turn left, turn right, look up, look down
+  - ESC: exit the program
+  - 'm' or 'M': manually cycle between weather conditions
+  - 'r': print parameters to terminal (only without GLEW)
+
+--- EXTERNAL RESOURCES ---
+  - Color picker: https://keiwando.com/color-picker/
+
+--- WHY THIS PROJECT DESERVES AN A ---
+  - I created all .obj files in the scene from scratch, including:
+    - clock.obj
+    - hillyGrassValley.obj
+    - mountainRim.obj
+    - mountainSnow.obj
+    - rainDrop.obj
+    - snowFlake.obj
+    - star.obj
+  - Was challenging to create a mountainous landscape from scratch
+    that looked believable and reacted to weather conditions
+  - Created an analog clock face that displays the current time with accurate
+    hour and minute hands
+  - Made all objects in the scene react to time of day and weather conditions
+  - Paid close attention to animating snow, rain, and mixed precipitation:
+    - Performed lots of trial and error with the rain fall speed
+    - Added "meandering" to the snow as it falls so it appears to blow around
+      as it falls
+    - Added a thunderstorm weather condition with random lightning effect
+  - Worked hard to carefully animate day and night cycles:
+    - Created sunrise and sunset effects with smooth sky color changes
+    - Added twinkling effect to stars
+
+--- REMAINING WORK ---
+  - Definitely going to add:
+    - Blue-to-orange sky gradient for sunset and sunrise
+    - Add a partly cloudy weather condition with skybox textures
+    - Created a pine tree object and create a forest with it
+    - Tall grass object for grassy area
+    - Log cabin with a porch for the first person view to stand on with an outdoor lamp, window, and door
+    - I ran into difficulties placing textures onto the landscape due to the following error (unable to load the material):
+      Utilities::loadMaterial(): cannot open file.
+  - Might add:
+    - Road with cars driving by
+    - Snow-covered effect for all objects
