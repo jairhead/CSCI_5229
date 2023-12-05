@@ -10,7 +10,9 @@
 #include "BaseObject.h"
 #include "Utilities.h"
 #include "WeatherData.h"
+
 #include "AnalogClock.h"
+#include "ConiferousTree.h"
 
 class Landscape : public BaseObject {
   public:
@@ -27,6 +29,7 @@ class Landscape : public BaseObject {
 
     // Texture variables
     float texFact = 1.0;
+    unsigned int textures[5];
 
     // Object ints
     int grassValley;
@@ -36,6 +39,7 @@ class Landscape : public BaseObject {
     // Objects
     WeatherData* data = nullptr;
     AnalogClock* clock;
+    ConiferousTree* tree;
 };
 
 #endif

@@ -12,19 +12,28 @@ Landscape::Landscape() {
   // Get pointer to data structure
   data = WeatherData::getInstance();
 
-  // Load .obj files
+  // Load blender objects
   grassValley = Utilities::loadOBJ("data/hillyGrassValley.obj");
   mountainRim = Utilities::loadOBJ("data/mountainRim.obj");
   mountainSnow = Utilities::loadOBJ("data/mountainSnow.obj");
 
+  // Load textures
+  textures[0] = Utilities::loadBmp("images/tree-branch-512x512.bmp");
+
   // Instantiate clock face
   clock = new AnalogClock();
   clock->enableLighting();
+
+  // Instantiate trees
+  tree = new ConiferousTree();
+  tree->setTrunkTexture(&textures[0]);
+  tree->enableLighting();
 }
 
 // Destructor
 Landscape::~Landscape() {
   delete clock;
+  delete tree;
 }
 
 // color() public member function
@@ -80,6 +89,11 @@ void Landscape::draw() {
   clock->translate(2.3, 1.1, 7.7);
   clock->scale(0.25, 0.25, 0.25);
   clock->draw();
+
+  // Draw the trees
+  tree->translate(1.5, 1.2, 7.7);
+  tree->scale(0.1, 0.1, 0.1);
+  tree->draw();
 
   // End
   glPopMatrix();

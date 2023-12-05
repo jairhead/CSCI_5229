@@ -55,3 +55,9 @@ Final Project
   - Might add:
     - Road with cars driving by
     - Snow-covered effect for all objects
+
+--- TEXTURES USED ---
+tree-branch-512x512.bmp:
+  - Downloaded from https://www.manytextures.com/texture/11/tree-branch/
+  - License: https://creativecommons.org/licenses/by/4.0/
+  - Changes made: converted from JPG to BMP for use in the program

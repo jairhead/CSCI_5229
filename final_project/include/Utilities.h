@@ -23,6 +23,9 @@ class Utilities {
     static unsigned int loadBmp(const char* fileName);
     static double sine(double angle);
     static double cosine(double angle);
+    static double arcSine(double frac);
+    static double arcCosine(double frac);
+    static double hypotenuse(double a, double b);
     static double** loadElevationData(std::string fileName);
     static int loadOBJ(const char* fileName);
     static int timeDifference(int currHr, int currMin, int hr, int min);

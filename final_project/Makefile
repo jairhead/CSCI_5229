@@ -34,6 +34,7 @@ OBJ := final.o \
 			 RectangularPrism.o \
 			 Sphere.o \
 			 AnalogClock.o \
+			 ConiferousTree.o \
 			 SkyBox.o \
 			 Landscape.o \
 			 Precipitation.o \

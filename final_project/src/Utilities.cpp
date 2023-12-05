@@ -148,6 +148,18 @@ double Utilities::sine(double angle) {return sin(angle * (3.14159265 / 180));}
 // Returns the cosine of the provided angle in degrees
 double Utilities::cosine(double angle) {return cos(angle * (3.14159265 / 180));}
 
+// arcSine() public member function
+// Returns the arcsine of the provided fraction in degrees
+double Utilities::arcSine(double frac) {return (180.0 / 3.14159265) * asin(frac);}
+
+// arcCosine() public member function
+// Returns the arccosine of the provided fraction in degrees
+double Utilities::arcCosine(double frac) {return (180.0 / 3.14159265) * acos(frac);}
+
+// hypotenuse() public member function
+// Returns the hypotenuse of a right triangle given sides a and b
+double Utilities::hypotenuse(double a, double b) {return sqrt(pow(a, 2.0) + pow(b, 2.0));}
+
 // loadElevationData() public member function
 // Loads a plaintext elevation data file and returns a 2D double array
 double** Utilities::loadElevationData(std::string fileName) {
