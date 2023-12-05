@@ -19,13 +19,18 @@ class ConiferousTree : public BaseObject {
     void setTextureFactor(float tf);
     void setTrunkTexture(unsigned int *tex);
     void setLeafTexture(unsigned int *tex);
+    void setSnowyLeafTexture(unsigned int *tex);
     void draw();
   protected:
     // Protected member functions
-    void drawCyl(double x1, double x2,
-                 double y1, double y2,
-                 double z1, double z2,
-                 double ph);
+    void drawTrunkSection(double x1, double x2,
+                          double y1, double y2,
+                          double z1, double z2,
+                          double ph);
+    void drawLeaves(double x1, double x2,
+                    double y1, double y2,
+                    double z1, double z2,
+                    double ph);
 
     // Geometry variables
     const int d = 30;
@@ -34,6 +39,7 @@ class ConiferousTree : public BaseObject {
     float texFact = 1.0;
     unsigned int *treeTrunkTexture;
     unsigned int *leafTexture;
+    unsigned int *snowyLeafTexture;
 
     // Color & lighting variables
     float colorArray[4] = {1.0, 1.0, 1.0, 1.0};

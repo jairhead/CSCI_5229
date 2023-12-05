@@ -19,6 +19,8 @@ Landscape::Landscape() {
 
   // Load textures
   textures[0] = Utilities::loadBmp("images/tree-branch-512x512.bmp");
+  textures[1] = Utilities::loadBmp("images/fir-leaves-512x512.bmp");
+  textures[2] = Utilities::loadBmp("images/snowy-fir-leaves-512x512.bmp");
 
   // Instantiate clock face
   clock = new AnalogClock();
@@ -27,6 +29,8 @@ Landscape::Landscape() {
   // Instantiate trees
   tree = new ConiferousTree();
   tree->setTrunkTexture(&textures[0]);
+  tree->setLeafTexture(&textures[1]);
+  tree->setSnowyLeafTexture(&textures[2]);
   tree->enableLighting();
 }
 
