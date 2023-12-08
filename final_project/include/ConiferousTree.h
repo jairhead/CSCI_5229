@@ -1,5 +1,5 @@
 /*
- * File: ConiferousTree.cpp
+ * File: ConiferousTree.h
  * Author: Jared McKneely
  * Description: Implementation file for the ConiferousTree class, a child
  *              class of the BaseObject abstract class.

@@ -21,6 +21,8 @@ Landscape::Landscape() {
   textures[0] = Utilities::loadBmp("images/tree-branch-512x512.bmp");
   textures[1] = Utilities::loadBmp("images/fir-leaves-512x512.bmp");
   textures[2] = Utilities::loadBmp("images/snowy-fir-leaves-512x512.bmp");
+  textures[3] = Utilities::loadBmp("images/log-circular-512x512.bmp");
+  textures[4] = Utilities::loadBmp("images/log-top-512x512.bmp");
 
   // Instantiate clock face
   clock = new AnalogClock();
@@ -32,6 +34,12 @@ Landscape::Landscape() {
   tree->setLeafTexture(&textures[1]);
   tree->setSnowyLeafTexture(&textures[2]);
   tree->enableLighting();
+
+  // Instantiate cabin
+  cabin = new Cabin();
+  cabin->setLogCircularTexture(&textures[3]);
+  cabin->setLogTopTexture(&textures[4]);
+  cabin->enableLighting();
 }
 
 // Destructor
@@ -62,8 +70,9 @@ void Landscape::draw() {
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, colorArray);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specularArray);
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emissionArray);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_NORMALIZE);
   }
-  glEnable(GL_LIGHTING);
 
   // Save transformation; Translate -> Rotate -> Scale
   glPushMatrix();
@@ -97,7 +106,12 @@ void Landscape::draw() {
   // Draw the trees
   tree->translate(1.5, 1.2, 7.7);
   tree->scale(0.1, 0.1, 0.1);
-  tree->draw();
+  //tree->draw();
+
+  // Draw the cabin
+  cabin->translate(2.0, 1.2, 7.0);
+  cabin->scale(1.0, 1.0, 1.0);
+  cabin->draw();
 
   // End
   glPopMatrix();

@@ -13,6 +13,7 @@
 
 #include "AnalogClock.h"
 #include "ConiferousTree.h"
+#include "Cabin.h"
 
 class Landscape : public BaseObject {
   public:
@@ -40,6 +41,7 @@ class Landscape : public BaseObject {
     WeatherData* data = nullptr;
     AnalogClock* clock;
     ConiferousTree* tree;
+    Cabin* cabin;
 };
 
 #endif

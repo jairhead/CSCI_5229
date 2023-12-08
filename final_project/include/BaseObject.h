@@ -36,6 +36,7 @@ class BaseObject {
     double posArray[3] = {0.0, 0.0, 0.0};
     double scaleArray[3] = {1.0, 1.0, 1.0};
     double theta = 0.0;
+    double phi = 0.0;
 
     // Lighting attributes
     float shinyFactor = 1.0;

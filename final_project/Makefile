@@ -38,7 +38,9 @@ OBJ := final.o \
 			 SkyBox.o \
 			 Landscape.o \
 			 Precipitation.o \
-			 ClearSkies.o
+			 ClearSkies.o \
+			 Cabin.o \
+			 Log.o
 SRC_DIR := src
 
 # Default
