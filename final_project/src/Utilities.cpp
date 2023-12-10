@@ -378,6 +378,36 @@ void Utilities::computeNormal(double vec1[3], double vec2[3], double normal[3]) 
   normal[2] = (vec1[0] * vec2[1]) - (vec1[1] * vec2[0]);
 }
 
+// createShader() public member function
+// Creates an OpenGL shader given a file name
+int Utilities::createShader(GLenum type, const char* fileName) {
+  int shader = glCreateShader(type);
+  char* source = readText(fileName);
+  glShaderSource(shader, 1, (const char**)&source, NULL);
+  free(source);
+  glCompileShader(shader);
+  displayShaderLog(shader, fileName);
+  return shader;
+}
+
+// createShaderProgram() public member function
+// Creates a vertex + fragment shader program
+int Utilities::createShaderProgram(const char* vertShaderFile, const char* fragShaderFile) {
+  // Create the program
+  int program = glCreateProgram();
+  int vertShader = createShader(GL_VERTEX_SHADER, vertShaderFile);
+  int fragShader = createShader(GL_FRAGMENT_SHADER, fragShaderFile);
+  
+  // Attach the shaders
+  glAttachShader(program, vertShader);
+  glAttachShader(program, fragShader);
+
+  // Link the program, check for errors, and return
+  glLinkProgram(program);
+  displayProgramLog(program);
+  return program;
+}
+
 // loadMaterial() private member function
 // Loads materials from file
 void Utilities::loadMaterial(const char* fileName) {
@@ -594,4 +624,68 @@ char* Utilities::getWord(char** line) {
 // Return true if CR or LF
 int Utilities::CRLF(char ch) {
   return ch == '\r' || ch == '\n';
+}
+
+// readText() private member function
+// Reads text from a file and returns a buffer with it
+char* Utilities::readText(const char* fileName) {
+  // Attempt to open the file
+  FILE* f = fopen(fileName, "rb");
+  if (!f) {std::cout << "Utilities::readText(): cannot open file." << std::endl; throw GenericHomeworkException();}
+
+  // Seek to the end of the file to get its size
+  fseek(f, 0, SEEK_END);
+  int size = ftell(f);
+  rewind(f);
+
+  // Allocate memory for the file
+  char* buffer = (char*)malloc(size + 1);
+  if (!buffer) {std::cout << "Utilities::readText(): cannot allocate bytes for text file." << std::endl; throw GenericHomeworkException();}
+
+  // Read file into buffer
+  if (fread(buffer, size, 1, f) != 1) {std::cout << "Utilities::readText(): cannot read bytes for text file." << std::endl; throw GenericHomeworkException();}
+  buffer[size] = 0;
+
+  // Close & return
+  fclose(f);
+  return buffer;
+}
+
+// displayShaderLog() private member function
+// Displays the debug log for the shader
+void Utilities::displayShaderLog(int obj, const char* fileName) {
+  // Get log
+  int length = 0;
+  glGetShaderiv(obj, GL_INFO_LOG_LENGTH, &length);
+
+  // If the log's length is greater than 1, print
+  if (length > 1) {
+    int size = 0;
+    char * buffer = (char*)malloc(length);
+    if (!buffer) {std::cout << "Utilities::displayShaderLog(): cannot allocate bytes of text for shader log." << std::endl; throw GenericHomeworkException();}
+    glGetShaderInfoLog(obj, length, &size, buffer);
+    std::cerr << fileName << ": " << buffer << std::endl;
+    free(buffer);
+  }
+  glGetShaderiv(obj, GL_COMPILE_STATUS, &length);
+  if (!length) {std::cout << "Utilities::displayShaderLog(): error compiling " << fileName << std::endl; throw GenericHomeworkException();}
+}
+
+// displayProgramLog() private member function
+// Displays the debug log for the shader program linking
+void Utilities::displayProgramLog(int obj) {
+  // Get log
+  int length = 0;
+  glGetProgramiv(obj, GL_INFO_LOG_LENGTH, &length);
+
+  // If the log's length is greater than 1, print
+  if (length > 1) {
+    int size = 0;
+    char * buffer = (char*)malloc(length);
+    if (!buffer) {std::cout << "Utilities::displayProgramLog(): cannot allocate bytes of text for shader log." << std::endl; throw GenericHomeworkException();}
+    glGetProgramInfoLog(obj, length, &size, buffer);
+    std::cerr << buffer << std::endl;
+  }
+  glGetProgramiv(obj, GL_LINK_STATUS, &length);
+  if (!length) {std::cout << "Utilities::displayProgramLog(): error linking program." << std::endl; throw GenericHomeworkException();}
 }

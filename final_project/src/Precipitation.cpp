@@ -42,6 +42,9 @@ Precipitation::Precipitation(LightManager* l) {
     precipPos[i][1] = yVal;
     precipPos[i][2] = zVal;
   }
+
+  // Load shaders
+  snowShader = Utilities::createShaderProgram("shaders/snow.vert", "shaders/snow.frag");
 }
 
 // Destructor

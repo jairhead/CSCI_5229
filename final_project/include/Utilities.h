@@ -30,6 +30,8 @@ class Utilities {
     static int loadOBJ(const char* fileName);
     static int timeDifference(int currHr, int currMin, int hr, int min);
     static void computeNormal(double v_A[], double v_B[], double c_P[]);
+    static int createShader(GLenum type, const char* fileName);
+    static int createShaderProgram(const char* vertShaderFile, const char* fragShaderFile);
   private:
     static void reverseBytes(void *x, const int n);
     static void loadMaterial(const char* fileName);
@@ -40,6 +42,9 @@ class Utilities {
     static char* readStr(char* line, const char* skip);
     static char* getWord(char** line);
     static int CRLF(char ch);
+    static char* readText(const char* fileName);
+    static void displayShaderLog(int obj, const char* fileName);
+    static void displayProgramLog(int obj);
 };
 
 #endif
