@@ -109,8 +109,9 @@ void Landscape::draw() {
   //tree->draw();
 
   // Draw the cabin
-  cabin->translate(2.0, 1.2, 7.0);
-  cabin->scale(1.0, 1.0, 1.0);
+  cabin->rotate(90.0);
+  cabin->translate(2.8, 1.2, 7.0);
+  cabin->scale(0.75, 0.75, 0.75);
   cabin->draw();
 
   // End

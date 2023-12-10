@@ -18,18 +18,22 @@ class Log : public BaseObject {
     void setTextureFactor(float tf);
     void setTheta(double th);
     void setPhi(double ph);
+    void setRadius(double r);
+    void setLength(double l);
     void setLogCircularTexture(unsigned int *tex);
     void setLogTopTexture(unsigned int *tex);
     void draw();
   protected:
     // Protected member functions
-    void drawCircumference(double r, double l);
-    void drawTop(double r, double l);
-    void drawBottom(double r);
+    void drawCircumference();
+    void drawTop();
+    void drawBottom();
 
     // Geometry variables
     const int d = 30;
     double phi = 0.0;
+    double radius = 0.1;
+    double length = 1.0;
 
     // Texture variables
     float texFact = 1.0;
