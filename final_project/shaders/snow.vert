@@ -1,18 +1,13 @@
-// Snowfall vertex shader
-#version 120
-layout (location = 0) in vec4 vertex; // <vec2 position, vec2 texCoords>
+// Snowflake vertex shader
+#version 400 core
 
-out vec3 TexCoords;
-out vec4 ParticleColor;
+// Inputs
+in vec2 vertTexture;
 
-uniform mat4 projection;
-uniform vec2 offset;
-uniform vec4 color;
+// Outputs
+out vec2 geomTexture;
 
-void main()
-{
-    float scale = 10.0f;
-    TexCoords = vertex.zw;
-    ParticleColor = color;
-    gl_Position = projection * vec4((vertex.xy * scale) + offset, 0.0, 1.0);
+// Main
+void main() {
+  geomTexture = vertTexture;
 }

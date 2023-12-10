@@ -44,7 +44,11 @@ Precipitation::Precipitation(LightManager* l) {
   }
 
   // Load shaders
-  snowShader = Utilities::createShaderProgram("shaders/snow.vert", "shaders/snow.frag");
+  Mat4Ops::mat4identity(ViewMatrix);
+  snowflakeTexture = Utilities::loadBmp("images/snowflake.bmp");
+  glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+  snowShader = Utilities::createGeomShaderProgram("shaders/snow.vert", "shaders/snow.geom", "shaders/snow.frag");
 }
 
 // Destructor
@@ -301,6 +305,72 @@ void Precipitation::snow() {
   updatePrecip();
   glDisable(GL_LIGHTING);
   Utilities::errorCheck("Precipitation::snow()");
+
+  /*glUseProgram(snowShader);
+
+  // Set snowflake texture
+  if (snow_vao != 0 ) {
+    glBindVertexArray(snow_vao);
+  }
+  else {
+    float snow_data[2];
+    snow_data[0] = 0;
+    snow_data[1] = 0;
+    
+    glGenVertexArrays(1, &snow_vao);
+    glBindVertexArray(snow_vao);
+
+    unsigned int vbo = 0;
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(snow_data), snow_data, GL_STATIC_DRAW);
+
+    int loc = glGetAttribLocation(snowShader, "vertTexture");
+    glVertexAttribPointer(loc, 2, GL_FLOAT, 0, 8, (void*)0);
+    glEnableVertexAttribArray(loc);
+  }
+
+  // Set projection matrix
+  int id = glGetUniformLocation(snowShader, "ProjectionMatrix");
+  glUniformMatrix4fv(id, 1, 0, ProjectionMatrix);
+
+  // Set ModelView matrix
+  float ModelViewMatrix[16];
+  Mat4Ops::mat4copy(ModelViewMatrix, ViewMatrix);
+  Mat4Ops::mat4translate(ModelViewMatrix, 0.0, 2.5, 0.0);
+  id = glGetUniformLocation(snowShader, "ModelViewMatrix");
+  glUniformMatrix4fv(id, 1, 0, ModelViewMatrix);
+
+  // Set color
+  const float white[] = {1.0, 1.0, 1.0, 1.0};
+  id = glGetUniformLocation(snowShader, "inColor");
+  glUniform4fv(id, 1, white);
+
+  // Snowflake size in world coordinates
+  id = glGetUniformLocation(snowShader, "wX");
+  glUniform1f(id, 1.0);
+  id = glGetUniformLocation(snowShader, "wY");
+  glUniform1f(id, 1.0);
+
+  // Snowflake size in texture coordinates
+  id = glGetUniformLocation(snowShader, "tX");
+  glUniform1f(id, 1.0);
+  id = glGetUniformLocation(snowShader, "tY");
+  glUniform1f(id, 1.0);
+
+  // Bind snowflake texture
+  glEnable(GL_TEXTURE_2D);
+  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+  glBindTexture(GL_TEXTURE_2D, snowflakeTexture);
+  
+  // Draw the snowflake
+  glDrawArrays(GL_POINTS, 0, 1);
+  glBindVertexArray(0);
+  glBindBuffer(GL_ARRAY_BUFFER,0);
+
+  //  Revert to fixed pipeline
+  glUseProgram(0);
+  updatePrecip();*/
 }
 
 // mix() private member function

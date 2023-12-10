@@ -408,6 +408,26 @@ int Utilities::createShaderProgram(const char* vertShaderFile, const char* fragS
   return program;
 }
 
+// createShaderProgram() public member function
+// Creates a vertex + geometry + fragment shader program
+int Utilities::createGeomShaderProgram(const char* vertShaderFile, const char* geomShaderFile, const char* fragShaderFile) {
+  // Create the program
+  int program = glCreateProgram();
+  int vertShader = createShader(GL_VERTEX_SHADER, vertShaderFile);
+  int geomShader = createShader(GL_GEOMETRY_SHADER, geomShaderFile);
+  int fragShader = createShader(GL_FRAGMENT_SHADER, fragShaderFile);
+
+  // Attach the shaders
+  glAttachShader(program, vertShader);
+  glAttachShader(program, geomShader);
+  glAttachShader(program, fragShader);
+
+  // Link the program, check for errors, and return
+  glLinkProgram(program);
+  displayProgramLog(program);
+  return program;
+}
+
 // loadMaterial() private member function
 // Loads materials from file
 void Utilities::loadMaterial(const char* fileName) {

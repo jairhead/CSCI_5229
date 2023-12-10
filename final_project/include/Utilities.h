@@ -32,6 +32,7 @@ class Utilities {
     static void computeNormal(double v_A[], double v_B[], double c_P[]);
     static int createShader(GLenum type, const char* fileName);
     static int createShaderProgram(const char* vertShaderFile, const char* fragShaderFile);
+    static int createGeomShaderProgram(const char* vertShaderFile, const char* geomShaderFile, const char* fragShaderFile);
   private:
     static void reverseBytes(void *x, const int n);
     static void loadMaterial(const char* fileName);

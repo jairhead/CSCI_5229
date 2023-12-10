@@ -8,6 +8,7 @@
 #define _PRECIPITATION_H
 
 #include <cstdlib>
+#include "Mat4Ops.h"
 #include "BaseWeatherCondition.h"
 #include "Utilities.h"
 #include "SkyBox.h"
@@ -79,7 +80,13 @@ class Precipitation : public BaseWeatherCondition {
     float precipZMax = 2.0;
     float precipZMin = -2.0;
     char weatherCondition;
+
+    // Shader variables
     int snowShader;
+    int snowflakeTexture;
+    unsigned int snow_vao = 0;
+    float ProjectionMatrix[16];
+    float ViewMatrix[16]; 
 
     // Color & lighting variables
     float shinyFactor = 1.0;

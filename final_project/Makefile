@@ -25,6 +25,7 @@ endif
 OBJ := final.o \
        PrimaryGraphicsHelper.o \
 			 Utilities.o \
+			 Mat4Ops.o \
 			 ProjectionManager.o \
 			 LightManager.o \
 			 WeatherData.o \
