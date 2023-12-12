@@ -14,6 +14,7 @@
 #include "AnalogClock.h"
 #include "ConiferousTree.h"
 #include "Cabin.h"
+#include "TallGrass.h"
 
 class Landscape : public BaseObject {
   public:
@@ -49,6 +50,11 @@ class Landscape : public BaseObject {
     ConiferousTree* tree4;
     ConiferousTree* tree5;
     Cabin* cabin;
+    TallGrass* grass1;
+    TallGrass* grass2;
+    TallGrass* grass3;
+    TallGrass* grass4;
+    TallGrass* grass5;
 };
 
 #endif

@@ -56,6 +56,23 @@ Landscape::Landscape() {
   cabin->rotate(270.0);
   cabin->translate(2.8, 1.3, 7.9);
   cabin->scale(0.75, 0.75, 0.75);
+
+  // Instantiate tall grass
+  grass1 = new TallGrass();
+  grass2 = new TallGrass();
+  grass3 = new TallGrass();
+  grass4 = new TallGrass();
+  grass5 = new TallGrass();
+  grass1->scale(0.08, 0.08, 0.08);
+  grass2->scale(0.08, 0.08, 0.08);
+  grass3->scale(0.08, 0.08, 0.08);
+  grass4->scale(0.08, 0.08, 0.08);
+  grass5->scale(0.08, 0.08, 0.08);
+  grass1->translate(2.0, 1.1, 7.0);
+  grass2->translate(2.5, 1.1, 6.7);
+  grass3->translate(3.0, 1.2, 7.7);
+  grass4->translate(3.2, 1.2, 7.0);
+  grass5->translate(1.0, 1.3, 7.2);
 }
 
 // Destructor
@@ -67,6 +84,11 @@ Landscape::~Landscape() {
   delete tree4;
   delete tree5;
   delete cabin;
+  delete grass1;
+  delete grass2;
+  delete grass3;
+  delete grass4;
+  delete grass5;
 }
 
 // color() public member function
@@ -149,6 +171,13 @@ void Landscape::draw() {
   // Draw the cabin
   cabin->draw();
 
+  // Draw the tall grass
+  grass1->draw();
+  grass2->draw();
+  grass3->draw();
+  grass4->draw();
+  grass5->draw();
+
   // End
   glPopMatrix();
 }
@@ -185,7 +214,7 @@ void Landscape::initializeTrees() {
   tree4->setLeafTexture(&textures[1]);
   tree4->setSnowyLeafTexture(&textures[2]);
   tree4->enableLighting();
-  tree4->translate(2.4, 1.2, 6.0);
+  tree4->translate(2.4, 1.0, 6.0);
   tree4->scale(0.15, 0.15, 0.15);
 
   // Tree 5

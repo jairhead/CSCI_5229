@@ -25,7 +25,6 @@ endif
 OBJ := final.o \
        PrimaryGraphicsHelper.o \
 			 Utilities.o \
-			 Mat4Ops.o \
 			 ProjectionManager.o \
 			 LightManager.o \
 			 WeatherData.o \
@@ -41,7 +40,8 @@ OBJ := final.o \
 			 Precipitation.o \
 			 ClearSkies.o \
 			 Cabin.o \
-			 Log.o
+			 Log.o \
+			 TallGrass.o
 SRC_DIR := src
 
 # Default

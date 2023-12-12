@@ -8,7 +8,7 @@
 #define _PRECIPITATION_H
 
 #include <cstdlib>
-#include "Mat4Ops.h"
+//#include "Mat4Ops.h"
 #include "BaseWeatherCondition.h"
 #include "Utilities.h"
 #include "SkyBox.h"
