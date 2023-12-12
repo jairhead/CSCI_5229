@@ -62,7 +62,29 @@ void Cabin::setTextureFactor(float tf) {texFact = tf;}
 // setLogCircularTexture() public member function
 // Sets the texture of the log's circumference
 void Cabin::setLogCircularTexture(unsigned int *tex) {
-  fLogCircularTexture = tex;
+  logCircularTexture = tex;
+  setCircularTextureOfWood(logCircularTexture);
+  textureEnabled = true;
+}
+
+// setSnowyLogCircularTexture() public member function
+// Sets the snowy texture of the log's circumference
+void Cabin::setSnowyCircularTextureOfWood(unsigned int *tex) {
+  snowyLogCircularTexture = tex;
+  textureEnabled = true;
+}
+
+// setLogTopTexture() public member function
+// Sets the texture of the log's ends
+void Cabin::setLogTopTexture(unsigned int *tex) {
+  logTopTexture = tex;
+  setTopTextureOfWood(logTopTexture);
+  textureEnabled = true;
+}
+
+// setCircularTextureOfLogs() public member function
+// Sets the circular textures of the logs and boards
+void Cabin::setCircularTextureOfWood(unsigned int *tex) {
   fLog1->setLogCircularTexture(tex);
   fLog2->setLogCircularTexture(tex);
   fLog3->setLogCircularTexture(tex);
@@ -97,13 +119,11 @@ void Cabin::setLogCircularTexture(unsigned int *tex) {
   pLog3->setLogCircularTexture(tex);
   pLog4->setLogCircularTexture(tex);
   pLog5->setLogCircularTexture(tex);
-  textureEnabled = true;
 }
 
-// setLogTopTexture() public overloaded member function
-// Sets the texture of the log's ends
-void Cabin::setLogTopTexture(unsigned int *tex) {
-  fLogTopTexture = tex;
+// setTopTextureOfWood() public member function
+// Sets the top texture of the logs
+void Cabin::setTopTextureOfWood(unsigned int *tex) {
   fLog1->setLogTopTexture(tex);
   fLog2->setLogTopTexture(tex);
   fLog3->setLogTopTexture(tex);
@@ -134,7 +154,6 @@ void Cabin::setLogTopTexture(unsigned int *tex) {
   pLog3->setLogTopTexture(tex);
   pLog4->setLogTopTexture(tex);
   pLog5->setLogTopTexture(tex);
-  textureEnabled = true;
 }
 
 // setFrontDoorTexture() public member function
@@ -148,6 +167,13 @@ void Cabin::setFrontDoorTexture(unsigned int *tex) {
 // Sets the texture of the cabin's roof
 void Cabin::setRoofTexture(unsigned int *tex) {
   roofTexture = tex;
+  textureEnabled = true;
+}
+
+// setSnowyRoofTexture() public member function
+// Sets the texture of the cabin's snowy roof
+void Cabin::setSnowyRoofTexture(unsigned int *tex) {
+  snowyRoofTexture = tex;
   textureEnabled = true;
 }
 
@@ -168,6 +194,15 @@ void Cabin::draw() {
   glRotated(theta, 0, 1, 0);
   glScaled(scaleArray[0], scaleArray[1], scaleArray[2]);
   glColor3f(colorArray[0], colorArray[1], colorArray[2]);
+
+  // Set the texture
+  char weatherCondition = data->getCurrentWeatherCondition();
+  if (weatherCondition == 's' || weatherCondition == 'm') {
+    setCircularTextureOfWood(snowyLogCircularTexture);
+  }
+  else {
+    setCircularTextureOfWood(logCircularTexture);
+  }
 
   // Size & position fLogs for cabin's front fascia
   fLog1->setLength(lUnit); fLog1->translate(0.0, 0.0, 0.0);

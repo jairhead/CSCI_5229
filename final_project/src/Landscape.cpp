@@ -25,6 +25,8 @@ Landscape::Landscape() {
   textures[4] = Utilities::loadBmp("images/log-top-512x512.bmp");
   textures[5] = Utilities::loadBmp("images/front-door-512x512.bmp");
   textures[6] = Utilities::loadBmp("images/roof-512x512.bmp");
+  textures[7] = Utilities::loadBmp("images/snowy-log-circular-512x512.bmp");
+  textures[8] = Utilities::loadBmp("images/snowy-roof-512x512.bmp");
 
   // Instantiate clock face
   clock = new AnalogClock();
@@ -47,6 +49,8 @@ Landscape::Landscape() {
   cabin->setLogTopTexture(&textures[4]);
   cabin->setFrontDoorTexture(&textures[5]);
   cabin->setRoofTexture(&textures[6]);
+  cabin->setSnowyCircularTextureOfWood(&textures[7]);
+  cabin->setSnowyRoofTexture(&textures[8]);
   cabin->enableLighting();
   cabin->rotate(270.0);
   cabin->translate(2.8, 1.3, 7.9);

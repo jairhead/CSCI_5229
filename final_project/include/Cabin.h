@@ -21,8 +21,12 @@ class Cabin : public BaseObject {
     void setTextureFactor(float tf);
     void setLogCircularTexture(unsigned int *tex);
     void setLogTopTexture(unsigned int *tex);
+    void setCircularTextureOfWood(unsigned int *tex);
+    void setSnowyCircularTextureOfWood(unsigned int *tex);
+    void setTopTextureOfWood(unsigned int *tex);
     void setFrontDoorTexture(unsigned int *tex);
     void setRoofTexture(unsigned int *tex);
+    void setSnowyRoofTexture(unsigned int *tex);
     void draw();
   protected:
     // Protected methods
@@ -33,10 +37,12 @@ class Cabin : public BaseObject {
 
     // Texture variables
     float texFact = 1.0;
-    unsigned int *fLogCircularTexture;
-    unsigned int *fLogTopTexture;
+    unsigned int *logCircularTexture;
+    unsigned int *snowyLogCircularTexture;
+    unsigned int *logTopTexture;
     unsigned int *frontDoorTexture;
     unsigned int *roofTexture;
+    unsigned int *snowyRoofTexture;
 
     // Color & lighting variables
     float colorArray[4] = {1.0, 1.0, 1.0, 1.0};
@@ -87,7 +93,7 @@ class Cabin : public BaseObject {
     Log* pLog2;               // Front hand rail
     Log* pLog3;               // Right side hand rail
     Log* pLog4;               // Left side hand rail support
-    Log* pLog5;               // Right side hand rail support
+    Log* pLog5;               // Right side hand rail
 };
 
 #endif
