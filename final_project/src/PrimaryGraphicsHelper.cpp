@@ -218,7 +218,7 @@ void PrimaryGraphicsHelper::displayParams() {
   parameters += "Location: WEATHER DEMO, ";
   parameters += "Temperature: ";
   parameters += std::to_string(dataPtr->getFahrenheit());
-  parameters += "°F, ";
+  parameters += "F, ";
   parameters += "Current Weather: ";
   if (wc == 'n') {parameters += "Clear";}
   else if (wc == 'r') {parameters += "Rain";}
