@@ -38,8 +38,8 @@ void PrimaryGraphicsHelper::init() {
 
   // Initialize first person position
   projection->setFirstPersonX(0.0);
-  projection->setFirstPersonY(0.3);
-  projection->setFirstPersonZ(1.55);
+  projection->setFirstPersonY(0.32);
+  projection->setFirstPersonZ(1.35);
   projection->setFirstPersonTheta(270.0);
 }
 

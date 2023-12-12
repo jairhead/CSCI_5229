@@ -21,17 +21,22 @@ class Cabin : public BaseObject {
     void setTextureFactor(float tf);
     void setLogCircularTexture(unsigned int *tex);
     void setLogTopTexture(unsigned int *tex);
+    void setFrontDoorTexture(unsigned int *tex);
+    void setRoofTexture(unsigned int *tex);
     void draw();
   protected:
     // Protected methods
     void drawRoof();
     void drawDoor();
     void drawWindow();
+    void drawPorch();
 
     // Texture variables
     float texFact = 1.0;
     unsigned int *fLogCircularTexture;
     unsigned int *fLogTopTexture;
+    unsigned int *frontDoorTexture;
+    unsigned int *roofTexture;
 
     // Color & lighting variables
     float colorArray[4] = {1.0, 1.0, 1.0, 1.0};
@@ -73,6 +78,16 @@ class Cabin : public BaseObject {
     Log* bLog2; // First stacked right side log
     Log* bLog3; // Second stacked right side log
     Log* bLog4; // Third stacked right side log
+
+    // Front porch
+    RectangularPrism* board1; // First board in the porch
+    RectangularPrism* board2; // Second board in the porch
+    RectangularPrism* board3; // Third board in the porch
+    Log* pLog1;               // Left side hand rail
+    Log* pLog2;               // Front hand rail
+    Log* pLog3;               // Right side hand rail
+    Log* pLog4;               // Left side hand rail support
+    Log* pLog5;               // Right side hand rail support
 };
 
 #endif

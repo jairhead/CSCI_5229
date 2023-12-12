@@ -40,6 +40,16 @@ Cabin::Cabin() {
   bLog2 = new Log(); bLog2->setPhi(90.0);
   bLog3 = new Log(); bLog3->setPhi(90.0);
   bLog4 = new Log(); bLog4->setPhi(90.0);
+
+  // Initialize front porch items
+  board1 = new RectangularPrism();
+  board2 = new RectangularPrism();
+  board3 = new RectangularPrism();
+  pLog1 = new Log();
+  pLog2 = new Log();
+  pLog3 = new Log();
+  pLog4 = new Log();
+  pLog5 = new Log();
 }
 
 // Destructor
@@ -49,7 +59,7 @@ Cabin::~Cabin() { }
 // Sets the texture factor (scaling) for the cabin
 void Cabin::setTextureFactor(float tf) {texFact = tf;}
 
-// setLogCircularTexture() public overloaded member function
+// setLogCircularTexture() public member function
 // Sets the texture of the log's circumference
 void Cabin::setLogCircularTexture(unsigned int *tex) {
   fLogCircularTexture = tex;
@@ -77,6 +87,16 @@ void Cabin::setLogCircularTexture(unsigned int *tex) {
   bLog2->setLogCircularTexture(tex);
   bLog3->setLogCircularTexture(tex);
   bLog4->setLogCircularTexture(tex);
+
+  board1->setTexture(tex); board1->enableTexture();
+  board2->setTexture(tex); board2->enableTexture();
+  board3->setTexture(tex); board3->enableTexture();
+
+  pLog1->setLogCircularTexture(tex);
+  pLog2->setLogCircularTexture(tex);
+  pLog3->setLogCircularTexture(tex);
+  pLog4->setLogCircularTexture(tex);
+  pLog5->setLogCircularTexture(tex);
   textureEnabled = true;
 }
 
@@ -108,6 +128,26 @@ void Cabin::setLogTopTexture(unsigned int *tex) {
   bLog2->setLogTopTexture(tex);
   bLog3->setLogTopTexture(tex);
   bLog4->setLogTopTexture(tex);
+
+  pLog1->setLogTopTexture(tex);
+  pLog2->setLogTopTexture(tex);
+  pLog3->setLogTopTexture(tex);
+  pLog4->setLogTopTexture(tex);
+  pLog5->setLogTopTexture(tex);
+  textureEnabled = true;
+}
+
+// setFrontDoorTexture() public member function
+// Sets the texture of the cabin's front door
+void Cabin::setFrontDoorTexture(unsigned int *tex) {
+  frontDoorTexture = tex;
+  textureEnabled = true;
+}
+
+// setRoofTexture() public member function
+// Sets the texture of the cabin's roof
+void Cabin::setRoofTexture(unsigned int *tex) {
+  roofTexture = tex;
   textureEnabled = true;
 }
 
@@ -191,6 +231,7 @@ void Cabin::draw() {
   drawRoof();
   drawDoor();
   drawWindow();
+  drawPorch();
 
   // End
   glPopMatrix();
@@ -200,36 +241,71 @@ void Cabin::draw() {
 // drawRoof() private member function
 // Draws the pitch roof of the cabin
 void Cabin::drawRoof() {
+  // Set texture
+  if (textureEnabled) {
+    glEnable(GL_TEXTURE_2D);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    glBindTexture(GL_TEXTURE_2D, *roofTexture);
+  }
+
   // Draw front slope
   glBegin(GL_QUADS);
+  if (textureEnabled) {glTexCoord2f(5.0, 0.0);}
   glVertex3d(-0.2, (hUnit * 4) - 0.15, -0.1);
+  if (textureEnabled) {glTexCoord2f(0.0, 0.0);}
   glVertex3d(-0.2, (hUnit * 4) - 0.15, (lUnit * 6) + 0.1);
+  if (textureEnabled) {glTexCoord2f(0.0, 5.0);}
   glVertex3d((lUnit * 3), (hUnit * 5), (lUnit * 6) + 0.1);
+  if (textureEnabled) {glTexCoord2f(5.0, 5.0);}
   glVertex3d((lUnit * 3), (hUnit * 5), -0.1);
   glEnd();
 
   // Draw back slope
   glBegin(GL_QUADS);
+  if (textureEnabled) {glTexCoord2f(5.0, 0.0);}
   glVertex3d((lUnit * 6) + 0.2, (hUnit * 4) - 0.15, -0.1);
+  if (textureEnabled) {glTexCoord2f(0.0, 0.0);}
   glVertex3d((lUnit * 6) + 0.2, (hUnit * 4) - 0.15, (lUnit * 6) + 0.1);
+  if (textureEnabled) {glTexCoord2f(0.0, 5.0);}
   glVertex3d((lUnit * 3), (hUnit * 5), (lUnit * 6) + 0.1);
+  if (textureEnabled) {glTexCoord2f(5.0, 5.0);}
   glVertex3d((lUnit * 3), (hUnit * 5), -0.1);
   glEnd();
+  if (textureEnabled) {glDisable(GL_TEXTURE_2D);}
 }
 
 // drawDoor() private member function
 // Draws the front door on the cabin
 void Cabin::drawDoor() {
+  // Set texture
+  if (textureEnabled) {
+    glEnable(GL_TEXTURE_2D);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    glBindTexture(GL_TEXTURE_2D, *frontDoorTexture);
+  }
+
+  // Bottom right point
   glBegin(GL_QUADS);
   if (lightingEnabled) {glNormal3d(1.0, 0.0, 0.0);}
+  if (textureEnabled) {glTexCoord2f(0.0, 0.0);}
   glVertex3d(0.0, -0.1, (lUnit));
+
+  // Bottom left point
   if (lightingEnabled) {glNormal3d(1.0, 0.0, 0.0);}
+  if (textureEnabled) {glTexCoord2f(1.0, 0.0);}
   glVertex3d(0.0, -0.1, (lUnit * 2));
+
+  // Top left point
   if (lightingEnabled) {glNormal3d(1.0, 0.0, 0.0);}
+  if (textureEnabled) {glTexCoord2f(1.0, 1.0);}
   glVertex3d(0.0, (hUnit * 2) + 0.1, (lUnit * 2));
+
+  // Top right point
   if (lightingEnabled) {glNormal3d(1.0, 0.0, 0.0);}
+  if (textureEnabled) {glTexCoord2f(0.0, 1.0);}
   glVertex3d(0.0, (hUnit * 2) + 0.1, (lUnit));
   glEnd();
+  if (textureEnabled) {glDisable(GL_TEXTURE_2D);}
 }
 
 // drawWindow() private member function
@@ -250,8 +326,52 @@ void Cabin::drawWindow() {
   if (lightingEnabled) {glNormal3d(1.0, 0.0, 0.0);}
   glVertex3d(0.0, -0.1, (lUnit * 5));
   if (lightingEnabled) {glNormal3d(1.0, 0.0, 0.0);}
-  glVertex3d(0.0, (hUnit * 2) + 0.1, (lUnit * 4));
-  if (lightingEnabled) {glNormal3d(1.0, 0.0, 0.0);}
   glVertex3d(0.0, (hUnit * 2) + 0.1, (lUnit * 5));
+  if (lightingEnabled) {glNormal3d(1.0, 0.0, 0.0);}
+  glVertex3d(0.0, (hUnit * 2) + 0.1, (lUnit * 4));
   glEnd();
+}
+
+// drawWindow() private member function
+// Draws the front porch of the cabin
+void Cabin::drawPorch() {
+  // Size & position boards
+  board1->scale(0.5, 0.1, lUnit * 4.5);
+  board1->translate(-0.2, -0.05, lUnit * 3.0);
+  board2->scale(0.5, 0.1, lUnit * 4.5);
+  board2->translate(-0.5, -0.05, lUnit * 3.0);
+  board3->scale(0.5, 0.1, lUnit * 4.5);
+  board3->translate(-0.8, -0.05, lUnit * 3.0);
+
+  // Size & position hand rail logs
+  pLog1->setLength(lUnit);
+  pLog1->setRadius(0.04);
+  pLog1->translate(-0.84, 0.0, 0.3);
+  pLog2->setLength(lUnit * 4);
+  pLog2->setRadius(0.02);
+  pLog2->setPhi(90.0);
+  pLog2->translate(-0.84, 0.12, 0.3);
+  pLog3->setLength(lUnit * 4);
+  pLog3->setRadius(0.02);
+  pLog3->setPhi(90.0);
+  pLog3->setTheta(90.0);
+  pLog3->translate(-0.84, 0.12, 0.2);
+  pLog4->setLength(lUnit);
+  pLog4->setRadius(0.04);
+  pLog4->translate(-0.84, 0.0, 1.3);
+  pLog5->setLength(lUnit * 4);
+  pLog5->setRadius(0.02);
+  pLog5->setPhi(90.0);
+  pLog5->setTheta(90.0);
+  pLog5->translate(-0.84, 0.12, 1.3);
+
+  // Draw
+  board1->draw();
+  board2->draw();
+  board3->draw();
+  pLog1->draw();
+  pLog2->draw();
+  pLog3->draw();
+  pLog4->draw();
+  pLog5->draw();
 }

@@ -23,10 +23,14 @@ Landscape::Landscape() {
   textures[2] = Utilities::loadBmp("images/snowy-fir-leaves-512x512.bmp");
   textures[3] = Utilities::loadBmp("images/log-circular-512x512.bmp");
   textures[4] = Utilities::loadBmp("images/log-top-512x512.bmp");
+  textures[5] = Utilities::loadBmp("images/front-door-512x512.bmp");
+  textures[6] = Utilities::loadBmp("images/roof-512x512.bmp");
 
   // Instantiate clock face
   clock = new AnalogClock();
   clock->enableLighting();
+  clock->translate(2.3, 1.1, 6.7);
+  clock->scale(0.25, 0.25, 0.25);
 
   // Instantiate trees
   tree = new ConiferousTree();
@@ -34,12 +38,19 @@ Landscape::Landscape() {
   tree->setLeafTexture(&textures[1]);
   tree->setSnowyLeafTexture(&textures[2]);
   tree->enableLighting();
+  tree->translate(1.5, 1.2, 7.7);
+  tree->scale(0.1, 0.1, 0.1);
 
   // Instantiate cabin
   cabin = new Cabin();
   cabin->setLogCircularTexture(&textures[3]);
   cabin->setLogTopTexture(&textures[4]);
+  cabin->setFrontDoorTexture(&textures[5]);
+  cabin->setRoofTexture(&textures[6]);
   cabin->enableLighting();
+  cabin->rotate(270.0);
+  cabin->translate(2.8, 1.3, 7.9);
+  cabin->scale(0.75, 0.75, 0.75);
 }
 
 // Destructor
@@ -99,19 +110,12 @@ void Landscape::draw() {
   glCallList(mountainSnow);
 
   // Draw the clock pole
-  clock->translate(2.3, 1.1, 7.7);
-  clock->scale(0.25, 0.25, 0.25);
   clock->draw();
 
   // Draw the trees
-  tree->translate(1.5, 1.2, 7.7);
-  tree->scale(0.1, 0.1, 0.1);
   //tree->draw();
 
   // Draw the cabin
-  cabin->rotate(90.0);
-  cabin->translate(2.8, 1.2, 7.0);
-  cabin->scale(0.75, 0.75, 0.75);
   cabin->draw();
 
   // End
