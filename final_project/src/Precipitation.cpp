@@ -44,11 +44,11 @@ Precipitation::Precipitation(LightManager* l) {
   }
 
   // Load shaders
-  //Mat4Ops::mat4identity(ViewMatrix);
-  snowflakeTexture = Utilities::loadBmp("images/snowflake.bmp");
-  glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-  glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-  snowShader = Utilities::createGeomShaderProgram("shaders/snow.vert", "shaders/snow.geom", "shaders/snow.frag");
+  // Mat4Ops::mat4identity(ViewMatrix);
+  // snowflakeTexture = Utilities::loadBmp("images/snowflake.bmp");
+  // glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+  // glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+  // snowShader = Utilities::createGeomShaderProgram("shaders/snow.vert", "shaders/snow.geom", "shaders/snow.frag");
 }
 
 // Destructor

@@ -381,6 +381,7 @@ void Utilities::computeNormal(double vec1[3], double vec2[3], double normal[3]) 
 // createShader() public member function
 // Creates an OpenGL shader given a file name
 int Utilities::createShader(GLenum type, const char* fileName) {
+  #ifdef USEGLEW
   int shader = glCreateShader(type);
   char* source = readText(fileName);
   glShaderSource(shader, 1, (const char**)&source, NULL);
@@ -388,12 +389,16 @@ int Utilities::createShader(GLenum type, const char* fileName) {
   glCompileShader(shader);
   displayShaderLog(shader, fileName);
   return shader;
+  #else
+  return 0;
+  #endif
 }
 
 // createShaderProgram() public member function
 // Creates a vertex + fragment shader program
 int Utilities::createShaderProgram(const char* vertShaderFile, const char* fragShaderFile) {
   // Create the program
+  #ifdef USEGLEW
   int program = glCreateProgram();
   int vertShader = createShader(GL_VERTEX_SHADER, vertShaderFile);
   int fragShader = createShader(GL_FRAGMENT_SHADER, fragShaderFile);
@@ -406,12 +411,16 @@ int Utilities::createShaderProgram(const char* vertShaderFile, const char* fragS
   glLinkProgram(program);
   displayProgramLog(program);
   return program;
+  #else
+  return 0;
+  #endif
 }
 
 // createShaderProgram() public member function
 // Creates a vertex + geometry + fragment shader program
 int Utilities::createGeomShaderProgram(const char* vertShaderFile, const char* geomShaderFile, const char* fragShaderFile) {
   // Create the program
+  #ifdef USEGLEW
   int program = glCreateProgram();
   int vertShader = createShader(GL_VERTEX_SHADER, vertShaderFile);
   int geomShader = createShader(GL_GEOMETRY_SHADER, geomShaderFile);
@@ -426,6 +435,9 @@ int Utilities::createGeomShaderProgram(const char* vertShaderFile, const char* g
   glLinkProgram(program);
   displayProgramLog(program);
   return program;
+  #else
+  return 0;
+  #endif
 }
 
 // loadMaterial() private member function
@@ -674,6 +686,7 @@ char* Utilities::readText(const char* fileName) {
 // displayShaderLog() private member function
 // Displays the debug log for the shader
 void Utilities::displayShaderLog(int obj, const char* fileName) {
+  #ifdef USEGLEW
   // Get log
   int length = 0;
   glGetShaderiv(obj, GL_INFO_LOG_LENGTH, &length);
@@ -689,11 +702,13 @@ void Utilities::displayShaderLog(int obj, const char* fileName) {
   }
   glGetShaderiv(obj, GL_COMPILE_STATUS, &length);
   if (!length) {std::cout << "Utilities::displayShaderLog(): error compiling " << fileName << std::endl; throw GenericHomeworkException();}
+  #endif
 }
 
 // displayProgramLog() private member function
 // Displays the debug log for the shader program linking
 void Utilities::displayProgramLog(int obj) {
+  #ifdef USEGLEW
   // Get log
   int length = 0;
   glGetProgramiv(obj, GL_INFO_LOG_LENGTH, &length);
@@ -708,4 +723,5 @@ void Utilities::displayProgramLog(int obj) {
   }
   glGetProgramiv(obj, GL_LINK_STATUS, &length);
   if (!length) {std::cout << "Utilities::displayProgramLog(): error linking program." << std::endl; throw GenericHomeworkException();}
+  #endif
 }

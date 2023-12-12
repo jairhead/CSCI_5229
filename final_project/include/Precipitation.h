@@ -82,11 +82,11 @@ class Precipitation : public BaseWeatherCondition {
     char weatherCondition;
 
     // Shader variables
-    int snowShader;
-    int snowflakeTexture;
-    unsigned int snow_vao = 0;
-    float ProjectionMatrix[16];
-    float ViewMatrix[16]; 
+    // int snowShader;
+    // int snowflakeTexture;
+    // unsigned int snow_vao = 0;
+    // float ProjectionMatrix[16];
+    // float ViewMatrix[16]; 
 
     // Color & lighting variables
     float shinyFactor = 1.0;
