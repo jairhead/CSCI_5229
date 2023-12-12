@@ -177,6 +177,10 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
     displayParams();
     #endif
   }
+  else if (ch == 'w' && displayMode == 1) {projection->moveForward();}
+  else if (ch == 'a' && displayMode == 1) {projection->moveLeft();}
+  else if (ch == 's' && displayMode == 1) {projection->moveBackward();}
+  else if (ch == 'd' && displayMode == 1) {projection->moveRight();}
   else {return;}
 
   // Display params (if compiled without GLEW)
@@ -211,7 +215,7 @@ void PrimaryGraphicsHelper::displayParams() {
   parameters += ":";
   parameters += std::to_string(dataPtr->getMinute());
   parameters += ", ";
-  parameters += "Location: DEMO, ";
+  parameters += "Location: WEATHER DEMO, ";
   parameters += "Temperature: ";
   parameters += std::to_string(dataPtr->getFahrenheit());
   parameters += "°F, ";

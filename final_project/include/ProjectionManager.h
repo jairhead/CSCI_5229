@@ -73,10 +73,10 @@ class ProjectionManager {
     double fpCx = 0.0;
     double fpCy = 0.0;
     double fpCz = -0.02;
-    double fpXMax = 3.0;
-    double fpXMin = -3.0;
-    double fpZMax = 3.0;
-    double fpZMin = -3.0;
+    double fpXMax = 0.12;
+    double fpXMin = -0.03;
+    double fpZMax = 1.45;
+    double fpZMin = 1.33;
 
     // First Person Angle Variables
     double turnSpeed = 2.0;
