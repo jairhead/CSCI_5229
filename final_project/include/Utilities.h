@@ -27,7 +27,6 @@ class Utilities {
     static double arcSine(double frac);
     static double arcCosine(double frac);
     static double hypotenuse(double a, double b);
-    static double** loadElevationData(std::string fileName);
     static int loadOBJ(const char* fileName);
     static int timeDifference(int currHr, int currMin, int hr, int min);
     static void computeNormal(double v_A[], double v_B[], double c_P[]);
