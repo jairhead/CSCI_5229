@@ -16,7 +16,6 @@ class WeatherUpdater {
   public:
     WeatherUpdater();
     ~WeatherUpdater();
-    void updateThread(int loopTime);
     void demoThread();
   private:
     void demoIncrementWeatherCondition(char &wc);

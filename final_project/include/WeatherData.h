@@ -17,8 +17,6 @@ class WeatherData {
     static void removeInstance();
 
     // Variable getters and setters
-    void setLiveWeather(bool val);
-    bool getLiveWeather();
     void setExit(bool val);
     bool getExit();
     void setHour(int val);
@@ -54,7 +52,6 @@ class WeatherData {
     std::mutex dataMutex;
 
     // Data variables
-    bool liveWeather = false;
     bool exit = false;
     int hour = 12;
     int minute = 00;

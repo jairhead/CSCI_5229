@@ -13,6 +13,10 @@ Final Project
     - '-': decrease field of view
   - In first person display mode:
     - arrow keys: turn left, turn right, look up, look down
+    - 'w': move forward
+    - 'a': move left
+    - 's': move backward
+    - 'd': move right
   - ESC: exit the program
   - 'm' or 'M': manually cycle between weather conditions
   - 'r': print parameters to terminal (only without GLEW)
@@ -43,31 +47,202 @@ Final Project
     - Created sunrise and sunset effects with smooth sky color changes
     - Added twinkling effect to stars
 
---- REMAINING WORK ---
-  - Definitely going to add:
-    - Blue-to-orange sky gradient for sunset and sunrise
-    - Add a partly cloudy weather condition with skybox textures
-    - Created a pine tree object and create a forest with it
-    - Tall grass object for grassy area
-    - Log cabin with a porch for the first person view to stand on with an outdoor lamp, window, and door
-    - I ran into difficulties placing textures onto the landscape due to the following error (unable to load the material):
-      Utilities::loadMaterial(): cannot open file.
-  - Might add:
-    - Road with cars driving by
-    - Snow-covered effect for all objects
+--- REGRETS ---
+  - My full time position became pretty demanding over the last month (I've had to work weekends),
+    so unfortunately I wasn't able to get the precipitation shaders debugged. I did include the shader
+    code in the project (it was very similar to the GL4 geometry shader in ex26), but I commented out
+    the shader portion.
+  - Wasn't able to add sky gradient for sunset and sunrise
 
 --- TEXTURES USED ---
-tree-branch-512x512.bmp:
-  - Downloaded from https://www.manytextures.com/texture/11/tree-branch/
-  - License: https://creativecommons.org/licenses/by/4.0/
-  - Changes made: converted from JPG to BMP for use in the program
-
 fir-leaves-512x512.bmp:
   - Downloaded from: https://www.freepik.com/free-vector/christmas-tree-fir-branch-seamless-background-vector-illustration-eps-10_18165663.htm#query=tree%20texture%20spruce&position=0&from_view=search&track=ais&uuid=8c09ab94-a2a8-4755-8fb9-02caec31be40
   - Image by vikayatskina on Freepik
+
+front-door-512x512.bmp:
+  - I made this texture manually in GIMP 2.10.34
+
+granite-512x512.bmp:
+  - I made this texture manually in GIMP 2.10.34
+
+grass-512x512.bmp:
+  - I took this picture on my iPhone 15 and cropped it in GIMP 2.10.34
 
 log-circular-512x512.bmp:
   - I made this texture manually in GIMP 2.10.34
 
 log-top-512x512.bmp:
   - I made this texture manually in GIMP 2.10.34
+
+partly-cloudy-512x512.bmp:
+  - I took this picture on my iPhone 15 and cropped it in GIMP 2.10.34
+
+roof-512x512.bmp:
+  - I made this texture manually in GIMP 2.10.34
+
+snowflake.bmp:
+  - I made this texture manually in GIMP 2.10.34
+
+snowy-fir-leaves-512x512.bmp:
+  - I made this texture manually in GIMP 2.10.34
+
+snowy-log-circular-512x512.bmp:
+  - I made this texture manually in GIMP 2.10.34
+
+snowy-roof-512x512.bmp:
+  - I made this texture manually in GIMP 2.10.34
+
+tree-branch-512x512.bmp:
+  - Downloaded from https://www.manytextures.com/texture/11/tree-branch/
+  - License: https://creativecommons.org/licenses/by/4.0/
+  - Changes made: converted from JPG to BMP for use in the program
+
+--- DESCRIPTION OF SOURCE CODE FILES ---
+AnalogClock.h * .cpp:
+  - Child class of BaseObject
+  - Draws an analog clock using a vintage clock pole blender object (clock.obj)
+  - Draws the clock face using standard OpenGL techniques with lighting
+  - Has added support for texture mapping
+  - Uses the following blender objects:
+    - clock.obj
+
+Axes.h & .cpp:
+  - Draws X, Y, and Z axes and labels them
+
+BaseObject.h:
+  - Abstract class for all other objects in the project
+  - Implements translation, scaling, and getters / setters
+  - Has added support for texture mapping
+
+BaseWeatherCondition.h:
+  - Abstract class for ClearSkies and Precipitation
+  - Implements translation, scaling, and getters / setters
+
+Cabin.h & .cpp:
+  - Child class of BaseObject
+  - Draws a log cabin using standard OpenGL techniques with lighting
+  - Utilizes the Log class to draw the cabin sides and porch hand railing
+  - Utilizes the RectangularPrism class the draw the porch boards
+  - Updates textures to snow-covered variants for snowfall
+  - Uses the following textures:
+    - log-circular-512x512.bmp
+    - log-top-512x512.bmp
+    - roof-512x512.bmp
+    - snowy-log-circular-512x512.bmp
+    - snowy-roof-512x512.bmp
+
+ClearSkies.h & .cpp:
+  - Child class of BaseWeatherCondition
+  - Generates clear skies and partly cloudy skies
+  - Utilizes the Landscape class for drawing the entire landscape
+  - Utilizes the SkyBox class to draw the sky
+
+ConiferousTree.h & .cpp:
+  - Child class of BaseObject
+  - Draws a coniferous tree using standard OpenGL techniques with lighting
+  - Updates textures to snow-covered variants for snowfall
+  - Uses the following textures:
+    - fir-leaves-512x512.bmp
+    - snowy-fir-leaves-512x512.bmp
+    - tree-branch-512x512.bmp
+
+final.cpp:
+  - Contains main()
+  - Ties callbacks in PrimaryGraphicsHelper.cpp to GLUT
+  - Kicks off the updaterThread for the demo loop
+
+Landscape.h & .cpp:
+  - Child class of BaseObject
+  - Draws a mountainous landscape with trees, tall grass, and a cabin
+  - Utilizes the ConiferousTree class to draw the trees
+  - Utilizes the TallGrass class to draw tall grass patches
+  - Utilizes the Cabin class to draw the cabin for the first person viewer
+  - Uses the following blender objects:
+    - hillyGrassValley.obj
+    - mountainRim.obj
+    - mountainSnow.obj
+
+LightManager.h & .cpp:
+  - Manages Light Source 0
+  - Used as the sun and moon light source
+  - Uses the Sphere class for drawing the light source
+
+Log.h & .cpp:
+  - Child class of BaseObject
+  - Draws a single log with a wood texture
+  - Uses the following textures:
+    - log-circular-512x512.bmp
+    - log-top-512x512.bmp
+
+Precipitation.h * .cpp:
+  - Child class of BaseWeatherCondition
+  - Generates rain, snow, and lightning
+  - Utilizes the Landscape class for drawing the entire landscape
+  - Utilizes the SkyBox class to draw the sky
+
+PrimaryGraphicsHelper.h & .cpp:
+  - Declares public and private static methods for OpenGL
+  - Defines display() - static callback for glutDisplayFunc();
+  - Defines reshape() - static callback for glutReshapeFunc();
+  - Defines special() - static callback for glutSpecialFunc();
+  - Defines key() - static callback for glutKeyboardFunc();
+  - Defines idle() - static callback for glutIdleFunc();
+
+ProjectionManager.h & .cpp:
+  - Manages two view modes
+  - Manages first person navigation
+
+RectangularPrism.h & .cpp:
+  - Child class of BaseObject
+  - Draws a rectangular prism with adjustable height, width, depth, and color
+  - Has added support for texture mapping
+  - Used in this project for cabin porch boards
+
+Scene.cpp:
+  - Makes decisions on which weather to display based on values stored in WeatherData
+  - Utilizes the Axes class to draw the axes
+  - Utilizes the LightManager class for sun and moon
+  - Utilizes the ClearSkies class for clear and partly cloudy weather conditions
+  - Utilizes the Precipitation class for all types of precipitation weather conditions
+
+SkyBox.h & .cpp:
+  - Child class of BaseObject
+  - Draws a skybox around the scene
+  - Uses the following textures:
+    - partly-cloudy-512x512.bmp
+
+Sphere.h & .cpp:
+  - Child class of BaseObject
+  - Draws a sphere with adjustable size and color
+  - Has added support for texture mapping
+  - Used in this project by LightManager for drawing the sun and moon
+
+TallGrass.h & .cpp:
+  - Child class of BaseObject
+  - Draws tall grass blades using standard OpenGL techniques with lighting
+
+Utilities.h & .cpp:
+  - Static class that implements many commonly used routines throughout the project
+  - errorCheck
+  - displayText
+  - loadBmp
+  - sine
+  - cosine
+  - arcSine
+  - arcCosine
+  - hypotenuse
+  - loadOBJ
+  - timeDifference
+  - computeNormal
+  - createShader
+  - createShaderProgram
+  - createGeomShaderProgram
+
+WeatherData.h & .cpp:
+  - Thread-safe class used for setting and getting weather-related information
+
+WeatherUpdater.h & .cpp:
+  - Class used for updating WeatherData
+  - Only class in the project used in a separate thread
+  - Utilizes sleep() and usleep() only for providing a delay between WeatherData updates
+  - NOTE: sleep() and usleep() are not used anywhere else in the program

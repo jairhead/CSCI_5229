@@ -31,19 +31,6 @@ void WeatherData::removeInstance() {
   }
 }
 
-// setLiveWeather() public member function
-void WeatherData::setLiveWeather(bool val) {
-  std::unique_lock dataLock(dataMutex);
-  liveWeather = val;
-}
-
-// getLiveWeather() public member function
-bool WeatherData::getLiveWeather() {
-  std::unique_lock dataLock(dataMutex);
-  bool returnVal = liveWeather;
-  return returnVal;
-}
-
 // setExit() public member function
 void WeatherData::setExit(bool val) {
   std::unique_lock dataLock(dataMutex);

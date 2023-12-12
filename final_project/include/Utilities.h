@@ -11,6 +11,7 @@
 #include <fstream>
 #include <sstream>
 #include <cmath>
+#include <cstring>
 
 #include "TopIncludes.h"
 #include "GenericHomeworkException.h"

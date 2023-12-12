@@ -14,19 +14,6 @@ WeatherUpdater::WeatherUpdater() {
 // Destructor
 WeatherUpdater::~WeatherUpdater() { }
 
-// updateThread() public member function
-// Used as a looping thread for weather updates
-void WeatherUpdater::updateThread(int loopTime) {
-  std::cout << "WeatherUpdater::updateThread(): beginning loop" << std::endl;
-  while(!data->getExit()) {
-    // TODO: implement
-    std::cout << "WeatherUpdater::updateThread(): loop iteration" << std::endl;
-
-    // Sleep
-    sleep(loopTime);
-  }
-}
-
 // demoThread() public member function
 // Used to demo all the weather conditions
 void WeatherUpdater::demoThread() {
