@@ -12,12 +12,16 @@ ClearSkies::ClearSkies(LightManager* l) {
   // Get pointer to data structure
   data = WeatherData::getInstance();
 
+  // Load textures
+  textures[0] = Utilities::loadBmp("images/partly-cloudy-512x512.bmp");
+
   // Initialize objects
   skyBox = new SkyBox();
   land = new Landscape();
   light = l;
 
   // Enable lighting
+  skyBox->setPartlyCloudyTexture(&textures[0]);
   land->enableLighting();
 
   // Compute steps

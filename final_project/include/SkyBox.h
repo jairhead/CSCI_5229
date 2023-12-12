@@ -8,6 +8,7 @@
 #define _SKY_BOX_H
 
 #include "BaseObject.h"
+#include "WeatherData.h"
 
 class SkyBox : public BaseObject {
   public:
@@ -15,8 +16,7 @@ class SkyBox : public BaseObject {
     ~SkyBox();
     void color(float r, float g, float b);
     void setTextureFactor(float tf);
-    void setSkySideTexture(unsigned int *tex);
-    void setSkyTopTexture(unsigned int *tex);
+    void setPartlyCloudyTexture(unsigned int *tex);
     void draw();
   protected:
     // Color & lighting variables
@@ -26,8 +26,10 @@ class SkyBox : public BaseObject {
 
     // Texture variables
     float texFact = 1.0;
-    unsigned int *skySideTexture = nullptr;
-    unsigned int *skyTopTexture = nullptr;
+    unsigned int *partlyCloudyTexture = nullptr;
+
+    // Objects
+    WeatherData* data = nullptr;
 };
 
 #endif

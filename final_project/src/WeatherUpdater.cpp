@@ -94,6 +94,10 @@ void WeatherUpdater::demoIncrementWeatherCondition(char &wc) {
     data->setFahrenheit(23);
   }
   else if (wc == 's') {
+    data->setCurrentWeatherCondition('p');
+    data->setFahrenheit(75);
+  }
+  else if (wc == 'p') {
     data->setCurrentWeatherCondition('n');
     data->setFahrenheit(78);
   }

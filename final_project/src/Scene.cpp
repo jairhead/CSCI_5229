@@ -62,7 +62,7 @@ void Scene::drawWeather() {
   char wc = data->getCurrentWeatherCondition();
 
   // Draw weather based on current weather
-  if (wc == 'n') {clear->draw();}
+  if (wc == 'n' || wc == 'p') {clear->draw();}
   if (wc == 'r' || wc == 't' || wc == 's' || wc == 'm') {precip->draw();}
 
   // Check for errors

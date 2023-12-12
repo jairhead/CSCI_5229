@@ -37,6 +37,9 @@ class ClearSkies : public BaseWeatherCondition {
     WeatherData* data = nullptr;
     LightManager* light = nullptr;
 
+    // Texture variables
+    unsigned int textures[1];
+
     // Sky colors
     float skyColor[4] = {0.00, 0.15, 0.89, 1.00};
     const float day[4] = {0.00, 0.15, 0.89, 1.00};

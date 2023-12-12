@@ -8,7 +8,9 @@
 #include "SkyBox.h"
 
 // Default Constructor
-SkyBox::SkyBox() { }
+SkyBox::SkyBox() {
+  data = WeatherData::getInstance();
+}
 
 // Destructor
 SkyBox::~SkyBox() { }
@@ -25,17 +27,10 @@ void SkyBox::color(float r, float g, float b) {
 // Sets the texture factor (scaling) for the object
 void SkyBox::setTextureFactor(float tf) {texFact = tf;}
 
-// setSkySideTexture() public member function
-// Sets the texture for the sides of the skybox
-void SkyBox::setSkySideTexture(unsigned int* tex) {
-  skySideTexture = tex;
-  textureEnabled = true;
-}
-
-// setSkyTopTexture() public member function
-// Sets the texture for the top of the skybox
-void SkyBox::setSkyTopTexture(unsigned int* tex) {
-  skyTopTexture = tex;
+// setPartlyCloudy() public member function
+// Sets the texture for the sides of the skybox for partly cloudy conditions
+void SkyBox::setPartlyCloudyTexture(unsigned int* tex) {
+  partlyCloudyTexture = tex;
   textureEnabled = true;
 }
 
@@ -45,12 +40,6 @@ void SkyBox::draw() {
   // Disable lighting
   if (lightingEnabled) {glDisable(GL_LIGHTING);}
 
-  // Set texture properties
-  if (textureEnabled) {
-    glEnable(GL_TEXTURE_2D);
-    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-  }
-
   // Save transformation; Translate -> Rotate -> Scale
   glPushMatrix();
   glTranslated(posArray[0], posArray[1], posArray[2]);
@@ -58,43 +47,49 @@ void SkyBox::draw() {
   glScaled(scaleArray[0], scaleArray[1], scaleArray[2]);
   glColor3f(colorArray[0], colorArray[1], colorArray[2]);
 
+  // Get weather condition
+  char weatherCondition = data->getCurrentWeatherCondition();
+  if (weatherCondition == 'p') {
+    glEnable(GL_TEXTURE_2D);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    glBindTexture(GL_TEXTURE_2D, *partlyCloudyTexture);
+  }
+
   // Draw back side
   glBegin(GL_QUADS);
-  if (textureEnabled) {glBindTexture(GL_TEXTURE_2D, *skySideTexture);}
-  if (textureEnabled) {glTexCoord2f(0.00, 0);} glVertex3f(-1, -1, -1);
-  if (textureEnabled) {glTexCoord2f(0.25, 0);} glVertex3f(+1, -1, -1);
-  if (textureEnabled) {glTexCoord2f(0.25, 1);} glVertex3f(+1, +1, -1);
-  if (textureEnabled) {glTexCoord2f(0.00, 1);} glVertex3f(-1, +1, -1);
+  if (weatherCondition == 'p') {glTexCoord2f(0, 0);} glVertex3f(-1, -1, -1);
+  if (weatherCondition == 'p') {glTexCoord2f(1, 0);} glVertex3f(+1, -1, -1);
+  if (weatherCondition == 'p') {glTexCoord2f(1, 1);} glVertex3f(+1, +1, -1);
+  if (weatherCondition == 'p') {glTexCoord2f(0, 1);} glVertex3f(-1, +1, -1);
 
   // Draw right side
-  if (textureEnabled) {glTexCoord2f(0.25, 0);} glVertex3f(+1, -1, -1);
-  if (textureEnabled) {glTexCoord2f(0.50, 0);} glVertex3f(+1, -1, +1);
-  if (textureEnabled) {glTexCoord2f(0.50, 1);} glVertex3f(+1, +1, +1);
-  if (textureEnabled) {glTexCoord2f(0.25, 1);} glVertex3f(+1, +1, -1);
+  if (weatherCondition == 'p') {glTexCoord2f(0, 0);} glVertex3f(+1, -1, -1);
+  if (weatherCondition == 'p') {glTexCoord2f(0, 1);} glVertex3f(+1, -1, +1);
+  if (weatherCondition == 'p') {glTexCoord2f(1, 1);} glVertex3f(+1, +1, +1);
+  if (weatherCondition == 'p') {glTexCoord2f(1, 0);} glVertex3f(+1, +1, -1);
 
   // Draw front side
-  if (textureEnabled) {glTexCoord2f(0.50, 0);} glVertex3f(+1, -1, +1);
-  if (textureEnabled) {glTexCoord2f(0.75, 0);} glVertex3f(-1, -1, +1);
-  if (textureEnabled) {glTexCoord2f(0.75, 1);} glVertex3f(-1, +1, +1);
-  if (textureEnabled) {glTexCoord2f(0.50, 1);} glVertex3f(+1, +1, +1);
+  if (weatherCondition == 'p') {glTexCoord2f(1, 0);} glVertex3f(+1, -1, +1);
+  if (weatherCondition == 'p') {glTexCoord2f(0, 0);} glVertex3f(-1, -1, +1);
+  if (weatherCondition == 'p') {glTexCoord2f(0, 1);} glVertex3f(-1, +1, +1);
+  if (weatherCondition == 'p') {glTexCoord2f(1, 1);} glVertex3f(+1, +1, +1);
 
   // Draw left side
-  if (textureEnabled) {glTexCoord2f(0.75, 0);} glVertex3f(-1, -1, +1);
-  if (textureEnabled) {glTexCoord2f(1.00, 0);} glVertex3f(-1, -1, -1);
-  if (textureEnabled) {glTexCoord2f(1.00, 1);} glVertex3f(-1, +1, -1);
-  if (textureEnabled) {glTexCoord2f(0.75, 1);} glVertex3f(-1, +1, +1);
+  if (weatherCondition == 'p') {glTexCoord2f(0, 1);} glVertex3f(-1, -1, +1);
+  if (weatherCondition == 'p') {glTexCoord2f(0, 0);} glVertex3f(-1, -1, -1);
+  if (weatherCondition == 'p') {glTexCoord2f(1, 0);} glVertex3f(-1, +1, -1);
+  if (weatherCondition == 'p') {glTexCoord2f(1, 1);} glVertex3f(-1, +1, +1);
   glEnd();
 
   // Draw top
   glBegin(GL_QUADS);
-  if (textureEnabled) {glBindTexture(GL_TEXTURE_2D, *skySideTexture);}
-  if (textureEnabled) {glTexCoord2f(0.00, 0);} glVertex3f(+1, +1, -1);
-  if (textureEnabled) {glTexCoord2f(0.50, 0);} glVertex3f(+1, +1, +1);
-  if (textureEnabled) {glTexCoord2f(0.50, 1);} glVertex3f(-1, +1, +1);
-  if (textureEnabled) {glTexCoord2f(0.00, 1);} glVertex3f(-1, +1, -1);
+  if (weatherCondition == 'p') {glTexCoord2f(1, 0);} glVertex3f(+1, +1, -1);
+  if (weatherCondition == 'p') {glTexCoord2f(1, 1);} glVertex3f(+1, +1, +1);
+  if (weatherCondition == 'p') {glTexCoord2f(0, 1);} glVertex3f(-1, +1, +1);
+  if (weatherCondition == 'p') {glTexCoord2f(0, 0);} glVertex3f(-1, +1, -1);
   glEnd();
 
   // End
-  if (textureEnabled) {glDisable(GL_TEXTURE_2D);}
+  if (weatherCondition == 'p') {glDisable(GL_TEXTURE_2D);}
   glPopMatrix();
 }

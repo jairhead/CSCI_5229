@@ -25,7 +25,7 @@ class Landscape : public BaseObject {
   protected:
     // Protected methods
     void initializeTrees();
-    
+
     // Color & lighting variables
     float colorArray[4] = {1.0, 1.0, 1.0, 1.0};
     float specularArray[4] = {0.25, 0.25, 0.25, 1.0};

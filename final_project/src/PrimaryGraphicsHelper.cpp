@@ -96,10 +96,10 @@ void PrimaryGraphicsHelper::special(int key, int x, int y) {
   else if (key == GLUT_KEY_LEFT && displayMode != 1) {th -= 1;}
   else if (key == GLUT_KEY_UP && displayMode != 1) {ph += 1;}
   else if (key == GLUT_KEY_DOWN && displayMode != 1) {ph -= 1;}
-  else if (key == GLUT_KEY_RIGHT && displayMode == 1) {projection->turnRight(); std::cout << "Looking right!" << std::endl;}
-  else if (key == GLUT_KEY_LEFT && displayMode == 1) {projection->turnLeft(); std::cout << "Looking left!" << std::endl;}
-  else if (key == GLUT_KEY_UP && displayMode == 1) {projection->lookUp(); std::cout << "Looking up!" << std::endl;}
-  else if (key == GLUT_KEY_DOWN && displayMode == 1) {projection->lookDown(); std::cout << "Looking down!" << std::endl;}
+  else if (key == GLUT_KEY_RIGHT && displayMode == 1) {projection->turnRight();}
+  else if (key == GLUT_KEY_LEFT && displayMode == 1) {projection->turnLeft();}
+  else if (key == GLUT_KEY_UP && displayMode == 1) {projection->lookUp();}
+  else if (key == GLUT_KEY_DOWN && displayMode == 1) {projection->lookDown();}
 
   // Set theta and phi
   projection->setTheta(th);
@@ -150,6 +150,10 @@ void PrimaryGraphicsHelper::key(unsigned char ch, int x, int y) {
       dataPtr->setFahrenheit(23);
     }
     else if (wc == 's') {
+      dataPtr->setCurrentWeatherCondition('p');
+      dataPtr->setFahrenheit(75);
+    }
+    else if (wc == 'p') {
       dataPtr->setCurrentWeatherCondition('n');
       dataPtr->setFahrenheit(78);
     }
@@ -217,6 +221,7 @@ void PrimaryGraphicsHelper::displayParams() {
   else if (wc == 't') {parameters += "T-Storm";}
   else if (wc == 'm') {parameters += "Mixed Precip";}
   else if (wc == 's') {parameters += "Snow";}
+  else if (wc == 'p') {parameters += "Partly Cloudy";}
 
   // Display
   Utilities::displayText(parameters);
