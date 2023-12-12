@@ -35,13 +35,12 @@ Landscape::Landscape() {
   clock->scale(0.25, 0.25, 0.25);
 
   // Instantiate trees
-  tree = new ConiferousTree();
-  tree->setTrunkTexture(&textures[0]);
-  tree->setLeafTexture(&textures[1]);
-  tree->setSnowyLeafTexture(&textures[2]);
-  tree->enableLighting();
-  tree->translate(1.5, 1.2, 7.7);
-  tree->scale(0.1, 0.1, 0.1);
+  tree1 = new ConiferousTree();
+  tree2 = new ConiferousTree();
+  tree3 = new ConiferousTree();
+  tree4 = new ConiferousTree();
+  tree5 = new ConiferousTree();
+  initializeTrees();
 
   // Instantiate cabin
   cabin = new Cabin();
@@ -60,7 +59,12 @@ Landscape::Landscape() {
 // Destructor
 Landscape::~Landscape() {
   delete clock;
-  delete tree;
+  delete tree1;
+  delete tree2;
+  delete tree3;
+  delete tree4;
+  delete tree5;
+  delete cabin;
 }
 
 // color() public member function
@@ -117,11 +121,59 @@ void Landscape::draw() {
   clock->draw();
 
   // Draw the trees
-  //tree->draw();
+  tree1->draw();
+  tree2->draw();
+  tree3->draw();
+  tree4->draw();
+  tree5->draw();
 
   // Draw the cabin
   cabin->draw();
 
   // End
   glPopMatrix();
+}
+
+// initializeTrees() private member function
+// Initializes the tree textures and positions
+void Landscape::initializeTrees() {
+  // Tree 1
+  tree1->setTrunkTexture(&textures[0]);
+  tree1->setLeafTexture(&textures[1]);
+  tree1->setSnowyLeafTexture(&textures[2]);
+  tree1->enableLighting();
+  tree1->translate(1.3, 1.2, 7.7);
+  tree1->scale(0.1, 0.1, 0.1);
+
+  // Tree 2
+  tree2->setTrunkTexture(&textures[0]);
+  tree2->setLeafTexture(&textures[1]);
+  tree2->setSnowyLeafTexture(&textures[2]);
+  tree2->enableLighting();
+  tree2->translate(1.8, 1.3, 7.1);
+  tree2->scale(0.05, 0.05, 0.05);
+
+  // Tree 3
+  tree3->setTrunkTexture(&textures[0]);
+  tree3->setLeafTexture(&textures[1]);
+  tree3->setSnowyLeafTexture(&textures[2]);
+  tree3->enableLighting();
+  tree3->translate(2.7, 1.2, 6.6);
+  tree3->scale(0.12, 0.12, 0.12);
+
+  // Tree 4
+  tree4->setTrunkTexture(&textures[0]);
+  tree4->setLeafTexture(&textures[1]);
+  tree4->setSnowyLeafTexture(&textures[2]);
+  tree4->enableLighting();
+  tree4->translate(2.4, 1.2, 6.0);
+  tree4->scale(0.15, 0.15, 0.15);
+
+  // Tree 5
+  tree5->setTrunkTexture(&textures[0]);
+  tree5->setLeafTexture(&textures[1]);
+  tree5->setSnowyLeafTexture(&textures[2]);
+  tree5->enableLighting();
+  tree5->translate(3.4, 1.2, 7.7);
+  tree5->scale(0.1, 0.1, 0.1);
 }

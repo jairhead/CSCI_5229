@@ -23,6 +23,9 @@ class Landscape : public BaseObject {
     void setTextureFactor(float tf);
     void draw();
   protected:
+    // Protected methods
+    void initializeTrees();
+    
     // Color & lighting variables
     float colorArray[4] = {1.0, 1.0, 1.0, 1.0};
     float specularArray[4] = {0.25, 0.25, 0.25, 1.0};
@@ -40,7 +43,11 @@ class Landscape : public BaseObject {
     // Objects
     WeatherData* data = nullptr;
     AnalogClock* clock;
-    ConiferousTree* tree;
+    ConiferousTree* tree1;
+    ConiferousTree* tree2;
+    ConiferousTree* tree3;
+    ConiferousTree* tree4;
+    ConiferousTree* tree5;
     Cabin* cabin;
 };
 
