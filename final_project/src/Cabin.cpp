@@ -283,26 +283,54 @@ void Cabin::drawRoof() {
     glBindTexture(GL_TEXTURE_2D, *roofTexture);
   }
 
+  // Compute normals
+  double v_A[3] = {0.0, 0.0, 0.0};
+  double v_B[3] = {0.0, 0.0, 0.0};
+  double normal[3] = {0.0, 0.0, 0.0};
+  v_A[0] = 0.0;
+  v_A[1] = 0.0;
+  v_A[2] = ((lUnit * 6) + 0.1) - (-0.1);
+  v_B[0] = (lUnit * 3) - (-0.2);
+  v_B[1] = (hUnit * 5) - ((hUnit * 4) - 0.15);
+  v_B[2] = (lUnit * 6) - (-0.1);
+  Utilities::computeNormal(v_A, v_B, normal);
+
   // Draw front slope
   glBegin(GL_QUADS);
+  if (lightingEnabled) {glNormal3d(normal[0], normal[1], normal[2]);}
   if (textureEnabled) {glTexCoord2f(5.0, 0.0);}
   glVertex3d(-0.2, (hUnit * 4) - 0.15, -0.1);
+  if (lightingEnabled) {glNormal3d(normal[0], normal[1], normal[2]);}
   if (textureEnabled) {glTexCoord2f(0.0, 0.0);}
   glVertex3d(-0.2, (hUnit * 4) - 0.15, (lUnit * 6) + 0.1);
+  if (lightingEnabled) {glNormal3d(normal[0], normal[1], normal[2]);}
   if (textureEnabled) {glTexCoord2f(0.0, 5.0);}
   glVertex3d((lUnit * 3), (hUnit * 5), (lUnit * 6) + 0.1);
+  if (lightingEnabled) {glNormal3d(normal[0], normal[1], normal[2]);}
   if (textureEnabled) {glTexCoord2f(5.0, 5.0);}
   glVertex3d((lUnit * 3), (hUnit * 5), -0.1);
   glEnd();
 
+  v_A[0] = 0.0;
+  v_A[1] = 0.0;
+  v_A[2] = ((lUnit * 6) + 0.1) - (-0.1);
+  v_B[0] = (lUnit * 6) - (lUnit * 3);
+  v_B[1] = (hUnit * 5) - ((hUnit * 4) - 0.15);
+  v_B[2] = (lUnit * 6) - (-0.1);
+  Utilities::computeNormal(v_A, v_B, normal);
+
   // Draw back slope
   glBegin(GL_QUADS);
+  if (lightingEnabled) {glNormal3d(normal[0], normal[1], normal[2]);}
   if (textureEnabled) {glTexCoord2f(5.0, 0.0);}
   glVertex3d((lUnit * 6) + 0.2, (hUnit * 4) - 0.15, -0.1);
+  if (lightingEnabled) {glNormal3d(normal[0], normal[1], normal[2]);}
   if (textureEnabled) {glTexCoord2f(0.0, 0.0);}
   glVertex3d((lUnit * 6) + 0.2, (hUnit * 4) - 0.15, (lUnit * 6) + 0.1);
+  if (lightingEnabled) {glNormal3d(normal[0], normal[1], normal[2]);}
   if (textureEnabled) {glTexCoord2f(0.0, 5.0);}
   glVertex3d((lUnit * 3), (hUnit * 5), (lUnit * 6) + 0.1);
+  if (lightingEnabled) {glNormal3d(normal[0], normal[1], normal[2]);}
   if (textureEnabled) {glTexCoord2f(5.0, 5.0);}
   glVertex3d((lUnit * 3), (hUnit * 5), -0.1);
   glEnd();
