@@ -27,6 +27,8 @@ Landscape::Landscape() {
   textures[6] = Utilities::loadBmp("images/roof-512x512.bmp");
   textures[7] = Utilities::loadBmp("images/snowy-log-circular-512x512.bmp");
   textures[8] = Utilities::loadBmp("images/snowy-roof-512x512.bmp");
+  textures[9] = Utilities::loadBmp("images/grass-512x512.bmp");
+  textures[10] = Utilities::loadBmp("images/granite-512x512.bmp");
 
   // Instantiate clock face
   clock = new AnalogClock();
@@ -101,19 +103,36 @@ void Landscape::draw() {
 
   // Draw the grass landscape using elevation data
   char weatherCondition = data->getCurrentWeatherCondition();
-  if (weatherCondition == 's') {glColor3f(0.95, 0.95, 0.95);}
-  else {glColor3f(0.04, 0.33, 0);}
+  bool landscapeTextures = false;
+  if (weatherCondition == 's') {
+    glColor3f(0.95, 0.95, 0.95);
+  }
+  else {
+    glColor3f(1.0, 1.0, 1.0);
+    glEnable(GL_TEXTURE_2D);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    glBindTexture(GL_TEXTURE_2D, textures[9]);
+    landscapeTextures = true;
+  }
   glCallList(grassValley);
 
   // Draw the mountains
   glTranslated(0.0, -0.1, 0.0);
-  if (weatherCondition == 's') {glColor3f(0.95, 0.95, 0.95);}
-  else {glColor3f(0.21, 0.21, 0.21);}
+  if (weatherCondition == 's') {
+    glColor3f(0.95, 0.95, 0.95);
+  }
+  else {
+    glColor3f(0.21, 0.21, 0.21);
+    glEnable(GL_TEXTURE_2D);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    glBindTexture(GL_TEXTURE_2D, textures[10]);
+    landscapeTextures = true;
+  }
   glCallList(mountainRim);
 
   // Draw the mountain snow
-  if (weatherCondition == 'n' || weatherCondition == 'r' || weatherCondition == 't') {glColor3f(0.21, 0.21, 0.21);}
-  else {glColor3f(1.0, 1.0, 1.0);}
+  if (landscapeTextures) {glDisable(GL_TEXTURE_2D);}
+  glColor3f(1.0, 1.0, 1.0);
   glTranslated(0.0, -0.1, 0.0);
   glCallList(mountainSnow);
 

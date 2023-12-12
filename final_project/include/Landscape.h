@@ -33,7 +33,7 @@ class Landscape : public BaseObject {
 
     // Texture variables
     float texFact = 1.0;
-    unsigned int textures[9];
+    unsigned int textures[11];
 
     // Object ints
     int grassValley;
